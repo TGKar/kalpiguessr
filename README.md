@@ -42,9 +42,9 @@ In Daily mode, a date picker lets you replay any earlier date's puzzle
 In Random mode, a slider picks which size tier the locality is drawn from —
 קטן (small, K25 eligible voters ≥ 1000), בינוני (medium, the default —
 `randomEligible: true`, the same 323-locality pool as before this slider
-existed), or גדול (large, Israel's 100 biggest localities by K25 eligible
-voters). Moving the slider re-rolls immediately. See `AGENTS.md` for the
-exact pool definitions.
+existed), or גדול (large, K25 eligible voters ≥ 30000 — Israel's biggest
+cities/towns, currently 48 localities). Moving the slider re-rolls
+immediately. See `AGENTS.md` for the exact pool definitions.
 
 ## Changing the daily answer
 

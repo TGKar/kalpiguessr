@@ -76,11 +76,13 @@
   // randomEligible: 'medium' IS the existing randomEligible subset (323
   // localities, unchanged); 'small' is a looser >=1000-eligible-voters-in-K25
   // cut (no both-elections requirement, so it's a superset of 'medium');
-  // 'large' is exactly the top 100 guessable localities by K25 eligible
-  // voters, ties broken by numeric locality id for determinism. Daily mode's
-  // fallback rotation and answer-schedule.json overrides only ever use
-  // randomEligible directly (see pickAnswerId) and never touch these pools.
+  // 'large' is every guessable locality with K25 eligible voters >= 30000
+  // (currently 48 — not a fixed round number, it'll shift if the underlying
+  // data ever changes). Daily mode's fallback rotation and
+  // answer-schedule.json overrides only ever use randomEligible directly
+  // (see pickAnswerId) and never touch these pools.
   const SIZE_TIERS = ['small', 'medium', 'large'];
+  const LARGE_TIER_MIN_ELIGIBLE = 30000;
 
   function computeSizeTierPools(localities, results25) {
     const small = localities.filter((loc) => {
@@ -88,15 +90,10 @@
       return rec && rec.eligible >= 1000;
     });
     const medium = localities.filter((loc) => loc.randomEligible);
-    const large = localities
-      .filter((loc) => results25[loc.id])
-      .slice()
-      .sort((a, b) => {
-        const diff = results25[b.id].eligible - results25[a.id].eligible;
-        if (diff !== 0) return diff;
-        return Number(a.id) - Number(b.id);
-      })
-      .slice(0, 100);
+    const large = localities.filter((loc) => {
+      const rec = results25[loc.id];
+      return rec && rec.eligible >= LARGE_TIER_MIN_ELIGIBLE;
+    });
     return { small, medium, large };
   }
 

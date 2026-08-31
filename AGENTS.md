@@ -126,9 +126,11 @@ and still use `randomEligible` directly through `pickAnswerId`, unmodified:
   it's a superset of בינוני. **331 of 1211**.
 - **בינוני (medium)**: exactly the `randomEligible === true` set — **323**,
   byte-identical to the pool above, unchanged.
-- **גדול (large)**: the top 100 guessable localities by K25 `eligible`,
-  descending, ties broken by numeric locality id — **exactly 100**, always
-  (Israel's largest cities/towns; Jerusalem/Tel Aviv/Haifa are all in it).
+- **גדול (large)**: every guessable locality with K25 (`results-25.json`)
+  `eligible >= 30000` — a fixed threshold, not a fixed count, so this number
+  will shift if the underlying data ever changes. **48 of 1211** as of the
+  currently committed data (Israel's largest cities/towns; Jerusalem/Tel
+  Aviv/Haifa are all in it; large is a subset of קטן since 30000 > 1000).
 
 `pickRandomAnswerId(pool)` now takes the pool array directly (whichever tier
 is selected, via `state.sizeTierPools[state.sizeTier]`) instead of filtering
@@ -235,7 +237,14 @@ them; 5000 `pickRandomAnswerId` draws per tier all landed inside that tier's
 pool; and `pickAnswerId` (Daily mode's fallback rotation) is untouched by
 this change — confirmed both by a zero-diff on that function and by
 re-resolving today's override and a future fallback date to the same
-answers as before.
+answers as before. Chrome is still unavailable as of the round that changed
+גדול (large)'s rule from a top-100-by-eligible cut to a fixed
+`eligible >= 30000` threshold — verified in Node against the real committed
+JSON: large is now 48 (not 100 — expected, since it's a threshold count, not
+a fixed round number, and will vary if the underlying data ever changes),
+is a strict subset of קטן (small, 331) as expected since 30000 > 1000, and
+Jerusalem/Tel Aviv/Haifa are all still in it; small (331) and medium (323)
+pools are unchanged (zero-diff on both filters).
 
 ## Maintaining this file
 
