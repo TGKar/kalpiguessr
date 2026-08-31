@@ -1,1294 +1,6057 @@
 [
  {
   "id": "967",
-  "name": "אבו ג'ווייעד (שבט)"
+  "name": "אבו ג'ווייעד (שבט)",
+  "randomEligible": true
  },
  {
   "id": "472",
-  "name": "אבו גוש"
+  "name": "אבו גוש",
+  "randomEligible": true
  },
  {
   "id": "473",
-  "name": "אבו סנאן"
+  "name": "אבו סנאן",
+  "randomEligible": true
+ },
+ {
+  "id": "958",
+  "name": "אבו עבדון (שבט)",
+  "randomEligible": false
+ },
+ {
+  "id": "1342",
+  "name": "אבו קורינאת (יישוב)",
+  "randomEligible": false
  },
  {
   "id": "968",
-  "name": "אבו קורינאת (שבט)"
+  "name": "אבו קורינאת (שבט)",
+  "randomEligible": true
  },
  {
   "id": "966",
-  "name": "אבו רובייעה (שבט)"
+  "name": "אבו רובייעה (שבט)",
+  "randomEligible": true
  },
  {
   "id": "961",
-  "name": "אבו רוקייק (שבט)"
+  "name": "אבו רוקייק (שבט)",
+  "randomEligible": true
  },
  {
   "id": "1375",
-  "name": "אבו תלול"
+  "name": "אבו תלול",
+  "randomEligible": true
  },
  {
   "id": "652",
-  "name": "אבטין"
+  "name": "אבטין",
+  "randomEligible": true
+ },
+ {
+  "id": "1275",
+  "name": "אבטליון",
+  "randomEligible": false
+ },
+ {
+  "id": "679",
+  "name": "אביאל",
+  "randomEligible": false
+ },
+ {
+  "id": "1115",
+  "name": "אביבים",
+  "randomEligible": false
+ },
+ {
+  "id": "819",
+  "name": "אביגדור",
+  "randomEligible": false
+ },
+ {
+  "id": "175",
+  "name": "אביחיל",
+  "randomEligible": false
+ },
+ {
+  "id": "2052",
+  "name": "אביטל",
+  "randomEligible": false
+ },
+ {
+  "id": "1070",
+  "name": "אביעזר",
+  "randomEligible": false
+ },
+ {
+  "id": "1220",
+  "name": "אבירים",
+  "randomEligible": false
  },
  {
   "id": "182",
-  "name": "אבן יהודה"
+  "name": "אבן יהודה",
+  "randomEligible": true
+ },
+ {
+  "id": "1081",
+  "name": "אבן מנחם",
+  "randomEligible": false
+ },
+ {
+  "id": "783",
+  "name": "אבן ספיר",
+  "randomEligible": false
+ },
+ {
+  "id": "400",
+  "name": "אבן שמואל",
+  "randomEligible": false
+ },
+ {
+  "id": "4011",
+  "name": "אבני איתן",
+  "randomEligible": false
  },
  {
   "id": "3793",
-  "name": "אבני חפץ"
+  "name": "אבני חפץ",
+  "randomEligible": true
+ },
+ {
+  "id": "1311",
+  "name": "אבשלום",
+  "randomEligible": false
+ },
+ {
+  "id": "3759",
+  "name": "אדורה",
+  "randomEligible": false
+ },
+ {
+  "id": "113",
+  "name": "אדירים",
+  "randomEligible": false
+ },
+ {
+  "id": "1068",
+  "name": "אדמית",
+  "randomEligible": false
+ },
+ {
+  "id": "1123",
+  "name": "אדרת",
+  "randomEligible": false
+ },
+ {
+  "id": "446",
+  "name": "אודים",
+  "randomEligible": false
+ },
+ {
+  "id": "4010",
+  "name": "אודם",
+  "randomEligible": false
+ },
+ {
+  "id": "1046",
+  "name": "אוהד",
+  "randomEligible": false
  },
  {
   "id": "2710",
-  "name": "אום אל-פחם"
+  "name": "אום אל-פחם",
+  "randomEligible": true
+ },
+ {
+  "id": "2024",
+  "name": "אום אל-קוטוף",
+  "randomEligible": false
  },
  {
   "id": "1358",
-  "name": "אום בטין"
+  "name": "אום בטין",
+  "randomEligible": true
+ },
+ {
+  "id": "1108",
+  "name": "אומן",
+  "randomEligible": false
+ },
+ {
+  "id": "680",
+  "name": "אומץ",
+  "randomEligible": false
  },
  {
   "id": "31",
-  "name": "אופקים"
+  "name": "אופקים",
+  "randomEligible": true
+ },
+ {
+  "id": "1294",
+  "name": "אור הגנוז",
+  "randomEligible": false
+ },
+ {
+  "id": "67",
+  "name": "אור הנר",
+  "randomEligible": false
  },
  {
   "id": "2400",
-  "name": "אור יהודה"
+  "name": "אור יהודה",
+  "randomEligible": true
  },
  {
   "id": "1020",
-  "name": "אור עקיבא"
+  "name": "אור עקיבא",
+  "randomEligible": true
+ },
+ {
+  "id": "780",
+  "name": "אורה",
+  "randomEligible": false
+ },
+ {
+  "id": "2012",
+  "name": "אורות",
+  "randomEligible": false
+ },
+ {
+  "id": "4013",
+  "name": "אורטל",
+  "randomEligible": false
+ },
+ {
+  "id": "403",
+  "name": "אורים",
+  "randomEligible": false
  },
  {
   "id": "3760",
-  "name": "אורנית"
+  "name": "אורנית",
+  "randomEligible": true
+ },
+ {
+  "id": "278",
+  "name": "אושה",
+  "randomEligible": false
  },
  {
   "id": "565",
-  "name": "אזור"
+  "name": "אזור",
+  "randomEligible": true
+ },
+ {
+  "id": "1157",
+  "name": "אחווה",
+  "randomEligible": false
+ },
+ {
+  "id": "821",
+  "name": "אחוזם",
+  "randomEligible": false
  },
  {
   "id": "1330",
-  "name": "אחוזת ברק"
+  "name": "אחוזת ברק",
+  "randomEligible": true
+ },
+ {
+  "id": "785",
+  "name": "אחיהוד",
+  "randomEligible": false
+ },
+ {
+  "id": "850",
+  "name": "אחיטוב",
+  "randomEligible": false
+ },
+ {
+  "id": "804",
+  "name": "אחיסמך",
+  "randomEligible": false
  },
  {
   "id": "797",
-  "name": "אחיעזר"
+  "name": "אחיעזר",
+  "randomEligible": true
  },
  {
   "id": "965",
-  "name": "אטרש (שבט)"
+  "name": "אטרש (שבט)",
+  "randomEligible": true
+ },
+ {
+  "id": "338",
+  "name": "איבים",
+  "randomEligible": false
+ },
+ {
+  "id": "716",
+  "name": "אייל",
+  "randomEligible": false
+ },
+ {
+  "id": "77",
+  "name": "איילת השחר",
+  "randomEligible": false
+ },
+ {
+  "id": "294",
+  "name": "אילון",
+  "randomEligible": false
+ },
+ {
+  "id": "1126",
+  "name": "אילות",
+  "randomEligible": false
+ },
+ {
+  "id": "49",
+  "name": "אילנייה",
+  "randomEligible": false
  },
  {
   "id": "2600",
-  "name": "אילת"
+  "name": "אילת",
+  "randomEligible": true
+ },
+ {
+  "id": "1336",
+  "name": "אירוס",
+  "randomEligible": false
+ },
+ {
+  "id": "3762",
+  "name": "איתמר",
+  "randomEligible": false
+ },
+ {
+  "id": "37",
+  "name": "איתן",
+  "randomEligible": false
  },
  {
   "id": "478",
-  "name": "אכסאל"
+  "name": "אכסאל",
+  "randomEligible": true
+ },
+ {
+  "id": "1316",
+  "name": "אל -עריאן",
+  "randomEligible": false
+ },
+ {
+  "id": "4003",
+  "name": "אל -רום",
+  "randomEligible": false
  },
  {
   "id": "1359",
-  "name": "אל סייד"
+  "name": "אל סייד",
+  "randomEligible": true
+ },
+ {
+  "id": "1145",
+  "name": "אלומה",
+  "randomEligible": false
+ },
+ {
+  "id": "330",
+  "name": "אלומות",
+  "randomEligible": false
+ },
+ {
+  "id": "1182",
+  "name": "אלון הגליל",
+  "randomEligible": false
+ },
+ {
+  "id": "3579",
+  "name": "אלון מורה",
+  "randomEligible": false
  },
  {
   "id": "3604",
-  "name": "אלון שבות"
+  "name": "אלון שבות",
+  "randomEligible": true
+ },
+ {
+  "id": "429",
+  "name": "אלוני אבא",
+  "randomEligible": false
+ },
+ {
+  "id": "4017",
+  "name": "אלוני הבשן",
+  "randomEligible": false
+ },
+ {
+  "id": "868",
+  "name": "אלוני יצחק",
+  "randomEligible": false
+ },
+ {
+  "id": "285",
+  "name": "אלונים",
+  "randomEligible": false
+ },
+ {
+  "id": "4002",
+  "name": "אלי-עד",
+  "randomEligible": false
+ },
+ {
+  "id": "1365",
+  "name": "אליאב",
+  "randomEligible": false
  },
  {
   "id": "41",
-  "name": "אליכין"
+  "name": "אליכין",
+  "randomEligible": true
+ },
+ {
+  "id": "1248",
+  "name": "אליפז",
+  "randomEligible": false
+ },
+ {
+  "id": "730",
+  "name": "אליפלט",
+  "randomEligible": false
+ },
+ {
+  "id": "682",
+  "name": "אליקים",
+  "randomEligible": false
+ },
+ {
+  "id": "204",
+  "name": "אלישיב",
+  "randomEligible": false
+ },
+ {
+  "id": "841",
+  "name": "אלישמע",
+  "randomEligible": false
+ },
+ {
+  "id": "1125",
+  "name": "אלמגור",
+  "randomEligible": false
+ },
+ {
+  "id": "3556",
+  "name": "אלמוג",
+  "randomEligible": false
  },
  {
   "id": "1309",
-  "name": "אלעד"
+  "name": "אלעד",
+  "randomEligible": true
  },
  {
   "id": "3618",
-  "name": "אלעזר"
+  "name": "אלעזר",
+  "randomEligible": true
  },
  {
   "id": "3750",
-  "name": "אלפי מנשה"
+  "name": "אלפי מנשה",
+  "randomEligible": true
+ },
+ {
+  "id": "603",
+  "name": "אלקוש",
+  "randomEligible": false
  },
  {
   "id": "3560",
-  "name": "אלקנה"
+  "name": "אלקנה",
+  "randomEligible": true
+ },
+ {
+  "id": "772",
+  "name": "אמונים",
+  "randomEligible": false
+ },
+ {
+  "id": "1064",
+  "name": "אמירים",
+  "randomEligible": false
+ },
+ {
+  "id": "1253",
+  "name": "אמנון",
+  "randomEligible": false
+ },
+ {
+  "id": "23",
+  "name": "אמציה",
+  "randomEligible": false
+ },
+ {
+  "id": "4012",
+  "name": "אניעם",
+  "randomEligible": false
+ },
+ {
+  "id": "960",
+  "name": "אסד (שבט)",
+  "randomEligible": false
+ },
+ {
+  "id": "3754",
+  "name": "אספר",
+  "randomEligible": false
  },
  {
   "id": "529",
-  "name": "אעבלין"
+  "name": "אעבלין",
+  "randomEligible": true
  },
  {
   "id": "963",
-  "name": "אעצם (שבט)"
+  "name": "אעצם (שבט)",
+  "randomEligible": true
+ },
+ {
+  "id": "4301",
+  "name": "אפיק",
+  "randomEligible": false
  },
  {
   "id": "176",
-  "name": "אפיקים"
+  "name": "אפיקים",
+  "randomEligible": true
+ },
+ {
+  "id": "313",
+  "name": "אפק",
+  "randomEligible": false
  },
  {
   "id": "3650",
-  "name": "אפרת"
+  "name": "אפרת",
+  "randomEligible": true
+ },
+ {
+  "id": "701",
+  "name": "ארבל",
+  "randomEligible": false
+ },
+ {
+  "id": "3598",
+  "name": "ארגמן",
+  "randomEligible": false
+ },
+ {
+  "id": "714",
+  "name": "ארז",
+  "randomEligible": false
  },
  {
   "id": "3570",
-  "name": "אריאל"
+  "name": "אריאל",
+  "randomEligible": true
+ },
+ {
+  "id": "1324",
+  "name": "ארסוף",
+  "randomEligible": false
+ },
+ {
+  "id": "71",
+  "name": "אשבול",
+  "randomEligible": false
  },
  {
   "id": "70",
-  "name": "אשדוד"
+  "name": "אשדוד",
+  "randomEligible": true
+ },
+ {
+  "id": "199",
+  "name": "אשדות יעקב (איחוד)",
+  "randomEligible": false
+ },
+ {
+  "id": "188",
+  "name": "אשדות יעקב (מאוחד)",
+  "randomEligible": false
+ },
+ {
+  "id": "1188",
+  "name": "אשחר",
+  "randomEligible": false
+ },
+ {
+  "id": "3722",
+  "name": "אשכולות",
+  "randomEligible": false
+ },
+ {
+  "id": "2021",
+  "name": "אשל הנשיא",
+  "randomEligible": false
+ },
+ {
+  "id": "1152",
+  "name": "אשלים",
+  "randomEligible": false
  },
  {
   "id": "7100",
-  "name": "אשקלון"
+  "name": "אשקלון",
+  "randomEligible": true
+ },
+ {
+  "id": "1256",
+  "name": "אשרת",
+  "randomEligible": false
+ },
+ {
+  "id": "740",
+  "name": "אשתאול",
+  "randomEligible": false
  },
  {
   "id": "6000",
-  "name": "באקה אל-גרביה"
+  "name": "באקה אל-גרביה",
+  "randomEligible": true
+ },
+ {
+  "id": "21",
+  "name": "באר אורה",
+  "randomEligible": false
  },
  {
   "id": "1376",
-  "name": "באר גנים"
+  "name": "באר גנים",
+  "randomEligible": true
+ },
+ {
+  "id": "155",
+  "name": "באר טוביה",
+  "randomEligible": false
  },
  {
   "id": "2530",
-  "name": "באר יעקב"
+  "name": "באר יעקב",
+  "randomEligible": true
+ },
+ {
+  "id": "1278",
+  "name": "באר מילכה",
+  "randomEligible": false
  },
  {
   "id": "9000",
-  "name": "באר שבע"
+  "name": "באר שבע",
+  "randomEligible": true
+ },
+ {
+  "id": "450",
+  "name": "בארות יצחק",
+  "randomEligible": false
+ },
+ {
+  "id": "697",
+  "name": "בארותיים",
+  "randomEligible": false
+ },
+ {
+  "id": "399",
+  "name": "בארי",
+  "randomEligible": false
+ },
+ {
+  "id": "559",
+  "name": "בוסתן הגליל",
+  "randomEligible": false
  },
  {
   "id": "482",
-  "name": "בועיינה-נוג'ידאת"
+  "name": "בועיינה-נוג'ידאת",
+  "randomEligible": true
+ },
+ {
+  "id": "4001",
+  "name": "בוקעאתא",
+  "randomEligible": false
+ },
+ {
+  "id": "698",
+  "name": "בורגתה",
+  "randomEligible": false
+ },
+ {
+  "id": "2043",
+  "name": "בחן",
+  "randomEligible": false
+ },
+ {
+  "id": "762",
+  "name": "בטחה",
+  "randomEligible": false
+ },
+ {
+  "id": "234",
+  "name": "ביצרון",
+  "randomEligible": false
  },
  {
   "id": "998",
-  "name": "ביר אל-מכסור"
+  "name": "ביר אל-מכסור",
+  "randomEligible": true
  },
  {
   "id": "1348",
-  "name": "ביר הדאג'"
+  "name": "ביר הדאג'",
+  "randomEligible": true
+ },
+ {
+  "id": "368",
+  "name": "בירייה",
+  "randomEligible": false
+ },
+ {
+  "id": "317",
+  "name": "בית אורן",
+  "randomEligible": false
  },
  {
   "id": "3574",
-  "name": "בית אל"
+  "name": "בית אל",
+  "randomEligible": true
  },
  {
   "id": "562",
-  "name": "בית אלעזרי"
+  "name": "בית אלעזרי",
+  "randomEligible": true
+ },
+ {
+  "id": "95",
+  "name": "בית אלפא",
+  "randomEligible": false
  },
  {
   "id": "3652",
-  "name": "בית אריה-עופרים"
+  "name": "בית אריה-עופרים",
+  "randomEligible": true
  },
  {
   "id": "480",
-  "name": "בית ג'ן"
+  "name": "בית ג'ן",
+  "randomEligible": true
+ },
+ {
+  "id": "619",
+  "name": "בית גוברין",
+  "randomEligible": false
+ },
+ {
+  "id": "571",
+  "name": "בית גמליאל",
+  "randomEligible": false
  },
  {
   "id": "466",
-  "name": "בית דגן"
+  "name": "בית דגן",
+  "randomEligible": true
+ },
+ {
+  "id": "723",
+  "name": "בית הגדי",
+  "randomEligible": false
+ },
+ {
+  "id": "373",
+  "name": "בית הלוי",
+  "randomEligible": false
+ },
+ {
+  "id": "322",
+  "name": "בית הלל",
+  "randomEligible": false
+ },
+ {
+  "id": "572",
+  "name": "בית העמק",
+  "randomEligible": false
+ },
+ {
+  "id": "3645",
+  "name": "בית הערבה",
+  "randomEligible": false
  },
  {
   "id": "242",
-  "name": "בית השיטה"
+  "name": "בית השיטה",
+  "randomEligible": true
+ },
+ {
+  "id": "353",
+  "name": "בית זיד",
+  "randomEligible": false
  },
  {
   "id": "710",
-  "name": "בית זית"
+  "name": "בית זית",
+  "randomEligible": true
+ },
+ {
+  "id": "143",
+  "name": "בית זרע",
+  "randomEligible": false
+ },
+ {
+  "id": "3575",
+  "name": "בית חורון",
+  "randomEligible": false
+ },
+ {
+  "id": "877",
+  "name": "בית חירות",
+  "randomEligible": false
+ },
+ {
+  "id": "2033",
+  "name": "בית חלקיה",
+  "randomEligible": false
+ },
+ {
+  "id": "159",
+  "name": "בית חנן",
+  "randomEligible": false
+ },
+ {
+  "id": "800",
+  "name": "בית חנניה",
+  "randomEligible": false
  },
  {
   "id": "1050",
-  "name": "בית חשמונאי"
+  "name": "בית חשמונאי",
+  "randomEligible": true
+ },
+ {
+  "id": "288",
+  "name": "בית יהושע",
+  "randomEligible": false
+ },
+ {
+  "id": "265",
+  "name": "בית יוסף",
+  "randomEligible": false
+ },
+ {
+  "id": "200",
+  "name": "בית ינאי",
+  "randomEligible": false
  },
  {
   "id": "326",
-  "name": "בית יצחק-שער חפר"
+  "name": "בית יצחק-שער חפר",
+  "randomEligible": true
+ },
+ {
+  "id": "430",
+  "name": "בית לחם הגלילית",
+  "randomEligible": false
+ },
+ {
+  "id": "751",
+  "name": "בית מאיר",
+  "randomEligible": false
+ },
+ {
+  "id": "784",
+  "name": "בית נחמיה",
+  "randomEligible": false
+ },
+ {
+  "id": "16",
+  "name": "בית ניר",
+  "randomEligible": false
+ },
+ {
+  "id": "672",
+  "name": "בית נקופה",
+  "randomEligible": false
+ },
+ {
+  "id": "202",
+  "name": "בית עובד",
+  "randomEligible": false
+ },
+ {
+  "id": "301",
+  "name": "בית עוזיאל",
+  "randomEligible": false
+ },
+ {
+  "id": "756",
+  "name": "בית עזרא",
+  "randomEligible": false
+ },
+ {
+  "id": "604",
+  "name": "בית עריף",
+  "randomEligible": false
+ },
+ {
+  "id": "212",
+  "name": "בית צבי",
+  "randomEligible": false
+ },
+ {
+  "id": "598",
+  "name": "בית קמה",
+  "randomEligible": false
+ },
+ {
+  "id": "365",
+  "name": "בית קשת",
+  "randomEligible": false
+ },
+ {
+  "id": "848",
+  "name": "בית רבן",
+  "randomEligible": false
+ },
+ {
+  "id": "1162",
+  "name": "בית רימון",
+  "randomEligible": false
  },
  {
   "id": "9200",
-  "name": "בית שאן"
+  "name": "בית שאן",
+  "randomEligible": true
  },
  {
   "id": "2610",
-  "name": "בית שמש"
+  "name": "בית שמש",
+  "randomEligible": true
+ },
+ {
+  "id": "248",
+  "name": "בית שערים",
+  "randomEligible": false
+ },
+ {
+  "id": "747",
+  "name": "בית שקמה",
+  "randomEligible": false
+ },
+ {
+  "id": "252",
+  "name": "ביתן אהרן",
+  "randomEligible": false
  },
  {
   "id": "3780",
-  "name": "ביתר עילית"
+  "name": "ביתר עילית",
+  "randomEligible": true
+ },
+ {
+  "id": "94",
+  "name": "בלפוריה",
+  "randomEligible": false
+ },
+ {
+  "id": "760",
+  "name": "בן זכאי",
+  "randomEligible": false
+ },
+ {
+  "id": "712",
+  "name": "בן עמי",
+  "randomEligible": false
+ },
+ {
+  "id": "1084",
+  "name": "בן שמן (כפר נוער)",
+  "randomEligible": false
+ },
+ {
+  "id": "2013",
+  "name": "בן שמן (מושב)",
+  "randomEligible": false
  },
  {
   "id": "6100",
-  "name": "בני ברק"
+  "name": "בני ברק",
+  "randomEligible": true
+ },
+ {
+  "id": "1368",
+  "name": "בני דקלים",
+  "randomEligible": false
+ },
+ {
+  "id": "592",
+  "name": "בני דרום",
+  "randomEligible": false
+ },
+ {
+  "id": "386",
+  "name": "בני דרור",
+  "randomEligible": false
+ },
+ {
+  "id": "4015",
+  "name": "בני יהודה",
+  "randomEligible": false
+ },
+ {
+  "id": "1363",
+  "name": "בני נצרים",
+  "randomEligible": false
+ },
+ {
+  "id": "448",
+  "name": "בני עטרות",
+  "randomEligible": false
  },
  {
   "id": "1066",
-  "name": "בני עי\"ש"
+  "name": "בני עי\"ש",
+  "randomEligible": true
+ },
+ {
+  "id": "418",
+  "name": "בני ציון",
+  "randomEligible": false
+ },
+ {
+  "id": "588",
+  "name": "בני ראם",
+  "randomEligible": false
+ },
+ {
+  "id": "685",
+  "name": "בניה",
+  "randomEligible": false
  },
  {
   "id": "9800",
-  "name": "בנימינה-גבעת עדה"
+  "name": "בנימינה-גבעת עדה",
+  "randomEligible": true
  },
  {
   "id": "1326",
-  "name": "בסמ\"ה"
+  "name": "בסמ\"ה",
+  "randomEligible": true
  },
  {
   "id": "944",
-  "name": "בסמת טבעון"
+  "name": "בסמת טבעון",
+  "randomEligible": true
  },
  {
   "id": "483",
-  "name": "בענה"
+  "name": "בענה",
+  "randomEligible": true
+ },
+ {
+  "id": "389",
+  "name": "בצרה",
+  "randomEligible": false
+ },
+ {
+  "id": "589",
+  "name": "בצת",
+  "randomEligible": false
+ },
+ {
+  "id": "864",
+  "name": "בקוע",
+  "randomEligible": false
+ },
+ {
+  "id": "3612",
+  "name": "בקעות",
+  "randomEligible": false
+ },
+ {
+  "id": "823",
+  "name": "בר גיורא",
+  "randomEligible": false
+ },
+ {
+  "id": "1191",
+  "name": "בר יוחאי",
+  "randomEligible": false
+ },
+ {
+  "id": "3744",
+  "name": "ברוכין",
+  "randomEligible": false
+ },
+ {
+  "id": "428",
+  "name": "ברור חיל",
+  "randomEligible": false
+ },
+ {
+  "id": "2060",
+  "name": "ברוש",
+  "randomEligible": false
  },
  {
   "id": "3710",
-  "name": "ברכה"
+  "name": "ברכה",
+  "randomEligible": true
+ },
+ {
+  "id": "746",
+  "name": "ברכיה",
+  "randomEligible": false
+ },
+ {
+  "id": "667",
+  "name": "ברעם",
+  "randomEligible": false
+ },
+ {
+  "id": "141",
+  "name": "ברק",
+  "randomEligible": false
+ },
+ {
+  "id": "617",
+  "name": "ברקאי",
+  "randomEligible": false
  },
  {
   "id": "3654",
-  "name": "ברקן"
+  "name": "ברקן",
+  "randomEligible": true
  },
  {
   "id": "2038",
-  "name": "ברקת"
+  "name": "ברקת",
+  "randomEligible": true
+ },
+ {
+  "id": "1323",
+  "name": "בת הדר",
+  "randomEligible": false
+ },
+ {
+  "id": "1361",
+  "name": "בת חן",
+  "randomEligible": false
  },
  {
   "id": "1319",
-  "name": "בת חפר"
+  "name": "בת חפר",
+  "randomEligible": true
  },
  {
   "id": "6200",
-  "name": "בת ים"
+  "name": "בת ים",
+  "randomEligible": true
+ },
+ {
+  "id": "3794",
+  "name": "בת עין",
+  "randomEligible": false
+ },
+ {
+  "id": "33",
+  "name": "בת שלמה",
+  "randomEligible": false
  },
  {
   "id": "1292",
-  "name": "ג'דיידה-מכר"
+  "name": "ג'דיידה-מכר",
+  "randomEligible": true
  },
  {
   "id": "485",
-  "name": "ג'ולס"
+  "name": "ג'ולס",
+  "randomEligible": true
  },
  {
   "id": "627",
-  "name": "ג'לג'וליה"
+  "name": "ג'לג'וליה",
+  "randomEligible": true
+ },
+ {
+  "id": "976",
+  "name": "ג'נאביב (שבט)",
+  "randomEligible": false
  },
  {
   "id": "541",
-  "name": "ג'סר א-זרקא"
+  "name": "ג'סר א-זרקא",
+  "randomEligible": true
  },
  {
   "id": "487",
-  "name": "ג'ש (גוש חלב)"
+  "name": "ג'ש (גוש חלב)",
+  "randomEligible": true
  },
  {
   "id": "628",
-  "name": "ג'ת"
+  "name": "ג'ת",
+  "randomEligible": true
+ },
+ {
+  "id": "872",
+  "name": "גאולי תימן",
+  "randomEligible": false
+ },
+ {
+  "id": "379",
+  "name": "גאולים",
+  "randomEligible": false
+ },
+ {
+  "id": "853",
+  "name": "גאליה",
+  "randomEligible": false
+ },
+ {
+  "id": "352",
+  "name": "גבולות",
+  "randomEligible": false
+ },
+ {
+  "id": "424",
+  "name": "גבים",
+  "randomEligible": false
+ },
+ {
+  "id": "86",
+  "name": "גבע",
+  "randomEligible": false
  },
  {
   "id": "3763",
-  "name": "גבע בנימין"
+  "name": "גבע בנימין",
+  "randomEligible": true
+ },
+ {
+  "id": "683",
+  "name": "גבע כרמל",
+  "randomEligible": false
+ },
+ {
+  "id": "2014",
+  "name": "גבעולים",
+  "randomEligible": false
+ },
+ {
+  "id": "3644",
+  "name": "גבעון החדשה",
+  "randomEligible": false
+ },
+ {
+  "id": "1344",
+  "name": "גבעות בר",
+  "randomEligible": false
  },
  {
   "id": "1293",
-  "name": "גבעת אבני"
+  "name": "גבעת אבני",
+  "randomEligible": true
  },
  {
   "id": "1288",
-  "name": "גבעת אלה"
+  "name": "גבעת אלה",
+  "randomEligible": true
  },
  {
   "id": "147",
-  "name": "גבעת ברנר"
+  "name": "גבעת ברנר",
+  "randomEligible": true
+ },
+ {
+  "id": "870",
+  "name": "גבעת השלושה",
+  "randomEligible": false
  },
  {
   "id": "3730",
-  "name": "גבעת זאב"
+  "name": "גבעת זאב",
+  "randomEligible": true
+ },
+ {
+  "id": "207",
+  "name": "גבעת ח\"ן",
+  "randomEligible": false
+ },
+ {
+  "id": "2018",
+  "name": "גבעת חיים (איחוד)",
+  "randomEligible": false
+ },
+ {
+  "id": "173",
+  "name": "גבעת חיים (מאוחד)",
+  "randomEligible": false
+ },
+ {
+  "id": "4021",
+  "name": "גבעת יואב",
+  "randomEligible": false
+ },
+ {
+  "id": "787",
+  "name": "גבעת יערים",
+  "randomEligible": false
+ },
+ {
+  "id": "919",
+  "name": "גבעת ישעיהו",
+  "randomEligible": false
+ },
+ {
+  "id": "802",
+  "name": "גבעת כ\"ח",
+  "randomEligible": false
+ },
+ {
+  "id": "360",
+  "name": "גבעת ניל\"י",
+  "randomEligible": false
+ },
+ {
+  "id": "703",
+  "name": "גבעת עוז",
+  "randomEligible": false
  },
  {
   "id": "681",
-  "name": "גבעת שמואל"
+  "name": "גבעת שמואל",
+  "randomEligible": true
+ },
+ {
+  "id": "1077",
+  "name": "גבעת שפירא",
+  "randomEligible": false
+ },
+ {
+  "id": "793",
+  "name": "גבעתי",
+  "randomEligible": false
  },
  {
   "id": "6300",
-  "name": "גבעתיים"
+  "name": "גבעתיים",
+  "randomEligible": true
+ },
+ {
+  "id": "342",
+  "name": "גברעם",
+  "randomEligible": false
+ },
+ {
+  "id": "133",
+  "name": "גבת",
+  "randomEligible": false
+ },
+ {
+  "id": "35",
+  "name": "גדות",
+  "randomEligible": false
+ },
+ {
+  "id": "145",
+  "name": "גדיש",
+  "randomEligible": false
+ },
+ {
+  "id": "442",
+  "name": "גדעונה",
+  "randomEligible": false
  },
  {
   "id": "2550",
-  "name": "גדרה"
+  "name": "גדרה",
+  "randomEligible": true
+ },
+ {
+  "id": "852",
+  "name": "גונן",
+  "randomEligible": false
+ },
+ {
+  "id": "755",
+  "name": "גורן",
+  "randomEligible": false
+ },
+ {
+  "id": "1219",
+  "name": "גורנות הגליל",
+  "randomEligible": false
+ },
+ {
+  "id": "457",
+  "name": "גזית",
+  "randomEligible": false
+ },
+ {
+  "id": "370",
+  "name": "גזר",
+  "randomEligible": false
+ },
+ {
+  "id": "706",
+  "name": "גיאה",
+  "randomEligible": false
+ },
+ {
+  "id": "196",
+  "name": "גיבתון",
+  "randomEligible": false
+ },
+ {
+  "id": "1043",
+  "name": "גיזו",
+  "randomEligible": false
+ },
+ {
+  "id": "1204",
+  "name": "גילון",
+  "randomEligible": false
  },
  {
   "id": "736",
-  "name": "גילת"
+  "name": "גילת",
+  "randomEligible": true
+ },
+ {
+  "id": "262",
+  "name": "גינוסר",
+  "randomEligible": false
+ },
+ {
+  "id": "92",
+  "name": "גיניגר",
+  "randomEligible": false
+ },
+ {
+  "id": "863",
+  "name": "גינתון",
+  "randomEligible": false
+ },
+ {
+  "id": "1206",
+  "name": "גיתה",
+  "randomEligible": false
+ },
+ {
+  "id": "3613",
+  "name": "גיתית",
+  "randomEligible": false
+ },
+ {
+  "id": "393",
+  "name": "גלאון",
+  "randomEligible": false
+ },
+ {
+  "id": "3606",
+  "name": "גלגל",
+  "randomEligible": false
+ },
+ {
+  "id": "346",
+  "name": "גליל ים",
+  "randomEligible": false
+ },
+ {
+  "id": "369",
+  "name": "גלעד (אבן יצחק)",
+  "randomEligible": false
+ },
+ {
+  "id": "745",
+  "name": "גמזו",
+  "randomEligible": false
+ },
+ {
+  "id": "1072",
+  "name": "גן הדרום",
+  "randomEligible": false
+ },
+ {
+  "id": "225",
+  "name": "גן השומרון",
+  "randomEligible": false
+ },
+ {
+  "id": "239",
+  "name": "גן חיים",
+  "randomEligible": false
+ },
+ {
+  "id": "734",
+  "name": "גן יאשיה",
+  "randomEligible": false
  },
  {
   "id": "166",
-  "name": "גן יבנה"
+  "name": "גן יבנה",
+  "randomEligible": true
  },
  {
   "id": "1274",
-  "name": "גן נר"
+  "name": "גן נר",
+  "randomEligible": true
+ },
+ {
+  "id": "311",
+  "name": "גן שורק",
+  "randomEligible": false
+ },
+ {
+  "id": "144",
+  "name": "גן שלמה",
+  "randomEligible": false
+ },
+ {
+  "id": "72",
+  "name": "גן שמואל",
+  "randomEligible": false
+ },
+ {
+  "id": "836",
+  "name": "גנות",
+  "randomEligible": false
+ },
+ {
+  "id": "549",
+  "name": "גנות הדר",
+  "randomEligible": false
+ },
+ {
+  "id": "1103",
+  "name": "גני הדר",
+  "randomEligible": false
+ },
+ {
+  "id": "1371",
+  "name": "גני טל",
+  "randomEligible": false
+ },
+ {
+  "id": "862",
+  "name": "גני יוחנן",
+  "randomEligible": false
  },
  {
   "id": "3823",
-  "name": "גני מודיעין"
+  "name": "גני מודיעין",
+  "randomEligible": true
+ },
+ {
+  "id": "218",
+  "name": "גני עם",
+  "randomEligible": false
  },
  {
   "id": "229",
-  "name": "גני תקווה"
+  "name": "גני תקווה",
+  "randomEligible": true
+ },
+ {
+  "id": "842",
+  "name": "געש",
+  "randomEligible": false
+ },
+ {
+  "id": "463",
+  "name": "געתון",
+  "randomEligible": false
+ },
+ {
+  "id": "39",
+  "name": "גפן",
+  "randomEligible": false
+ },
+ {
+  "id": "1129",
+  "name": "גרופית",
+  "randomEligible": false
+ },
+ {
+  "id": "4022",
+  "name": "גשור",
+  "randomEligible": false
+ },
+ {
+  "id": "305",
+  "name": "גשר",
+  "randomEligible": false
  },
  {
   "id": "574",
-  "name": "גשר הזיו"
+  "name": "גשר הזיו",
+  "randomEligible": true
+ },
+ {
+  "id": "340",
+  "name": "גת (קיבוץ)",
+  "randomEligible": false
+ },
+ {
+  "id": "128",
+  "name": "גת רימון",
+  "randomEligible": false
  },
  {
   "id": "494",
-  "name": "דאלית אל-כרמל"
+  "name": "דאלית אל-כרמל",
+  "randomEligible": true
+ },
+ {
+  "id": "146",
+  "name": "דבורה",
+  "randomEligible": false
  },
  {
   "id": "489",
-  "name": "דבורייה"
+  "name": "דבורייה",
+  "randomEligible": true
+ },
+ {
+  "id": "849",
+  "name": "דביר",
+  "randomEligible": false
+ },
+ {
+  "id": "407",
+  "name": "דברת",
+  "randomEligible": false
+ },
+ {
+  "id": "62",
+  "name": "דגניה א'",
+  "randomEligible": false
+ },
+ {
+  "id": "79",
+  "name": "דגניה ב'",
+  "randomEligible": false
+ },
+ {
+  "id": "1067",
+  "name": "דוב\"ב",
+  "randomEligible": false
+ },
+ {
+  "id": "3747",
+  "name": "דולב",
+  "randomEligible": false
+ },
+ {
+  "id": "738",
+  "name": "דור",
+  "randomEligible": false
+ },
+ {
+  "id": "336",
+  "name": "דורות",
+  "randomEligible": false
+ },
+ {
+  "id": "475",
+  "name": "דחי",
+  "randomEligible": false
  },
  {
   "id": "490",
-  "name": "דייר אל-אסד"
+  "name": "דייר אל-אסד",
+  "randomEligible": true
  },
  {
   "id": "492",
-  "name": "דייר חנא"
+  "name": "דייר חנא",
+  "randomEligible": true
  },
  {
   "id": "2200",
-  "name": "דימונה"
+  "name": "דימונה",
+  "randomEligible": true
+ },
+ {
+  "id": "2063",
+  "name": "דישון",
+  "randomEligible": false
+ },
+ {
+  "id": "300",
+  "name": "דלייה",
+  "randomEligible": false
+ },
+ {
+  "id": "431",
+  "name": "דלתון",
+  "randomEligible": false
+ },
+ {
+  "id": "1317",
+  "name": "דמיידה",
+  "randomEligible": false
+ },
+ {
+  "id": "303",
+  "name": "דן",
+  "randomEligible": false
+ },
+ {
+  "id": "302",
+  "name": "דפנה",
+  "randomEligible": false
+ },
+ {
+  "id": "1241",
+  "name": "דקל",
+  "randomEligible": false
+ },
+ {
+  "id": "1349",
+  "name": "דריג'את",
+  "randomEligible": false
+ },
+ {
+  "id": "702",
+  "name": "האון",
+  "randomEligible": false
+ },
+ {
+  "id": "675",
+  "name": "הבונים",
+  "randomEligible": false
+ },
+ {
+  "id": "356",
+  "name": "הגושרים",
+  "randomEligible": false
+ },
+ {
+  "id": "191",
+  "name": "הדר עם",
+  "randomEligible": false
  },
  {
   "id": "9700",
-  "name": "הוד השרון"
+  "name": "הוד השרון",
+  "randomEligible": true
+ },
+ {
+  "id": "726",
+  "name": "הודייה",
+  "randomEligible": false
  },
  {
   "id": "1169",
-  "name": "הוואשלה (שבט)"
+  "name": "הוואשלה (שבט)",
+  "randomEligible": true
  },
  {
   "id": "956",
-  "name": "הוזייל (שבט)"
+  "name": "הוזייל (שבט)",
+  "randomEligible": true
  },
  {
   "id": "1186",
-  "name": "הושעיה"
+  "name": "הושעיה",
+  "randomEligible": true
+ },
+ {
+  "id": "250",
+  "name": "הזורע",
+  "randomEligible": false
+ },
+ {
+  "id": "307",
+  "name": "הזורעים",
+  "randomEligible": false
+ },
+ {
+  "id": "434",
+  "name": "החותרים",
+  "randomEligible": false
+ },
+ {
+  "id": "684",
+  "name": "היוגב",
+  "randomEligible": false
+ },
+ {
+  "id": "1208",
+  "name": "הילה",
+  "randomEligible": false
+ },
+ {
+  "id": "377",
+  "name": "המעפיל",
+  "randomEligible": false
+ },
+ {
+  "id": "677",
+  "name": "הסוללים",
+  "randomEligible": false
+ },
+ {
+  "id": "423",
+  "name": "העוגן",
+  "randomEligible": false
  },
  {
   "id": "3769",
-  "name": "הר אדר"
+  "name": "הר אדר",
+  "randomEligible": true
  },
  {
   "id": "3603",
-  "name": "הר גילה"
+  "name": "הר גילה",
+  "randomEligible": true
+ },
+ {
+  "id": "1261",
+  "name": "הר עמשא",
+  "randomEligible": false
+ },
+ {
+  "id": "464",
+  "name": "הראל",
+  "randomEligible": false
+ },
+ {
+  "id": "1249",
+  "name": "הרדוף",
+  "randomEligible": false
  },
  {
   "id": "6400",
-  "name": "הרצלייה"
+  "name": "הרצלייה",
+  "randomEligible": true
+ },
+ {
+  "id": "1203",
+  "name": "הררית",
+  "randomEligible": false
+ },
+ {
+  "id": "3639",
+  "name": "ורד יריחו",
+  "randomEligible": false
+ },
+ {
+  "id": "1133",
+  "name": "ורדון",
+  "randomEligible": false
+ },
+ {
+  "id": "815",
+  "name": "זבדיאל",
+  "randomEligible": false
+ },
+ {
+  "id": "44",
+  "name": "זוהר",
+  "randomEligible": false
+ },
+ {
+  "id": "584",
+  "name": "זיקים",
+  "randomEligible": false
+ },
+ {
+  "id": "788",
+  "name": "זיתן",
+  "randomEligible": false
  },
  {
   "id": "9300",
-  "name": "זכרון יעקב"
+  "name": "זכרון יעקב",
+  "randomEligible": true
+ },
+ {
+  "id": "799",
+  "name": "זכריה",
+  "randomEligible": false
  },
  {
   "id": "1290",
-  "name": "זמר"
+  "name": "זמר",
+  "randomEligible": true
+ },
+ {
+  "id": "1065",
+  "name": "זמרת",
+  "randomEligible": false
+ },
+ {
+  "id": "816",
+  "name": "זנוח",
+  "randomEligible": false
+ },
+ {
+  "id": "2064",
+  "name": "זרועה",
+  "randomEligible": false
  },
  {
   "id": "975",
-  "name": "זרזיר"
+  "name": "זרזיר",
+  "randomEligible": true
+ },
+ {
+  "id": "818",
+  "name": "זרחיה",
+  "randomEligible": false
+ },
+ {
+  "id": "1321",
+  "name": "ח'ואלד",
+  "randomEligible": false
+ },
+ {
+  "id": "235",
+  "name": "חבצלת השרון",
+  "randomEligible": false
+ },
+ {
+  "id": "1110",
+  "name": "חבר",
+  "randomEligible": false
+ },
+ {
+  "id": "717",
+  "name": "חגור",
+  "randomEligible": false
+ },
+ {
+  "id": "3764",
+  "name": "חגי",
+  "randomEligible": false
+ },
+ {
+  "id": "205",
+  "name": "חגלה",
+  "randomEligible": false
+ },
+ {
+  "id": "4026",
+  "name": "חד-נס",
+  "randomEligible": false
+ },
+ {
+  "id": "618",
+  "name": "חדיד",
+  "randomEligible": false
  },
  {
   "id": "6500",
-  "name": "חדרה"
+  "name": "חדרה",
+  "randomEligible": true
+ },
+ {
+  "id": "160",
+  "name": "חולדה",
+  "randomEligible": false
  },
  {
   "id": "6600",
-  "name": "חולון"
+  "name": "חולון",
+  "randomEligible": true
+ },
+ {
+  "id": "1239",
+  "name": "חולית",
+  "randomEligible": false
+ },
+ {
+  "id": "253",
+  "name": "חולתה",
+  "randomEligible": false
+ },
+ {
+  "id": "662",
+  "name": "חוסן",
+  "randomEligible": false
+ },
+ {
+  "id": "1332",
+  "name": "חוסנייה",
+  "randomEligible": false
+ },
+ {
+  "id": "115",
+  "name": "חופית",
+  "randomEligible": false
+ },
+ {
+  "id": "374",
+  "name": "חוקוק",
+  "randomEligible": false
  },
  {
   "id": "1303",
-  "name": "חורה"
+  "name": "חורה",
+  "randomEligible": true
  },
  {
   "id": "496",
-  "name": "חורפיש"
+  "name": "חורפיש",
+  "randomEligible": true
+ },
+ {
+  "id": "355",
+  "name": "חורשים",
+  "randomEligible": false
+ },
+ {
+  "id": "1047",
+  "name": "חזון",
+  "randomEligible": false
+ },
+ {
+  "id": "219",
+  "name": "חיבת ציון",
+  "randomEligible": false
+ },
+ {
+  "id": "3643",
+  "name": "חיננית",
+  "randomEligible": false
  },
  {
   "id": "4000",
-  "name": "חיפה"
+  "name": "חיפה",
+  "randomEligible": true
+ },
+ {
+  "id": "162",
+  "name": "חירות",
+  "randomEligible": false
+ },
+ {
+  "id": "1272",
+  "name": "חלוץ",
+  "randomEligible": false
+ },
+ {
+  "id": "820",
+  "name": "חלץ",
+  "randomEligible": false
+ },
+ {
+  "id": "801",
+  "name": "חמ\"ד",
+  "randomEligible": false
  },
  {
   "id": "993",
-  "name": "חמאם"
+  "name": "חמאם",
+  "randomEligible": true
+ },
+ {
+  "id": "343",
+  "name": "חמדיה",
+  "randomEligible": false
+ },
+ {
+  "id": "3646",
+  "name": "חמדת",
+  "randomEligible": false
+ },
+ {
+  "id": "3609",
+  "name": "חמרה",
+  "randomEligible": false
+ },
+ {
+  "id": "807",
+  "name": "חניאל",
+  "randomEligible": false
+ },
+ {
+  "id": "280",
+  "name": "חניתה",
+  "randomEligible": false
+ },
+ {
+  "id": "1257",
+  "name": "חנתון",
+  "randomEligible": false
+ },
+ {
+  "id": "4005",
+  "name": "חספין",
+  "randomEligible": false
+ },
+ {
+  "id": "363",
+  "name": "חפץ חיים",
+  "randomEligible": false
+ },
+ {
+  "id": "90",
+  "name": "חפצי-בה",
+  "randomEligible": false
+ },
+ {
+  "id": "700",
+  "name": "חצב",
+  "randomEligible": false
+ },
+ {
+  "id": "13",
+  "name": "חצבה",
+  "randomEligible": false
  },
  {
   "id": "2034",
-  "name": "חצור הגלילית"
+  "name": "חצור הגלילית",
+  "randomEligible": true
+ },
+ {
+  "id": "406",
+  "name": "חצור-אשדוד",
+  "randomEligible": false
+ },
+ {
+  "id": "397",
+  "name": "חצרים",
+  "randomEligible": false
+ },
+ {
+  "id": "422",
+  "name": "חרב לאת",
+  "randomEligible": false
+ },
+ {
+  "id": "1024",
+  "name": "חרוצים",
+  "randomEligible": false
  },
  {
   "id": "1247",
-  "name": "חריש"
+  "name": "חריש",
+  "randomEligible": true
+ },
+ {
+  "id": "3717",
+  "name": "חרמש",
+  "randomEligible": false
+ },
+ {
+  "id": "1209",
+  "name": "חרשים",
+  "randomEligible": false
  },
  {
   "id": "3770",
-  "name": "חשמונאים"
+  "name": "חשמונאים",
+  "randomEligible": true
  },
  {
   "id": "6700",
-  "name": "טבריה"
+  "name": "טבריה",
+  "randomEligible": true
  },
  {
   "id": "962",
-  "name": "טובא-זנגרייה"
+  "name": "טובא-זנגרייה",
+  "randomEligible": true
  },
  {
   "id": "498",
-  "name": "טורעאן"
+  "name": "טורעאן",
+  "randomEligible": true
  },
  {
   "id": "2730",
-  "name": "טייבה"
+  "name": "טייבה",
+  "randomEligible": true
  },
  {
   "id": "497",
-  "name": "טייבה (בעמק)"
+  "name": "טייבה (בעמק)",
+  "randomEligible": true
  },
  {
   "id": "2720",
-  "name": "טירה"
+  "name": "טירה",
+  "randomEligible": true
+ },
+ {
+  "id": "663",
+  "name": "טירת יהודה",
+  "randomEligible": false
  },
  {
   "id": "2100",
-  "name": "טירת כרמל"
+  "name": "טירת כרמל",
+  "randomEligible": true
+ },
+ {
+  "id": "268",
+  "name": "טירת צבי",
+  "randomEligible": false
+ },
+ {
+  "id": "462",
+  "name": "טל שחר",
+  "randomEligible": false
+ },
+ {
+  "id": "1181",
+  "name": "טל-אל",
+  "randomEligible": false
+ },
+ {
+  "id": "1177",
+  "name": "טללים",
+  "randomEligible": false
  },
  {
   "id": "3788",
-  "name": "טלמון"
+  "name": "טלמון",
+  "randomEligible": true
  },
  {
   "id": "8900",
-  "name": "טמרה"
+  "name": "טמרה",
+  "randomEligible": true
  },
  {
   "id": "547",
-  "name": "טמרה (יזרעאל)"
+  "name": "טמרה (יזרעאל)",
+  "randomEligible": true
+ },
+ {
+  "id": "3743",
+  "name": "טנא",
+  "randomEligible": false
+ },
+ {
+  "id": "1214",
+  "name": "טפחות",
+  "randomEligible": false
  },
  {
   "id": "1295",
-  "name": "יאנוח-ג'ת"
+  "name": "יאנוח-ג'ת",
+  "randomEligible": true
+ },
+ {
+  "id": "1232",
+  "name": "יבול",
+  "randomEligible": false
  },
  {
   "id": "46",
-  "name": "יבנאל"
+  "name": "יבנאל",
+  "randomEligible": true
  },
  {
   "id": "2660",
-  "name": "יבנה"
+  "name": "יבנה",
+  "randomEligible": true
  },
  {
   "id": "96",
-  "name": "יגור"
+  "name": "יגור",
+  "randomEligible": true
+ },
+ {
+  "id": "798",
+  "name": "יגל",
+  "randomEligible": false
  },
  {
   "id": "577",
-  "name": "יד בנימין"
+  "name": "יד בנימין",
+  "randomEligible": true
+ },
+ {
+  "id": "1134",
+  "name": "יד השמונה",
+  "randomEligible": false
+ },
+ {
+  "id": "758",
+  "name": "יד חנה",
+  "randomEligible": false
+ },
+ {
+  "id": "358",
+  "name": "יד מרדכי",
+  "randomEligible": false
+ },
+ {
+  "id": "775",
+  "name": "יד נתן",
+  "randomEligible": false
+ },
+ {
+  "id": "64",
+  "name": "יד רמב\"ם",
+  "randomEligible": false
  },
  {
   "id": "9400",
-  "name": "יהוד-מונוסון"
+  "name": "יהוד-מונוסון",
+  "randomEligible": true
+ },
+ {
+  "id": "1158",
+  "name": "יהל",
+  "randomEligible": false
+ },
+ {
+  "id": "2009",
+  "name": "יובל",
+  "randomEligible": false
  },
  {
   "id": "1226",
-  "name": "יובלים"
+  "name": "יובלים",
+  "randomEligible": true
+ },
+ {
+  "id": "1112",
+  "name": "יודפת",
+  "randomEligible": false
+ },
+ {
+  "id": "4007",
+  "name": "יונתן",
+  "randomEligible": false
+ },
+ {
+  "id": "803",
+  "name": "יושיביה",
+  "randomEligible": false
+ },
+ {
+  "id": "452",
+  "name": "יזרעאל",
+  "randomEligible": false
+ },
+ {
+  "id": "409",
+  "name": "יחיעם",
+  "randomEligible": false
+ },
+ {
+  "id": "866",
+  "name": "יטבתה",
+  "randomEligible": false
+ },
+ {
+  "id": "3607",
+  "name": "ייט\"ב",
+  "randomEligible": false
+ },
+ {
+  "id": "811",
+  "name": "יכיני",
+  "randomEligible": false
+ },
+ {
+  "id": "753",
+  "name": "ינוב",
+  "randomEligible": false
+ },
+ {
+  "id": "2011",
+  "name": "ינון",
+  "randomEligible": false
  },
  {
   "id": "29",
-  "name": "יסוד המעלה"
+  "name": "יסוד המעלה",
+  "randomEligible": true
+ },
+ {
+  "id": "440",
+  "name": "יסודות",
+  "randomEligible": false
+ },
+ {
+  "id": "575",
+  "name": "יסעור",
+  "randomEligible": false
+ },
+ {
+  "id": "1138",
+  "name": "יעד",
+  "randomEligible": false
+ },
+ {
+  "id": "1044",
+  "name": "יעף",
+  "randomEligible": false
+ },
+ {
+  "id": "795",
+  "name": "יערה",
+  "randomEligible": false
  },
  {
   "id": "499",
-  "name": "יפיע"
+  "name": "יפיע",
+  "randomEligible": true
+ },
+ {
+  "id": "3566",
+  "name": "יפית",
+  "randomEligible": false
+ },
+ {
+  "id": "134",
+  "name": "יפעת",
+  "randomEligible": false
+ },
+ {
+  "id": "453",
+  "name": "יפתח",
+  "randomEligible": false
+ },
+ {
+  "id": "3749",
+  "name": "יצהר",
+  "randomEligible": false
+ },
+ {
+  "id": "759",
+  "name": "יציץ",
+  "randomEligible": false
+ },
+ {
+  "id": "417",
+  "name": "יקום",
+  "randomEligible": false
  },
  {
   "id": "3647",
-  "name": "יקיר"
+  "name": "יקיר",
+  "randomEligible": true
  },
  {
   "id": "241",
-  "name": "יקנעם (מושבה)"
+  "name": "יקנעם (מושבה)",
+  "randomEligible": true
  },
  {
   "id": "240",
-  "name": "יקנעם עילית"
+  "name": "יקנעם עילית",
+  "randomEligible": true
+ },
+ {
+  "id": "623",
+  "name": "יראון",
+  "randomEligible": false
+ },
+ {
+  "id": "2026",
+  "name": "ירדנה",
+  "randomEligible": false
  },
  {
   "id": "831",
-  "name": "ירוחם"
+  "name": "ירוחם",
+  "randomEligible": true
  },
  {
   "id": "3000",
-  "name": "ירושלים"
+  "name": "ירושלים",
+  "randomEligible": true
+ },
+ {
+  "id": "718",
+  "name": "ירחיב",
+  "randomEligible": false
  },
  {
   "id": "502",
-  "name": "ירכא"
+  "name": "ירכא",
+  "randomEligible": true
+ },
+ {
+  "id": "183",
+  "name": "ירקונה",
+  "randomEligible": false
+ },
+ {
+  "id": "916",
+  "name": "ישע",
+  "randomEligible": false
+ },
+ {
+  "id": "805",
+  "name": "ישעי",
+  "randomEligible": false
+ },
+ {
+  "id": "828",
+  "name": "ישרש",
+  "randomEligible": false
+ },
+ {
+  "id": "1227",
+  "name": "יתד",
+  "randomEligible": false
  },
  {
   "id": "504",
-  "name": "כאבול"
+  "name": "כאבול",
+  "randomEligible": true
  },
  {
   "id": "505",
-  "name": "כאוכב אבו אל-היג'א"
+  "name": "כאוכב אבו אל-היג'א",
+  "randomEligible": true
+ },
+ {
+  "id": "576",
+  "name": "כברי",
+  "randomEligible": false
+ },
+ {
+  "id": "1338",
+  "name": "כדיתה",
+  "randomEligible": false
  },
  {
   "id": "3564",
-  "name": "כוכב השחר"
+  "name": "כוכב השחר",
+  "randomEligible": true
  },
  {
   "id": "1224",
-  "name": "כוכב יאיר"
+  "name": "כוכב יאיר",
+  "randomEligible": true
  },
  {
   "id": "3779",
-  "name": "כוכב יעקב"
+  "name": "כוכב יעקב",
+  "randomEligible": true
+ },
+ {
+  "id": "824",
+  "name": "כוכב מיכאל",
+  "randomEligible": false
+ },
+ {
+  "id": "1252",
+  "name": "כורזים",
+  "randomEligible": false
+ },
+ {
+  "id": "1210",
+  "name": "כחל",
+  "randomEligible": false
+ },
+ {
+  "id": "1367",
+  "name": "כחלה",
+  "randomEligible": false
+ },
+ {
+  "id": "840",
+  "name": "כיסופים",
+  "randomEligible": false
+ },
+ {
+  "id": "1153",
+  "name": "כישור",
+  "randomEligible": false
+ },
+ {
+  "id": "1183",
+  "name": "כליל",
+  "randomEligible": false
+ },
+ {
+  "id": "1229",
+  "name": "כלנית",
+  "randomEligible": false
  },
  {
   "id": "1331",
-  "name": "כמאנה"
+  "name": "כמאנה",
+  "randomEligible": true
+ },
+ {
+  "id": "1291",
+  "name": "כמהין",
+  "randomEligible": false
+ },
+ {
+  "id": "1201",
+  "name": "כמון",
+  "randomEligible": false
+ },
+ {
+  "id": "4028",
+  "name": "כנף",
+  "randomEligible": false
+ },
+ {
+  "id": "63",
+  "name": "כנרת (מושבה)",
+  "randomEligible": false
+ },
+ {
+  "id": "57",
+  "name": "כנרת (קבוצה)",
+  "randomEligible": false
  },
  {
   "id": "1059",
-  "name": "כסיפה"
+  "name": "כסיפה",
+  "randomEligible": true
+ },
+ {
+  "id": "859",
+  "name": "כסלון",
+  "randomEligible": false
  },
  {
   "id": "1296",
-  "name": "כסרא-סמיע"
+  "name": "כסרא-סמיע",
+  "randomEligible": true
  },
  {
   "id": "978",
-  "name": "כעביה-טבאש-חג'אג'רה"
+  "name": "כעביה-טבאש-חג'אג'רה",
+  "randomEligible": true
+ },
+ {
+  "id": "857",
+  "name": "כפר אביב",
+  "randomEligible": false
  },
  {
   "id": "3638",
-  "name": "כפר אדומים"
+  "name": "כפר אדומים",
+  "randomEligible": true
+ },
+ {
+  "id": "364",
+  "name": "כפר אוריה",
+  "randomEligible": false
+ },
+ {
+  "id": "690",
+  "name": "כפר אחים",
+  "randomEligible": false
+ },
+ {
+  "id": "220",
+  "name": "כפר ביאליק",
+  "randomEligible": false
+ },
+ {
+  "id": "177",
+  "name": "כפר ביל\"ו",
+  "randomEligible": false
+ },
+ {
+  "id": "357",
+  "name": "כפר בלום",
+  "randomEligible": false
+ },
+ {
+  "id": "2010",
+  "name": "כפר בן נון",
+  "randomEligible": false
  },
  {
   "id": "633",
-  "name": "כפר ברא"
+  "name": "כפר ברא",
+  "randomEligible": true
+ },
+ {
+  "id": "132",
+  "name": "כפר ברוך",
+  "randomEligible": false
+ },
+ {
+  "id": "106",
+  "name": "כפר גדעון",
+  "randomEligible": false
+ },
+ {
+  "id": "427",
+  "name": "כפר גלים",
+  "randomEligible": false
+ },
+ {
+  "id": "310",
+  "name": "כפר גליקסון",
+  "randomEligible": false
+ },
+ {
+  "id": "76",
+  "name": "כפר גלעדי",
+  "randomEligible": false
+ },
+ {
+  "id": "707",
+  "name": "כפר דניאל",
+  "randomEligible": false
  },
  {
   "id": "3796",
-  "name": "כפר האורנים"
+  "name": "כפר האורנים",
+  "randomEligible": true
+ },
+ {
+  "id": "192",
+  "name": "כפר החורש",
+  "randomEligible": false
+ },
+ {
+  "id": "254",
+  "name": "כפר המכבי",
+  "randomEligible": false
+ },
+ {
+  "id": "582",
+  "name": "כפר הנגיד",
+  "randomEligible": false
+ },
+ {
+  "id": "443",
+  "name": "כפר הנשיא",
+  "randomEligible": false
  },
  {
   "id": "187",
-  "name": "כפר הס"
+  "name": "כפר הס",
+  "randomEligible": true
+ },
+ {
+  "id": "217",
+  "name": "כפר הרא\"ה",
+  "randomEligible": false
+ },
+ {
+  "id": "888",
+  "name": "כפר הרי\"ף",
+  "randomEligible": false
  },
  {
   "id": "190",
-  "name": "כפר ויתקין"
+  "name": "כפר ויתקין",
+  "randomEligible": true
+ },
+ {
+  "id": "320",
+  "name": "כפר ורבורג",
+  "randomEligible": false
  },
  {
   "id": "1263",
-  "name": "כפר ורדים"
+  "name": "כפר ורדים",
+  "randomEligible": true
+ },
+ {
+  "id": "786",
+  "name": "כפר זיתים",
+  "randomEligible": false
  },
  {
   "id": "696",
-  "name": "כפר חב\"ד"
+  "name": "כפר חב\"ד",
+  "randomEligible": true
+ },
+ {
+  "id": "609",
+  "name": "כפר חושן",
+  "randomEligible": false
+ },
+ {
+  "id": "255",
+  "name": "כפר חיטים",
+  "randomEligible": false
+ },
+ {
+  "id": "193",
+  "name": "כפר חיים",
+  "randomEligible": false
+ },
+ {
+  "id": "1297",
+  "name": "כפר חנניה",
+  "randomEligible": false
+ },
+ {
+  "id": "112",
+  "name": "כפר חסידים א'",
+  "randomEligible": false
+ },
+ {
+  "id": "889",
+  "name": "כפר חסידים ב'",
+  "randomEligible": false
+ },
+ {
+  "id": "4004",
+  "name": "כפר חרוב",
+  "randomEligible": false
+ },
+ {
+  "id": "673",
+  "name": "כפר טרומן",
+  "randomEligible": false
  },
  {
   "id": "507",
-  "name": "כפר יאסיף"
+  "name": "כפר יאסיף",
+  "randomEligible": true
+ },
+ {
+  "id": "233",
+  "name": "כפר ידידיה",
+  "randomEligible": false
+ },
+ {
+  "id": "140",
+  "name": "כפר יהושע",
+  "randomEligible": false
  },
  {
   "id": "168",
-  "name": "כפר יונה"
+  "name": "כפר יונה",
+  "randomEligible": true
+ },
+ {
+  "id": "85",
+  "name": "כפר יחזקאל",
+  "randomEligible": false
+ },
+ {
+  "id": "170",
+  "name": "כפר יעבץ",
+  "randomEligible": false
  },
  {
   "id": "508",
-  "name": "כפר כמא"
+  "name": "כפר כמא",
+  "randomEligible": true
  },
  {
   "id": "509",
-  "name": "כפר כנא"
+  "name": "כפר כנא",
+  "randomEligible": true
+ },
+ {
+  "id": "387",
+  "name": "כפר מונש",
+  "randomEligible": false
+ },
+ {
+  "id": "1095",
+  "name": "כפר מימון",
+  "randomEligible": false
+ },
+ {
+  "id": "98",
+  "name": "כפר מל\"ל",
+  "randomEligible": false
  },
  {
   "id": "510",
-  "name": "כפר מנדא"
+  "name": "כפר מנדא",
+  "randomEligible": true
+ },
+ {
+  "id": "274",
+  "name": "כפר מנחם",
+  "randomEligible": false
+ },
+ {
+  "id": "297",
+  "name": "כפר מסריק",
+  "randomEligible": false
  },
  {
   "id": "512",
-  "name": "כפר מצר"
+  "name": "כפר מצר",
+  "randomEligible": true
+ },
+ {
+  "id": "764",
+  "name": "כפר מרדכי",
+  "randomEligible": false
+ },
+ {
+  "id": "316",
+  "name": "כפר נטר",
+  "randomEligible": false
+ },
+ {
+  "id": "345",
+  "name": "כפר סאלד",
+  "randomEligible": false
  },
  {
   "id": "6900",
-  "name": "כפר סבא"
+  "name": "כפר סבא",
+  "randomEligible": true
+ },
+ {
+  "id": "107",
+  "name": "כפר סילבר",
+  "randomEligible": false
+ },
+ {
+  "id": "249",
+  "name": "כפר סירקין",
+  "randomEligible": false
+ },
+ {
+  "id": "845",
+  "name": "כפר עזה",
+  "randomEligible": false
+ },
+ {
+  "id": "3488",
+  "name": "כפר עציון",
+  "randomEligible": false
+ },
+ {
+  "id": "189",
+  "name": "כפר פינס",
+  "randomEligible": false
  },
  {
   "id": "634",
-  "name": "כפר קאסם"
+  "name": "כפר קאסם",
+  "randomEligible": true
+ },
+ {
+  "id": "388",
+  "name": "כפר קיש",
+  "randomEligible": false
  },
  {
   "id": "654",
-  "name": "כפר קרע"
+  "name": "כפר קרע",
+  "randomEligible": true
  },
  {
   "id": "579",
-  "name": "כפר ראש הנקרה"
+  "name": "כפר ראש הנקרה",
+  "randomEligible": true
+ },
+ {
+  "id": "1130",
+  "name": "כפר רוזנואלד (זרעית)",
+  "randomEligible": false
+ },
+ {
+  "id": "295",
+  "name": "כפר רופין",
+  "randomEligible": false
+ },
+ {
+  "id": "1166",
+  "name": "כפר רות",
+  "randomEligible": false
+ },
+ {
+  "id": "605",
+  "name": "כפר שמאי",
+  "randomEligible": false
+ },
+ {
+  "id": "743",
+  "name": "כפר שמואל",
+  "randomEligible": false
  },
  {
   "id": "267",
-  "name": "כפר שמריהו"
+  "name": "כפר שמריהו",
+  "randomEligible": true
  },
  {
   "id": "47",
-  "name": "כפר תבור"
+  "name": "כפר תבור",
+  "randomEligible": true
+ },
+ {
+  "id": "3572",
+  "name": "כפר תפוח",
+  "randomEligible": false
+ },
+ {
+  "id": "1285",
+  "name": "כרכום",
+  "randomEligible": false
+ },
+ {
+  "id": "1094",
+  "name": "כרם ביבנה (ישיבה)",
+  "randomEligible": false
+ },
+ {
+  "id": "664",
+  "name": "כרם בן זמרה",
+  "randomEligible": false
+ },
+ {
+  "id": "580",
+  "name": "כרם מהר\"ל",
+  "randomEligible": false
+ },
+ {
+  "id": "1085",
+  "name": "כרם שלום",
+  "randomEligible": false
  },
  {
   "id": "1264",
-  "name": "כרמי יוסף"
+  "name": "כרמי יוסף",
+  "randomEligible": true
+ },
+ {
+  "id": "3766",
+  "name": "כרמי צור",
+  "randomEligible": false
+ },
+ {
+  "id": "1374",
+  "name": "כרמי קטיף",
+  "randomEligible": false
  },
  {
   "id": "1139",
-  "name": "כרמיאל"
+  "name": "כרמיאל",
+  "randomEligible": true
+ },
+ {
+  "id": "768",
+  "name": "כרמייה",
+  "randomEligible": false
+ },
+ {
+  "id": "1198",
+  "name": "כרמים",
+  "randomEligible": false
+ },
+ {
+  "id": "3656",
+  "name": "כרמל",
+  "randomEligible": false
+ },
+ {
+  "id": "1207",
+  "name": "לבון",
+  "randomEligible": false
+ },
+ {
+  "id": "585",
+  "name": "לביא",
+  "randomEligible": false
+ },
+ {
+  "id": "1230",
+  "name": "לבנים",
+  "randomEligible": false
+ },
+ {
+  "id": "2023",
+  "name": "להב",
+  "randomEligible": false
+ },
+ {
+  "id": "380",
+  "name": "להבות הבשן",
+  "randomEligible": false
+ },
+ {
+  "id": "715",
+  "name": "להבות חביבה",
+  "randomEligible": false
  },
  {
   "id": "1271",
-  "name": "להבים"
+  "name": "להבים",
+  "randomEligible": true
  },
  {
   "id": "7000",
-  "name": "לוד"
+  "name": "לוד",
+  "randomEligible": true
+ },
+ {
+  "id": "52",
+  "name": "לוזית",
+  "randomEligible": false
+ },
+ {
+  "id": "595",
+  "name": "לוחמי הגיטאות",
+  "randomEligible": false
+ },
+ {
+  "id": "1171",
+  "name": "לוטם",
+  "randomEligible": false
+ },
+ {
+  "id": "1255",
+  "name": "לוטן",
+  "randomEligible": false
+ },
+ {
+  "id": "674",
+  "name": "לימן",
+  "randomEligible": false
+ },
+ {
+  "id": "24",
+  "name": "לכיש",
+  "randomEligible": false
  },
  {
   "id": "1310",
-  "name": "לפיד"
+  "name": "לפיד",
+  "randomEligible": true
+ },
+ {
+  "id": "1173",
+  "name": "לפידות",
+  "randomEligible": false
  },
  {
   "id": "1060",
-  "name": "לקיה"
+  "name": "לקיה",
+  "randomEligible": true
+ },
+ {
+  "id": "2055",
+  "name": "מאור",
+  "randomEligible": false
+ },
+ {
+  "id": "102",
+  "name": "מאיר שפיה",
+  "randomEligible": false
+ },
+ {
+  "id": "771",
+  "name": "מבוא ביתר",
+  "randomEligible": false
+ },
+ {
+  "id": "3569",
+  "name": "מבוא דותן",
+  "randomEligible": false
  },
  {
   "id": "3709",
-  "name": "מבוא חורון"
+  "name": "מבוא חורון",
+  "randomEligible": true
+ },
+ {
+  "id": "4204",
+  "name": "מבוא חמה",
+  "randomEligible": false
+ },
+ {
+  "id": "1141",
+  "name": "מבוא מודיעים",
+  "randomEligible": false
+ },
+ {
+  "id": "1080",
+  "name": "מבועים",
+  "randomEligible": false
+ },
+ {
+  "id": "829",
+  "name": "מבטחים",
+  "randomEligible": false
+ },
+ {
+  "id": "573",
+  "name": "מבקיעים",
+  "randomEligible": false
  },
  {
   "id": "1015",
-  "name": "מבשרת ציון"
+  "name": "מבשרת ציון",
+  "randomEligible": true
  },
  {
   "id": "516",
-  "name": "מג'ד אל-כרום"
+  "name": "מג'ד אל-כרום",
+  "randomEligible": true
+ },
+ {
+  "id": "4201",
+  "name": "מג'דל שמס",
+  "randomEligible": false
  },
  {
   "id": "481",
-  "name": "מגאר"
+  "name": "מגאר",
+  "randomEligible": true
+ },
+ {
+  "id": "689",
+  "name": "מגדים",
+  "randomEligible": false
  },
  {
   "id": "65",
-  "name": "מגדל"
+  "name": "מגדל",
+  "randomEligible": true
  },
  {
   "id": "874",
-  "name": "מגדל העמק"
+  "name": "מגדל העמק",
+  "randomEligible": true
+ },
+ {
+  "id": "3561",
+  "name": "מגדל עוז",
+  "randomEligible": false
+ },
+ {
+  "id": "3751",
+  "name": "מגדלים",
+  "randomEligible": false
+ },
+ {
+  "id": "586",
+  "name": "מגידו",
+  "randomEligible": false
+ },
+ {
+  "id": "375",
+  "name": "מגל",
+  "randomEligible": false
+ },
+ {
+  "id": "695",
+  "name": "מגן",
+  "randomEligible": false
+ },
+ {
+  "id": "1155",
+  "name": "מגן שאול",
+  "randomEligible": false
+ },
+ {
+  "id": "722",
+  "name": "מגשימים",
+  "randomEligible": false
+ },
+ {
+  "id": "2029",
+  "name": "מדרך עוז",
+  "randomEligible": false
  },
  {
   "id": "1140",
-  "name": "מדרשת בן גוריון"
+  "name": "מדרשת בן גוריון",
+  "randomEligible": true
  },
  {
   "id": "3797",
-  "name": "מודיעין עילית"
+  "name": "מודיעין עילית",
+  "randomEligible": true
  },
  {
   "id": "1200",
-  "name": "מודיעין-מכבים-רעות"
+  "name": "מודיעין-מכבים-רעות",
+  "randomEligible": true
+ },
+ {
+  "id": "269",
+  "name": "מולדת",
+  "randomEligible": false
+ },
+ {
+  "id": "208",
+  "name": "מוצא עילית",
+  "randomEligible": false
  },
  {
   "id": "635",
-  "name": "מוקייבלה"
+  "name": "מוקייבלה",
+  "randomEligible": true
+ },
+ {
+  "id": "1163",
+  "name": "מורן",
+  "randomEligible": false
  },
  {
   "id": "1178",
-  "name": "מורשת"
+  "name": "מורשת",
+  "randomEligible": true
+ },
+ {
+  "id": "606",
+  "name": "מזור",
+  "randomEligible": false
  },
  {
   "id": "28",
-  "name": "מזכרת בתיה"
+  "name": "מזכרת בתיה",
+  "randomEligible": true
+ },
+ {
+  "id": "104",
+  "name": "מזרע",
+  "randomEligible": false
  },
  {
   "id": "517",
-  "name": "מזרעה"
+  "name": "מזרעה",
+  "randomEligible": true
+ },
+ {
+  "id": "3599",
+  "name": "מחולה",
+  "randomEligible": false
+ },
+ {
+  "id": "1411",
+  "name": "מחנה הילה*",
+  "randomEligible": false
+ },
+ {
+  "id": "1418",
+  "name": "מחנה טלי*",
+  "randomEligible": false
+ },
+ {
+  "id": "1413",
+  "name": "מחנה יהודית*",
+  "randomEligible": false
+ },
+ {
+  "id": "1416",
+  "name": "מחנה יוכבד*",
+  "randomEligible": false
+ },
+ {
+  "id": "1415",
+  "name": "מחנה יפה*",
+  "randomEligible": false
+ },
+ {
+  "id": "1414",
+  "name": "מחנה מרים*",
+  "randomEligible": false
+ },
+ {
+  "id": "1412",
+  "name": "מחנה תל נוף*",
+  "randomEligible": false
+ },
+ {
+  "id": "308",
+  "name": "מחניים",
+  "randomEligible": false
+ },
+ {
+  "id": "776",
+  "name": "מחסיה",
+  "randomEligible": false
  },
  {
   "id": "43",
-  "name": "מטולה"
+  "name": "מטולה",
+  "randomEligible": true
+ },
+ {
+  "id": "822",
+  "name": "מטע",
+  "randomEligible": false
+ },
+ {
+  "id": "1128",
+  "name": "מי עמי",
+  "randomEligible": false
+ },
+ {
+  "id": "2054",
+  "name": "מיטב",
+  "randomEligible": false
  },
  {
   "id": "649",
-  "name": "מייסר"
+  "name": "מייסר",
+  "randomEligible": true
+ },
+ {
+  "id": "4019",
+  "name": "מיצר",
+  "randomEligible": false
+ },
+ {
+  "id": "1282",
+  "name": "מירב",
+  "randomEligible": false
+ },
+ {
+  "id": "607",
+  "name": "מירון",
+  "randomEligible": false
+ },
+ {
+  "id": "731",
+  "name": "מישר",
+  "randomEligible": false
  },
  {
   "id": "1268",
-  "name": "מיתר"
+  "name": "מיתר",
+  "randomEligible": true
+ },
+ {
+  "id": "3614",
+  "name": "מכורה",
+  "randomEligible": false
+ },
+ {
+  "id": "1343",
+  "name": "מכחול",
+  "randomEligible": false
  },
  {
   "id": "382",
-  "name": "מכמורת"
+  "name": "מכמורת",
+  "randomEligible": true
+ },
+ {
+  "id": "1202",
+  "name": "מכמנים",
+  "randomEligible": false
+ },
+ {
+  "id": "164",
+  "name": "מלאה",
+  "randomEligible": false
+ },
+ {
+  "id": "2044",
+  "name": "מלילות",
+  "randomEligible": false
+ },
+ {
+  "id": "596",
+  "name": "מלכייה",
+  "randomEligible": false
+ },
+ {
+  "id": "2030",
+  "name": "מנוחה",
+  "randomEligible": false
+ },
+ {
+  "id": "1174",
+  "name": "מנוף",
+  "randomEligible": false
+ },
+ {
+  "id": "1205",
+  "name": "מנות",
+  "randomEligible": false
+ },
+ {
+  "id": "48",
+  "name": "מנחמיה",
+  "randomEligible": false
+ },
+ {
+  "id": "347",
+  "name": "מנרה",
+  "randomEligible": false
+ },
+ {
+  "id": "994",
+  "name": "מנשית זבדה",
+  "randomEligible": false
+ },
+ {
+  "id": "1258",
+  "name": "מסד",
+  "randomEligible": false
+ },
+ {
+  "id": "263",
+  "name": "מסדה",
+  "randomEligible": false
+ },
+ {
+  "id": "298",
+  "name": "מסילות",
+  "randomEligible": false
+ },
+ {
+  "id": "742",
+  "name": "מסילת ציון",
+  "randomEligible": false
+ },
+ {
+  "id": "748",
+  "name": "מסלול",
+  "randomEligible": false
+ },
+ {
+  "id": "4203",
+  "name": "מסעדה",
+  "randomEligible": false
  },
  {
   "id": "939",
-  "name": "מסעודין אל-עזאזמה (שבט)"
+  "name": "מסעודין אל-עזאזמה (שבט)",
+  "randomEligible": true
+ },
+ {
+  "id": "197",
+  "name": "מעברות",
+  "randomEligible": false
  },
  {
   "id": "1082",
-  "name": "מעגלים"
+  "name": "מעגלים",
+  "randomEligible": true
+ },
+ {
+  "id": "678",
+  "name": "מעגן",
+  "randomEligible": false
  },
  {
   "id": "694",
-  "name": "מעגן מיכאל"
+  "name": "מעגן מיכאל",
+  "randomEligible": true
+ },
+ {
+  "id": "272",
+  "name": "מעוז חיים",
+  "randomEligible": false
+ },
+ {
+  "id": "3657",
+  "name": "מעון",
+  "randomEligible": false
+ },
+ {
+  "id": "570",
+  "name": "מעונה",
+  "randomEligible": false
+ },
+ {
+  "id": "416",
+  "name": "מעיין ברוך",
+  "randomEligible": false
+ },
+ {
+  "id": "290",
+  "name": "מעיין צבי",
+  "randomEligible": false
  },
  {
   "id": "518",
-  "name": "מעיליא"
+  "name": "מעיליא",
+  "randomEligible": true
  },
  {
   "id": "3616",
-  "name": "מעלה אדומים"
+  "name": "מעלה אדומים",
+  "randomEligible": true
  },
  {
   "id": "3608",
-  "name": "מעלה אפרים"
+  "name": "מעלה אפרים",
+  "randomEligible": true
+ },
+ {
+  "id": "1127",
+  "name": "מעלה גלבוע",
+  "randomEligible": false
+ },
+ {
+  "id": "4008",
+  "name": "מעלה גמלא",
+  "randomEligible": false
+ },
+ {
+  "id": "286",
+  "name": "מעלה החמישה",
+  "randomEligible": false
+ },
+ {
+  "id": "3752",
+  "name": "מעלה לבונה",
+  "randomEligible": false
  },
  {
   "id": "3651",
-  "name": "מעלה מכמש"
+  "name": "מעלה מכמש",
+  "randomEligible": true
  },
  {
   "id": "1327",
-  "name": "מעלה עירון"
+  "name": "מעלה עירון",
+  "randomEligible": true
+ },
+ {
+  "id": "3653",
+  "name": "מעלה עמוס",
+  "randomEligible": false
  },
  {
   "id": "1063",
-  "name": "מעלות-תרשיחא"
+  "name": "מעלות-תרשיחא",
+  "randomEligible": true
+ },
+ {
+  "id": "344",
+  "name": "מענית",
+  "randomEligible": false
+ },
+ {
+  "id": "230",
+  "name": "מעש",
+  "randomEligible": false
+ },
+ {
+  "id": "668",
+  "name": "מפלסים",
+  "randomEligible": false
+ },
+ {
+  "id": "3745",
+  "name": "מצדות יהודה",
+  "randomEligible": false
+ },
+ {
+  "id": "325",
+  "name": "מצובה",
+  "randomEligible": false
+ },
+ {
+  "id": "757",
+  "name": "מצליח",
+  "randomEligible": false
+ },
+ {
+  "id": "58",
+  "name": "מצפה",
+  "randomEligible": false
+ },
+ {
+  "id": "1222",
+  "name": "מצפה אבי\"ב",
+  "randomEligible": false
+ },
+ {
+  "id": "1370",
+  "name": "מצפה אילן",
+  "randomEligible": false
  },
  {
   "id": "3576",
-  "name": "מצפה יריחו"
+  "name": "מצפה יריחו",
+  "randomEligible": true
+ },
+ {
+  "id": "1190",
+  "name": "מצפה נטופה",
+  "randomEligible": false
  },
  {
   "id": "99",
-  "name": "מצפה רמון"
+  "name": "מצפה רמון",
+  "randomEligible": true
+ },
+ {
+  "id": "3610",
+  "name": "מצפה שלם",
+  "randomEligible": false
+ },
+ {
+  "id": "648",
+  "name": "מצר",
+  "randomEligible": false
+ },
+ {
+  "id": "22",
+  "name": "מקווה ישראל",
+  "randomEligible": false
+ },
+ {
+  "id": "843",
+  "name": "מרגליות",
+  "randomEligible": false
+ },
+ {
+  "id": "4101",
+  "name": "מרום גולן",
+  "randomEligible": false
+ },
+ {
+  "id": "1340",
+  "name": "מרחב עם",
+  "randomEligible": false
+ },
+ {
+  "id": "97",
+  "name": "מרחביה (מושב)",
+  "randomEligible": false
+ },
+ {
+  "id": "66",
+  "name": "מרחביה (קיבוץ)",
+  "randomEligible": false
  },
  {
   "id": "1098",
-  "name": "מרכז שפירא"
+  "name": "מרכז שפירא",
+  "randomEligible": true
+ },
+ {
+  "id": "421",
+  "name": "משאבי שדה",
+  "randomEligible": false
+ },
+ {
+  "id": "765",
+  "name": "משגב דב",
+  "randomEligible": false
+ },
+ {
+  "id": "378",
+  "name": "משגב עם",
+  "randomEligible": false
  },
  {
   "id": "520",
-  "name": "משהד"
+  "name": "משהד",
+  "randomEligible": true
+ },
+ {
+  "id": "3605",
+  "name": "משואה",
+  "randomEligible": false
+ },
+ {
+  "id": "620",
+  "name": "משואות יצחק",
+  "randomEligible": false
+ },
+ {
+  "id": "3785",
+  "name": "משכיות",
+  "randomEligible": false
+ },
+ {
+  "id": "670",
+  "name": "משמר איילון",
+  "randomEligible": false
+ },
+ {
+  "id": "563",
+  "name": "משמר דוד",
+  "randomEligible": false
+ },
+ {
+  "id": "732",
+  "name": "משמר הירדן",
+  "randomEligible": false
+ },
+ {
+  "id": "395",
+  "name": "משמר הנגב",
+  "randomEligible": false
+ },
+ {
+  "id": "130",
+  "name": "משמר העמק",
+  "randomEligible": false
+ },
+ {
+  "id": "729",
+  "name": "משמר השבעה",
+  "randomEligible": false
+ },
+ {
+  "id": "194",
+  "name": "משמר השרון",
+  "randomEligible": false
+ },
+ {
+  "id": "213",
+  "name": "משמרות",
+  "randomEligible": false
+ },
+ {
+  "id": "425",
+  "name": "משמרת",
+  "randomEligible": false
+ },
+ {
+  "id": "791",
+  "name": "משען",
+  "randomEligible": false
  },
  {
   "id": "1315",
-  "name": "מתן"
+  "name": "מתן",
+  "randomEligible": true
+ },
+ {
+  "id": "1184",
+  "name": "מתת",
+  "randomEligible": false
+ },
+ {
+  "id": "3648",
+  "name": "מתתיהו",
+  "randomEligible": false
+ },
+ {
+  "id": "4551",
+  "name": "נאות גולן",
+  "randomEligible": false
+ },
+ {
+  "id": "1124",
+  "name": "נאות הכיכר",
+  "randomEligible": false
+ },
+ {
+  "id": "408",
+  "name": "נאות מרדכי",
+  "randomEligible": false
+ },
+ {
+  "id": "1197",
+  "name": "נאות סמדר",
+  "randomEligible": false
  },
  {
   "id": "524",
-  "name": "נאעורה"
+  "name": "נאעורה",
+  "randomEligible": true
+ },
+ {
+  "id": "396",
+  "name": "נבטים",
+  "randomEligible": false
+ },
+ {
+  "id": "315",
+  "name": "נגבה",
+  "randomEligible": false
+ },
+ {
+  "id": "3724",
+  "name": "נגוהות",
+  "randomEligible": false
+ },
+ {
+  "id": "309",
+  "name": "נהורה",
+  "randomEligible": false
+ },
+ {
+  "id": "80",
+  "name": "נהלל",
+  "randomEligible": false
  },
  {
   "id": "9100",
-  "name": "נהרייה"
+  "name": "נהרייה",
+  "randomEligible": true
+ },
+ {
+  "id": "4304",
+  "name": "נוב",
+  "randomEligible": false
+ },
+ {
+  "id": "55",
+  "name": "נוגה",
+  "randomEligible": false
+ },
+ {
+  "id": "1366",
+  "name": "נווה",
+  "randomEligible": false
+ },
+ {
+  "id": "590",
+  "name": "נווה אור",
+  "randomEligible": false
+ },
+ {
+  "id": "4303",
+  "name": "נווה אטי\"ב",
+  "randomEligible": false
+ },
+ {
+  "id": "405",
+  "name": "נווה אילן",
+  "randomEligible": false
+ },
+ {
+  "id": "296",
+  "name": "נווה איתן",
+  "randomEligible": false
  },
  {
   "id": "3725",
-  "name": "נווה דניאל"
+  "name": "נווה דניאל",
+  "randomEligible": true
+ },
+ {
+  "id": "1057",
+  "name": "נווה זוהר",
+  "randomEligible": false
+ },
+ {
+  "id": "1314",
+  "name": "נווה זיו",
+  "randomEligible": false
+ },
+ {
+  "id": "312",
+  "name": "נווה ים",
+  "randomEligible": false
+ },
+ {
+  "id": "686",
+  "name": "נווה ימין",
+  "randomEligible": false
+ },
+ {
+  "id": "858",
+  "name": "נווה ירק",
+  "randomEligible": false
+ },
+ {
+  "id": "827",
+  "name": "נווה מבטח",
+  "randomEligible": false
+ },
+ {
+  "id": "1071",
+  "name": "נווה מיכאל",
+  "randomEligible": false
+ },
+ {
+  "id": "3573",
+  "name": "נווה צוף",
+  "randomEligible": false
+ },
+ {
+  "id": "1259",
+  "name": "נווה שלום",
+  "randomEligible": false
+ },
+ {
+  "id": "15",
+  "name": "נועם",
+  "randomEligible": false
  },
  {
   "id": "1333",
-  "name": "נוף איילון"
+  "name": "נוף איילון",
+  "randomEligible": true
  },
  {
   "id": "1061",
-  "name": "נוף הגליל"
+  "name": "נוף הגליל",
+  "randomEligible": true
+ },
+ {
+  "id": "3790",
+  "name": "נופים",
+  "randomEligible": false
  },
  {
   "id": "1284",
-  "name": "נופית"
+  "name": "נופית",
+  "randomEligible": true
+ },
+ {
+  "id": "257",
+  "name": "נופך",
+  "randomEligible": false
  },
  {
   "id": "3726",
-  "name": "נוקדים"
+  "name": "נוקדים",
+  "randomEligible": true
  },
  {
   "id": "447",
-  "name": "נורדייה"
+  "name": "נורדייה",
+  "randomEligible": true
+ },
+ {
+  "id": "833",
+  "name": "נורית",
+  "randomEligible": false
+ },
+ {
+  "id": "59",
+  "name": "נחושה",
+  "randomEligible": false
+ },
+ {
+  "id": "844",
+  "name": "נחל עוז",
+  "randomEligible": false
+ },
+ {
+  "id": "2045",
+  "name": "נחלה",
+  "randomEligible": false
+ },
+ {
+  "id": "3767",
+  "name": "נחליאל",
+  "randomEligible": false
+ },
+ {
+  "id": "449",
+  "name": "נחלים",
+  "randomEligible": false
+ },
+ {
+  "id": "809",
+  "name": "נחם",
+  "randomEligible": false
  },
  {
   "id": "522",
-  "name": "נחף"
+  "name": "נחף",
+  "randomEligible": true
+ },
+ {
+  "id": "433",
+  "name": "נחשולים",
+  "randomEligible": false
+ },
+ {
+  "id": "777",
+  "name": "נחשון",
+  "randomEligible": false
+ },
+ {
+  "id": "705",
+  "name": "נחשונים",
+  "randomEligible": false
+ },
+ {
+  "id": "1147",
+  "name": "נטועה",
+  "randomEligible": false
+ },
+ {
+  "id": "4014",
+  "name": "נטור",
+  "randomEligible": false
+ },
+ {
+  "id": "1369",
+  "name": "נטע",
+  "randomEligible": false
+ },
+ {
+  "id": "174",
+  "name": "נטעים",
+  "randomEligible": false
+ },
+ {
+  "id": "1254",
+  "name": "נטף",
+  "randomEligible": false
  },
  {
   "id": "523",
-  "name": "ניין"
+  "name": "ניין",
+  "randomEligible": true
  },
  {
   "id": "3655",
-  "name": "ניל\"י"
+  "name": "ניל\"י",
+  "randomEligible": true
  },
  {
   "id": "351",
-  "name": "ניצן"
+  "name": "ניצן",
+  "randomEligible": true
+ },
+ {
+  "id": "1419",
+  "name": "ניצן ב'",
+  "randomEligible": false
+ },
+ {
+  "id": "1195",
+  "name": "ניצנה (קהילת חינוך)",
+  "randomEligible": false
+ },
+ {
+  "id": "1280",
+  "name": "ניצני סיני",
+  "randomEligible": false
+ },
+ {
+  "id": "851",
+  "name": "ניצני עוז",
+  "randomEligible": false
+ },
+ {
+  "id": "359",
+  "name": "ניצנים",
+  "randomEligible": false
+ },
+ {
+  "id": "808",
+  "name": "ניר אליהו",
+  "randomEligible": false
+ },
+ {
+  "id": "553",
+  "name": "ניר בנים",
+  "randomEligible": false
+ },
+ {
+  "id": "720",
+  "name": "ניר גלים",
+  "randomEligible": false
+ },
+ {
+  "id": "256",
+  "name": "ניר דוד (תל עמל)",
+  "randomEligible": false
+ },
+ {
+  "id": "11",
+  "name": "ניר ח\"ן",
+  "randomEligible": false
+ },
+ {
+  "id": "165",
+  "name": "ניר יפה",
+  "randomEligible": false
+ },
+ {
+  "id": "402",
+  "name": "ניר יצחק",
+  "randomEligible": false
+ },
+ {
+  "id": "699",
+  "name": "ניר ישראל",
+  "randomEligible": false
+ },
+ {
+  "id": "2047",
+  "name": "ניר משה",
+  "randomEligible": false
+ },
+ {
+  "id": "69",
+  "name": "ניר עוז",
+  "randomEligible": false
+ },
+ {
+  "id": "348",
+  "name": "ניר עם",
+  "randomEligible": false
+ },
+ {
+  "id": "769",
+  "name": "ניר עציון",
+  "randomEligible": false
+ },
+ {
+  "id": "2048",
+  "name": "ניר עקיבא",
+  "randomEligible": false
+ },
+ {
+  "id": "331",
+  "name": "ניר צבי",
+  "randomEligible": false
+ },
+ {
+  "id": "602",
+  "name": "נירים",
+  "randomEligible": false
+ },
+ {
+  "id": "1236",
+  "name": "נירית",
+  "randomEligible": false
+ },
+ {
+  "id": "825",
+  "name": "נס הרים",
+  "randomEligible": false
+ },
+ {
+  "id": "1143",
+  "name": "נס עמים",
+  "randomEligible": false
  },
  {
   "id": "7200",
-  "name": "נס ציונה"
+  "name": "נס ציונה",
+  "randomEligible": true
+ },
+ {
+  "id": "186",
+  "name": "נעורים",
+  "randomEligible": false
  },
  {
   "id": "3787",
-  "name": "נעלה"
+  "name": "נעלה",
+  "randomEligible": true
+ },
+ {
+  "id": "3713",
+  "name": "נעמ\"ה",
+  "randomEligible": false
  },
  {
   "id": "158",
-  "name": "נען"
+  "name": "נען",
+  "randomEligible": true
+ },
+ {
+  "id": "1041",
+  "name": "נצאצרה (שבט)",
+  "randomEligible": false
+ },
+ {
+  "id": "1372",
+  "name": "נצר חזני",
+  "randomEligible": false
+ },
+ {
+  "id": "435",
+  "name": "נצר סרני",
+  "randomEligible": false
  },
  {
   "id": "7300",
-  "name": "נצרת"
+  "name": "נצרת",
+  "randomEligible": true
  },
  {
   "id": "2500",
-  "name": "נשר"
+  "name": "נשר",
+  "randomEligible": true
+ },
+ {
+  "id": "3555",
+  "name": "נתיב הגדוד",
+  "randomEligible": false
+ },
+ {
+  "id": "693",
+  "name": "נתיב הל\"ה",
+  "randomEligible": false
+ },
+ {
+  "id": "1242",
+  "name": "נתיב העשרה",
+  "randomEligible": false
+ },
+ {
+  "id": "792",
+  "name": "נתיב השיירה",
+  "randomEligible": false
  },
  {
   "id": "246",
-  "name": "נתיבות"
+  "name": "נתיבות",
+  "randomEligible": true
  },
  {
   "id": "7400",
-  "name": "נתניה"
+  "name": "נתניה",
+  "randomEligible": true
  },
  {
   "id": "525",
-  "name": "סאג'ור"
+  "name": "סאג'ור",
+  "randomEligible": true
+ },
+ {
+  "id": "578",
+  "name": "סאסא",
+  "randomEligible": false
  },
  {
   "id": "587",
-  "name": "סביון"
+  "name": "סביון",
+  "randomEligible": true
+ },
+ {
+  "id": "2046",
+  "name": "סגולה",
+  "randomEligible": false
+ },
+ {
+  "id": "942",
+  "name": "סואעד (חמרייה)*",
+  "randomEligible": false
  },
  {
   "id": "526",
-  "name": "סולם"
+  "name": "סולם",
+  "randomEligible": true
+ },
+ {
+  "id": "3756",
+  "name": "סוסיה",
+  "randomEligible": false
+ },
+ {
+  "id": "1238",
+  "name": "סופה",
+  "randomEligible": false
  },
  {
   "id": "7500",
-  "name": "סח'נין"
+  "name": "סח'נין",
+  "randomEligible": true
+ },
+ {
+  "id": "1170",
+  "name": "סייד (שבט)",
+  "randomEligible": false
  },
  {
   "id": "1245",
-  "name": "סלמה"
+  "name": "סלמה",
+  "randomEligible": true
+ },
+ {
+  "id": "3567",
+  "name": "סלעית",
+  "randomEligible": false
+ },
+ {
+  "id": "1156",
+  "name": "סמר",
+  "randomEligible": false
+ },
+ {
+  "id": "3777",
+  "name": "סנסנה",
+  "randomEligible": false
+ },
+ {
+  "id": "419",
+  "name": "סעד",
+  "randomEligible": false
+ },
+ {
+  "id": "1360",
+  "name": "סעוה",
+  "randomEligible": false
+ },
+ {
+  "id": "454",
+  "name": "סער",
+  "randomEligible": false
+ },
+ {
+  "id": "1176",
+  "name": "ספיר",
+  "randomEligible": false
+ },
+ {
+  "id": "610",
+  "name": "סתרייה",
+  "randomEligible": false
  },
  {
   "id": "4501",
-  "name": "ע'ג'ר"
+  "name": "ע'ג'ר",
+  "randomEligible": true
+ },
+ {
+  "id": "892",
+  "name": "עבדון",
+  "randomEligible": false
+ },
+ {
+  "id": "376",
+  "name": "עברון",
+  "randomEligible": false
+ },
+ {
+  "id": "794",
+  "name": "עגור",
+  "randomEligible": false
  },
  {
   "id": "1199",
-  "name": "עדי"
+  "name": "עדי",
+  "randomEligible": true
+ },
+ {
+  "id": "2035",
+  "name": "עדנים",
+  "randomEligible": false
+ },
+ {
+  "id": "826",
+  "name": "עוזה",
+  "randomEligible": false
  },
  {
   "id": "528",
-  "name": "עוזייר"
+  "name": "עוזייר",
+  "randomEligible": true
+ },
+ {
+  "id": "737",
+  "name": "עולש",
+  "randomEligible": false
  },
  {
   "id": "666",
-  "name": "עומר"
+  "name": "עומר",
+  "randomEligible": true
+ },
+ {
+  "id": "810",
+  "name": "עופר",
+  "randomEligible": false
+ },
+ {
+  "id": "32",
+  "name": "עוצם",
+  "randomEligible": false
+ },
+ {
+  "id": "957",
+  "name": "עוקבי (בנו עוקבה) (שבט)",
+  "randomEligible": false
+ },
+ {
+  "id": "1149",
+  "name": "עזר",
+  "randomEligible": false
+ },
+ {
+  "id": "837",
+  "name": "עזריאל",
+  "randomEligible": false
+ },
+ {
+  "id": "711",
+  "name": "עזריה",
+  "randomEligible": false
+ },
+ {
+  "id": "817",
+  "name": "עזריקם",
+  "randomEligible": false
+ },
+ {
+  "id": "969",
+  "name": "עטאוונה (שבט)",
+  "randomEligible": false
+ },
+ {
+  "id": "3658",
+  "name": "עטרת",
+  "randomEligible": false
+ },
+ {
+  "id": "1175",
+  "name": "עידן",
+  "randomEligible": false
  },
  {
   "id": "530",
-  "name": "עיילבון"
+  "name": "עיילבון",
+  "randomEligible": true
+ },
+ {
+  "id": "156",
+  "name": "עיינות",
+  "randomEligible": false
  },
  {
   "id": "511",
-  "name": "עילוט"
+  "name": "עילוט",
+  "randomEligible": true
+ },
+ {
+  "id": "687",
+  "name": "עין איילה",
+  "randomEligible": false
+ },
+ {
+  "id": "546",
+  "name": "עין אל-אסד",
+  "randomEligible": false
+ },
+ {
+  "id": "273",
+  "name": "עין גב",
+  "randomEligible": false
+ },
+ {
+  "id": "2042",
+  "name": "עין גדי",
+  "randomEligible": false
+ },
+ {
+  "id": "436",
+  "name": "עין דור",
+  "randomEligible": false
+ },
+ {
+  "id": "1240",
+  "name": "עין הבשור",
+  "randomEligible": false
+ },
+ {
+  "id": "74",
+  "name": "עין הוד",
+  "randomEligible": false
+ },
+ {
+  "id": "167",
+  "name": "עין החורש",
+  "randomEligible": false
+ },
+ {
+  "id": "289",
+  "name": "עין המפרץ",
+  "randomEligible": false
+ },
+ {
+  "id": "383",
+  "name": "עין הנצי\"ב",
+  "randomEligible": false
+ },
+ {
+  "id": "367",
+  "name": "עין העמק",
+  "randomEligible": false
+ },
+ {
+  "id": "270",
+  "name": "עין השופט",
+  "randomEligible": false
+ },
+ {
+  "id": "676",
+  "name": "עין השלושה",
+  "randomEligible": false
  },
  {
   "id": "157",
-  "name": "עין ורד"
+  "name": "עין ורד",
+  "randomEligible": true
+ },
+ {
+  "id": "4503",
+  "name": "עין זיוון",
+  "randomEligible": false
+ },
+ {
+  "id": "1320",
+  "name": "עין חוד",
+  "randomEligible": false
+ },
+ {
+  "id": "89",
+  "name": "עין חרוד (איחוד)",
+  "randomEligible": false
+ },
+ {
+  "id": "82",
+  "name": "עין חרוד (מאוחד)",
+  "randomEligible": false
+ },
+ {
+  "id": "806",
+  "name": "עין יהב",
+  "randomEligible": false
+ },
+ {
+  "id": "813",
+  "name": "עין יעקב",
+  "randomEligible": false
+ },
+ {
+  "id": "426",
+  "name": "עין כרמל",
+  "randomEligible": false
  },
  {
   "id": "532",
-  "name": "עין מאהל"
+  "name": "עין מאהל",
+  "randomEligible": true
  },
  {
   "id": "521",
-  "name": "עין נקובא"
+  "name": "עין נקובא",
+  "randomEligible": true
+ },
+ {
+  "id": "223",
+  "name": "עין עירון",
+  "randomEligible": false
+ },
+ {
+  "id": "622",
+  "name": "עין צורים",
+  "randomEligible": false
+ },
+ {
+  "id": "4502",
+  "name": "עין קנייא",
+  "randomEligible": false
+ },
+ {
+  "id": "514",
+  "name": "עין ראפה",
+  "randomEligible": false
+ },
+ {
+  "id": "139",
+  "name": "עין שמר",
+  "randomEligible": false
  },
  {
   "id": "880",
-  "name": "עין שריד"
+  "name": "עין שריד",
+  "randomEligible": true
+ },
+ {
+  "id": "1251",
+  "name": "עין תמר",
+  "randomEligible": false
+ },
+ {
+  "id": "871",
+  "name": "עינת",
+  "randomEligible": false
  },
  {
   "id": "7600",
-  "name": "עכו"
+  "name": "עכו",
+  "randomEligible": true
+ },
+ {
+  "id": "1146",
+  "name": "עלומים",
+  "randomEligible": false
  },
  {
   "id": "3765",
-  "name": "עלי"
+  "name": "עלי",
+  "randomEligible": true
  },
  {
   "id": "3727",
-  "name": "עלי זהב"
+  "name": "עלי זהב",
+  "randomEligible": true
+ },
+ {
+  "id": "688",
+  "name": "עלמה",
+  "randomEligible": false
  },
  {
   "id": "3715",
-  "name": "עלמון"
+  "name": "עלמון",
+  "randomEligible": true
+ },
+ {
+  "id": "1212",
+  "name": "עמוקה",
+  "randomEligible": false
+ },
+ {
+  "id": "779",
+  "name": "עמינדב",
+  "randomEligible": false
+ },
+ {
+  "id": "385",
+  "name": "עמיעד",
+  "randomEligible": false
+ },
+ {
+  "id": "318",
+  "name": "עמיעוז",
+  "randomEligible": false
+ },
+ {
+  "id": "773",
+  "name": "עמיקם",
+  "randomEligible": false
+ },
+ {
+  "id": "319",
+  "name": "עמיר",
+  "randomEligible": false
  },
  {
   "id": "3660",
-  "name": "עמנואל"
+  "name": "עמנואל",
+  "randomEligible": true
+ },
+ {
+  "id": "708",
+  "name": "עמקה",
+  "randomEligible": false
+ },
+ {
+  "id": "3712",
+  "name": "ענב",
+  "randomEligible": false
  },
  {
   "id": "534",
-  "name": "עספיא"
+  "name": "עספיא",
+  "randomEligible": true
  },
  {
   "id": "7700",
-  "name": "עפולה"
+  "name": "עפולה",
+  "randomEligible": true
  },
  {
   "id": "3617",
-  "name": "עפרה"
+  "name": "עפרה",
+  "randomEligible": true
+ },
+ {
+  "id": "917",
+  "name": "עצמון שגב",
+  "randomEligible": false
  },
  {
   "id": "531",
-  "name": "עראבה"
+  "name": "עראבה",
+  "randomEligible": true
  },
  {
   "id": "1246",
-  "name": "עראמשה"
+  "name": "עראמשה",
+  "randomEligible": true
+ },
+ {
+  "id": "1335",
+  "name": "ערב אל נעים",
+  "randomEligible": false
  },
  {
   "id": "2560",
-  "name": "ערד"
+  "name": "ערד",
+  "randomEligible": true
+ },
+ {
+  "id": "593",
+  "name": "ערוגות",
+  "randomEligible": false
  },
  {
   "id": "637",
-  "name": "ערערה"
+  "name": "ערערה",
+  "randomEligible": true
  },
  {
   "id": "1192",
-  "name": "ערערה-בנגב"
+  "name": "ערערה-בנגב",
+  "randomEligible": true
+ },
+ {
+  "id": "591",
+  "name": "עשרת",
+  "randomEligible": false
  },
  {
   "id": "53",
-  "name": "עתלית"
+  "name": "עתלית",
+  "randomEligible": true
+ },
+ {
+  "id": "3748",
+  "name": "עתניאל",
+  "randomEligible": false
+ },
+ {
+  "id": "1151",
+  "name": "פארן",
+  "randomEligible": false
  },
  {
   "id": "3768",
-  "name": "פדואל"
+  "name": "פדואל",
+  "randomEligible": true
+ },
+ {
+  "id": "750",
+  "name": "פדויים",
+  "randomEligible": false
+ },
+ {
+  "id": "838",
+  "name": "פדיה",
+  "randomEligible": false
  },
  {
   "id": "537",
-  "name": "פוריידיס"
+  "name": "פוריידיס",
+  "randomEligible": true
+ },
+ {
+  "id": "1104",
+  "name": "פורייה - כפר עבודה",
+  "randomEligible": false
  },
  {
   "id": "1105",
-  "name": "פורייה - נווה עובד"
+  "name": "פורייה - נווה עובד",
+  "randomEligible": true
+ },
+ {
+  "id": "1313",
+  "name": "פורייה עילית",
+  "randomEligible": false
+ },
+ {
+  "id": "767",
+  "name": "פורת",
+  "randomEligible": false
+ },
+ {
+  "id": "749",
+  "name": "פטיש",
+  "randomEligible": false
+ },
+ {
+  "id": "1185",
+  "name": "פלך",
+  "randomEligible": false
+ },
+ {
+  "id": "597",
+  "name": "פלמחים",
+  "randomEligible": false
+ },
+ {
+  "id": "3723",
+  "name": "פני חבר",
+  "randomEligible": false
  },
  {
   "id": "3659",
-  "name": "פסגות"
+  "name": "פסגות",
+  "randomEligible": true
  },
  {
   "id": "535",
-  "name": "פסוטה"
+  "name": "פסוטה",
+  "randomEligible": true
+ },
+ {
+  "id": "2059",
+  "name": "פעמי תש\"ז",
+  "randomEligible": false
+ },
+ {
+  "id": "3615",
+  "name": "פצאל",
+  "randomEligible": false
  },
  {
   "id": "536",
-  "name": "פקיעין (בוקייעה)"
+  "name": "פקיעין (בוקייעה)",
+  "randomEligible": true
+ },
+ {
+  "id": "281",
+  "name": "פקיעין חדשה",
+  "randomEligible": false
  },
  {
   "id": "7800",
-  "name": "פרדס חנה-כרכור"
+  "name": "פרדס חנה-כרכור",
+  "randomEligible": true
  },
  {
   "id": "171",
-  "name": "פרדסייה"
+  "name": "פרדסייה",
+  "randomEligible": true
+ },
+ {
+  "id": "599",
+  "name": "פרוד",
+  "randomEligible": false
+ },
+ {
+  "id": "2053",
+  "name": "פרזון",
+  "randomEligible": false
+ },
+ {
+  "id": "1231",
+  "name": "פרי גן",
+  "randomEligible": false
  },
  {
   "id": "7900",
-  "name": "פתח תקווה"
+  "name": "פתח תקווה",
+  "randomEligible": true
+ },
+ {
+  "id": "839",
+  "name": "פתחיה",
+  "randomEligible": false
+ },
+ {
+  "id": "413",
+  "name": "צאלים",
+  "randomEligible": false
+ },
+ {
+  "id": "1180",
+  "name": "צביה",
+  "randomEligible": false
+ },
+ {
+  "id": "1213",
+  "name": "צבעון",
+  "randomEligible": false
+ },
+ {
+  "id": "465",
+  "name": "צובה",
+  "randomEligible": false
+ },
+ {
+  "id": "1136",
+  "name": "צוחר",
+  "randomEligible": false
  },
  {
   "id": "3791",
-  "name": "צופים"
+  "name": "צופים",
+  "randomEligible": true
+ },
+ {
+  "id": "198",
+  "name": "צופית",
+  "randomEligible": false
+ },
+ {
+  "id": "1150",
+  "name": "צופר",
+  "randomEligible": false
+ },
+ {
+  "id": "1102",
+  "name": "צוקי ים",
+  "randomEligible": false
+ },
+ {
+  "id": "1262",
+  "name": "צוקים",
+  "randomEligible": false
  },
  {
   "id": "1113",
-  "name": "צור הדסה"
+  "name": "צור הדסה",
+  "randomEligible": true
  },
  {
   "id": "1345",
-  "name": "צור יצחק"
+  "name": "צור יצחק",
+  "randomEligible": true
  },
  {
   "id": "276",
-  "name": "צור משה"
+  "name": "צור משה",
+  "randomEligible": true
+ },
+ {
+  "id": "1148",
+  "name": "צור נתן",
+  "randomEligible": false
+ },
+ {
+  "id": "774",
+  "name": "צוריאל",
+  "randomEligible": false
+ },
+ {
+  "id": "1221",
+  "name": "צורית",
+  "randomEligible": false
+ },
+ {
+  "id": "613",
+  "name": "ציפורי",
+  "randomEligible": false
+ },
+ {
+  "id": "796",
+  "name": "צלפון",
+  "randomEligible": false
  },
  {
   "id": "636",
-  "name": "צנדלה"
+  "name": "צנדלה",
+  "randomEligible": true
+ },
+ {
+  "id": "594",
+  "name": "צפרייה",
+  "randomEligible": false
+ },
+ {
+  "id": "1079",
+  "name": "צפרירים",
+  "randomEligible": false
  },
  {
   "id": "8000",
-  "name": "צפת"
+  "name": "צפת",
+  "randomEligible": true
+ },
+ {
+  "id": "612",
+  "name": "צרופה",
+  "randomEligible": false
+ },
+ {
+  "id": "567",
+  "name": "צרעה",
+  "randomEligible": false
+ },
+ {
+  "id": "1234",
+  "name": "קבועה (שבט)",
+  "randomEligible": false
+ },
+ {
+  "id": "334",
+  "name": "קבוצת יבנה",
+  "randomEligible": false
  },
  {
   "id": "3557",
-  "name": "קדומים"
+  "name": "קדומים",
+  "randomEligible": true
  },
  {
   "id": "195",
-  "name": "קדימה-צורן"
+  "name": "קדימה-צורן",
+  "randomEligible": true
+ },
+ {
+  "id": "4025",
+  "name": "קדמת צבי",
+  "randomEligible": false
  },
  {
   "id": "3781",
-  "name": "קדר"
+  "name": "קדר",
+  "randomEligible": true
  },
  {
   "id": "615",
-  "name": "קדרון"
+  "name": "קדרון",
+  "randomEligible": true
+ },
+ {
+  "id": "1211",
+  "name": "קדרים",
+  "randomEligible": false
  },
  {
   "id": "964",
-  "name": "קודייראת א-צאנע (שבט)"
+  "name": "קודייראת א-צאנע (שבט)",
+  "randomEligible": true
+ },
+ {
+  "id": "972",
+  "name": "קוואעין (שבט)",
+  "randomEligible": false
+ },
+ {
+  "id": "766",
+  "name": "קוממיות",
+  "randomEligible": false
+ },
+ {
+  "id": "1179",
+  "name": "קורנית",
+  "randomEligible": false
+ },
+ {
+  "id": "1052",
+  "name": "קטורה",
+  "randomEligible": false
  },
  {
   "id": "1167",
-  "name": "קיסריה"
+  "name": "קיסריה",
+  "randomEligible": true
+ },
+ {
+  "id": "414",
+  "name": "קלחים",
+  "randomEligible": false
+ },
+ {
+  "id": "3601",
+  "name": "קליה",
+  "randomEligible": false
  },
  {
   "id": "638",
-  "name": "קלנסווה"
+  "name": "קלנסווה",
+  "randomEligible": true
+ },
+ {
+  "id": "4024",
+  "name": "קלע",
+  "randomEligible": false
  },
  {
   "id": "1243",
-  "name": "קציר"
+  "name": "קציר",
+  "randomEligible": true
  },
  {
   "id": "1347",
-  "name": "קצר א-סר"
+  "name": "קצר א-סר",
+  "randomEligible": true
  },
  {
   "id": "4100",
-  "name": "קצרין"
+  "name": "קצרין",
+  "randomEligible": true
  },
  {
   "id": "2620",
-  "name": "קריית אונו"
+  "name": "קריית אונו",
+  "randomEligible": true
  },
  {
   "id": "3611",
-  "name": "קריית ארבע"
+  "name": "קריית ארבע",
+  "randomEligible": true
  },
  {
   "id": "6800",
-  "name": "קריית אתא"
+  "name": "קריית אתא",
+  "randomEligible": true
  },
  {
   "id": "9500",
-  "name": "קריית ביאליק"
+  "name": "קריית ביאליק",
+  "randomEligible": true
  },
  {
   "id": "2630",
-  "name": "קריית גת"
+  "name": "קריית גת",
+  "randomEligible": true
  },
  {
   "id": "2300",
-  "name": "קריית טבעון"
+  "name": "קריית טבעון",
+  "randomEligible": true
  },
  {
   "id": "9600",
-  "name": "קריית ים"
+  "name": "קריית ים",
+  "randomEligible": true
  },
  {
   "id": "1137",
-  "name": "קריית יערים"
+  "name": "קריית יערים",
+  "randomEligible": true
  },
  {
   "id": "8200",
-  "name": "קריית מוצקין"
+  "name": "קריית מוצקין",
+  "randomEligible": true
  },
  {
   "id": "1034",
-  "name": "קריית מלאכי"
+  "name": "קריית מלאכי",
+  "randomEligible": true
+ },
+ {
+  "id": "3746",
+  "name": "קריית נטפים",
+  "randomEligible": false
+ },
+ {
+  "id": "78",
+  "name": "קריית ענבים",
+  "randomEligible": false
  },
  {
   "id": "469",
-  "name": "קריית עקרון"
+  "name": "קריית עקרון",
+  "randomEligible": true
  },
  {
   "id": "2800",
-  "name": "קריית שמונה"
+  "name": "קריית שמונה",
+  "randomEligible": true
  },
  {
   "id": "3640",
-  "name": "קרני שומרון"
+  "name": "קרני שומרון",
+  "randomEligible": true
+ },
+ {
+  "id": "4006",
+  "name": "קשת",
+  "randomEligible": false
  },
  {
   "id": "543",
-  "name": "ראמה"
+  "name": "ראמה",
+  "randomEligible": true
+ },
+ {
+  "id": "1334",
+  "name": "ראס אל-עין",
+  "randomEligible": false
+ },
+ {
+  "id": "990",
+  "name": "ראס עלי",
+  "randomEligible": false
  },
  {
   "id": "2640",
-  "name": "ראש העין"
+  "name": "ראש העין",
+  "randomEligible": true
  },
  {
   "id": "26",
-  "name": "ראש פינה"
+  "name": "ראש פינה",
+  "randomEligible": true
+ },
+ {
+  "id": "3602",
+  "name": "ראש צורים",
+  "randomEligible": false
  },
  {
   "id": "8300",
-  "name": "ראשון לציון"
+  "name": "ראשון לציון",
+  "randomEligible": true
  },
  {
   "id": "3795",
-  "name": "רבבה"
+  "name": "רבבה",
+  "randomEligible": true
+ },
+ {
+  "id": "564",
+  "name": "רבדים",
+  "randomEligible": false
+ },
+ {
+  "id": "354",
+  "name": "רביבים",
+  "randomEligible": false
+ },
+ {
+  "id": "390",
+  "name": "רגבה",
+  "randomEligible": false
+ },
+ {
+  "id": "444",
+  "name": "רגבים",
+  "randomEligible": false
  },
  {
   "id": "1161",
-  "name": "רהט"
+  "name": "רהט",
+  "randomEligible": true
+ },
+ {
+  "id": "2051",
+  "name": "רווחה",
+  "randomEligible": false
+ },
+ {
+  "id": "2016",
+  "name": "רוויה",
+  "randomEligible": false
+ },
+ {
+  "id": "362",
+  "name": "רוחמה",
+  "randomEligible": false
+ },
+ {
+  "id": "539",
+  "name": "רומאנה",
+  "randomEligible": false
  },
  {
   "id": "997",
-  "name": "רומת הייב"
+  "name": "רומת הייב",
+  "randomEligible": true
+ },
+ {
+  "id": "3619",
+  "name": "רועי",
+  "randomEligible": false
+ },
+ {
+  "id": "3782",
+  "name": "רותם",
+  "randomEligible": false
+ },
+ {
+  "id": "854",
+  "name": "רחוב",
+  "randomEligible": false
  },
  {
   "id": "8400",
-  "name": "רחובות"
+  "name": "רחובות",
+  "randomEligible": true
+ },
+ {
+  "id": "3822",
+  "name": "רחלים",
+  "randomEligible": false
+ },
+ {
+  "id": "540",
+  "name": "ריחאנייה",
+  "randomEligible": false
+ },
+ {
+  "id": "3568",
+  "name": "ריחן",
+  "randomEligible": false
  },
  {
   "id": "542",
-  "name": "ריינה"
+  "name": "ריינה",
+  "randomEligible": true
+ },
+ {
+  "id": "3565",
+  "name": "רימונים",
+  "randomEligible": false
+ },
+ {
+  "id": "616",
+  "name": "רינתיה",
+  "randomEligible": false
  },
  {
   "id": "922",
-  "name": "רכסים"
+  "name": "רכסים",
+  "randomEligible": true
+ },
+ {
+  "id": "1069",
+  "name": "רם-און",
+  "randomEligible": false
+ },
+ {
+  "id": "4702",
+  "name": "רמות",
+  "randomEligible": false
  },
  {
   "id": "206",
-  "name": "רמות השבים"
+  "name": "רמות השבים",
+  "randomEligible": true
+ },
+ {
+  "id": "735",
+  "name": "רמות מאיר",
+  "randomEligible": false
+ },
+ {
+  "id": "445",
+  "name": "רמות מנשה",
+  "randomEligible": false
+ },
+ {
+  "id": "372",
+  "name": "רמות נפתלי",
+  "randomEligible": false
  },
  {
   "id": "8500",
-  "name": "רמלה"
+  "name": "רמלה",
+  "randomEligible": true
  },
  {
   "id": "8600",
-  "name": "רמת גן"
+  "name": "רמת גן",
+  "randomEligible": true
+ },
+ {
+  "id": "135",
+  "name": "רמת דוד",
+  "randomEligible": false
+ },
+ {
+  "id": "184",
+  "name": "רמת הכובש",
+  "randomEligible": false
+ },
+ {
+  "id": "335",
+  "name": "רמת השופט",
+  "randomEligible": false
  },
  {
   "id": "2650",
-  "name": "רמת השרון"
+  "name": "רמת השרון",
+  "randomEligible": true
+ },
+ {
+  "id": "178",
+  "name": "רמת יוחנן",
+  "randomEligible": false
  },
  {
   "id": "122",
-  "name": "רמת ישי"
+  "name": "רמת ישי",
+  "randomEligible": true
+ },
+ {
+  "id": "4701",
+  "name": "רמת מגשימים",
+  "randomEligible": false
+ },
+ {
+  "id": "339",
+  "name": "רמת צבי",
+  "randomEligible": false
+ },
+ {
+  "id": "460",
+  "name": "רמת רזיאל",
+  "randomEligible": false
+ },
+ {
+  "id": "127",
+  "name": "רמת רחל",
+  "randomEligible": false
+ },
+ {
+  "id": "789",
+  "name": "רנן",
+  "randomEligible": false
+ },
+ {
+  "id": "713",
+  "name": "רעים",
+  "randomEligible": false
  },
  {
   "id": "8700",
-  "name": "רעננה"
+  "name": "רעננה",
+  "randomEligible": true
+ },
+ {
+  "id": "1228",
+  "name": "רקפת",
+  "randomEligible": false
+ },
+ {
+  "id": "247",
+  "name": "רשפון",
+  "randomEligible": false
+ },
+ {
+  "id": "437",
+  "name": "רשפים",
+  "randomEligible": false
+ },
+ {
+  "id": "1260",
+  "name": "רתמים",
+  "randomEligible": false
+ },
+ {
+  "id": "324",
+  "name": "שאר ישוב",
+  "randomEligible": false
+ },
+ {
+  "id": "282",
+  "name": "שבי ציון",
+  "randomEligible": false
+ },
+ {
+  "id": "3571",
+  "name": "שבי שומרון",
+  "randomEligible": false
  },
  {
   "id": "913",
-  "name": "שבלי - אום אל-גנם"
+  "name": "שבלי - אום אל-גנם",
+  "randomEligible": true
  },
  {
   "id": "1286",
-  "name": "שגב-שלום"
+  "name": "שגב-שלום",
+  "randomEligible": true
+ },
+ {
+  "id": "721",
+  "name": "שדה אילן",
+  "randomEligible": false
+ },
+ {
+  "id": "304",
+  "name": "שדה אליהו",
+  "randomEligible": false
+ },
+ {
+  "id": "861",
+  "name": "שדה אליעזר",
+  "randomEligible": false
+ },
+ {
+  "id": "885",
+  "name": "שדה בוקר",
+  "randomEligible": false
+ },
+ {
+  "id": "36",
+  "name": "שדה דוד",
+  "randomEligible": false
+ },
+ {
+  "id": "284",
+  "name": "שדה ורבורג",
+  "randomEligible": false
+ },
+ {
+  "id": "293",
+  "name": "שדה יואב",
+  "randomEligible": false
+ },
+ {
+  "id": "142",
+  "name": "שדה יעקב",
+  "randomEligible": false
+ },
+ {
+  "id": "2008",
+  "name": "שדה יצחק",
+  "randomEligible": false
+ },
+ {
+  "id": "18",
+  "name": "שדה משה",
+  "randomEligible": false
+ },
+ {
+  "id": "259",
+  "name": "שדה נחום",
+  "randomEligible": false
+ },
+ {
+  "id": "329",
+  "name": "שדה נחמיה",
+  "randomEligible": false
+ },
+ {
+  "id": "1058",
+  "name": "שדה ניצן",
+  "randomEligible": false
  },
  {
   "id": "739",
-  "name": "שדה עוזיהו"
+  "name": "שדה עוזיהו",
+  "randomEligible": true
+ },
+ {
+  "id": "2049",
+  "name": "שדה צבי",
+  "randomEligible": false
+ },
+ {
+  "id": "327",
+  "name": "שדות ים",
+  "randomEligible": false
+ },
+ {
+  "id": "27",
+  "name": "שדות מיכה",
+  "randomEligible": false
+ },
+ {
+  "id": "1223",
+  "name": "שדי אברהם",
+  "randomEligible": false
+ },
+ {
+  "id": "2015",
+  "name": "שדי חמד",
+  "randomEligible": false
+ },
+ {
+  "id": "2057",
+  "name": "שדי תרומות",
+  "randomEligible": false
+ },
+ {
+  "id": "555",
+  "name": "שדמה",
+  "randomEligible": false
+ },
+ {
+  "id": "306",
+  "name": "שדמות דבורה",
+  "randomEligible": false
+ },
+ {
+  "id": "3578",
+  "name": "שדמות מחולה",
+  "randomEligible": false
  },
  {
   "id": "1031",
-  "name": "שדרות"
+  "name": "שדרות",
+  "randomEligible": true
+ },
+ {
+  "id": "741",
+  "name": "שואבה",
+  "randomEligible": false
+ },
+ {
+  "id": "761",
+  "name": "שובה",
+  "randomEligible": false
+ },
+ {
+  "id": "394",
+  "name": "שובל",
+  "randomEligible": false
  },
  {
   "id": "1304",
-  "name": "שוהם"
+  "name": "שוהם",
+  "randomEligible": true
+ },
+ {
+  "id": "614",
+  "name": "שומרה",
+  "randomEligible": false
+ },
+ {
+  "id": "1265",
+  "name": "שומרייה",
+  "randomEligible": false
+ },
+ {
+  "id": "415",
+  "name": "שוקדה",
+  "randomEligible": false
  },
  {
   "id": "456",
-  "name": "שורש"
+  "name": "שורש",
+  "randomEligible": true
+ },
+ {
+  "id": "1235",
+  "name": "שורשים",
+  "randomEligible": false
+ },
+ {
+  "id": "224",
+  "name": "שושנת העמקים",
+  "randomEligible": false
+ },
+ {
+  "id": "527",
+  "name": "שזור",
+  "randomEligible": false
+ },
+ {
+  "id": "7",
+  "name": "שחר",
+  "randomEligible": false
+ },
+ {
+  "id": "1266",
+  "name": "שחרות",
+  "randomEligible": false
+ },
+ {
+  "id": "865",
+  "name": "שיבולים",
+  "randomEligible": false
  },
  {
   "id": "658",
-  "name": "שייח' דנון"
+  "name": "שייח' דנון",
+  "randomEligible": true
  },
  {
   "id": "3641",
-  "name": "שילה"
+  "name": "שילה",
+  "randomEligible": true
+ },
+ {
+  "id": "1165",
+  "name": "שילת",
+  "randomEligible": false
+ },
+ {
+  "id": "1160",
+  "name": "שכניה",
+  "randomEligible": false
+ },
+ {
+  "id": "873",
+  "name": "שלווה",
+  "randomEligible": false
+ },
+ {
+  "id": "439",
+  "name": "שלוחות",
+  "randomEligible": false
  },
  {
   "id": "812",
-  "name": "שלומי"
+  "name": "שלומי",
+  "randomEligible": true
+ },
+ {
+  "id": "1364",
+  "name": "שלומית",
+  "randomEligible": false
+ },
+ {
+  "id": "366",
+  "name": "שמיר",
+  "randomEligible": false
+ },
+ {
+  "id": "3784",
+  "name": "שמעה",
+  "randomEligible": false
+ },
+ {
+  "id": "432",
+  "name": "שמרת",
+  "randomEligible": false
  },
  {
   "id": "1337",
-  "name": "שמשית"
+  "name": "שמשית",
+  "randomEligible": true
+ },
+ {
+  "id": "1287",
+  "name": "שני",
+  "randomEligible": false
+ },
+ {
+  "id": "1132",
+  "name": "שניר",
+  "randomEligible": false
  },
  {
   "id": "538",
-  "name": "שעב"
+  "name": "שעב",
+  "randomEligible": true
+ },
+ {
+  "id": "4009",
+  "name": "שעל",
+  "randomEligible": false
+ },
+ {
+  "id": "856",
+  "name": "שעלבים",
+  "randomEligible": false
  },
  {
   "id": "661",
-  "name": "שער אפרים"
+  "name": "שער אפרים",
+  "randomEligible": true
+ },
+ {
+  "id": "264",
+  "name": "שער הגולן",
+  "randomEligible": false
+ },
+ {
+  "id": "237",
+  "name": "שער העמקים",
+  "randomEligible": false
+ },
+ {
+  "id": "921",
+  "name": "שער מנשה",
+  "randomEligible": false
  },
  {
   "id": "232",
-  "name": "שפיים"
+  "name": "שפיים",
+  "randomEligible": true
+ },
+ {
+  "id": "692",
+  "name": "שפיר",
+  "randomEligible": false
+ },
+ {
+  "id": "846",
+  "name": "שפר",
+  "randomEligible": false
  },
  {
   "id": "8800",
-  "name": "שפרעם"
+  "name": "שפרעם",
+  "randomEligible": true
+ },
+ {
+  "id": "3649",
+  "name": "שקד",
+  "randomEligible": false
+ },
+ {
+  "id": "1233",
+  "name": "שקף",
+  "randomEligible": false
+ },
+ {
+  "id": "292",
+  "name": "שרונה",
+  "randomEligible": false
+ },
+ {
+  "id": "1114",
+  "name": "שריגים (לי-און)",
+  "randomEligible": false
+ },
+ {
+  "id": "126",
+  "name": "שריד",
+  "randomEligible": false
+ },
+ {
+  "id": "398",
+  "name": "שרשרת",
+  "randomEligible": false
+ },
+ {
+  "id": "1045",
+  "name": "שתולה",
+  "randomEligible": false
  },
  {
   "id": "763",
-  "name": "שתולים"
+  "name": "שתולים",
+  "randomEligible": true
+ },
+ {
+  "id": "2062",
+  "name": "תאשור",
+  "randomEligible": false
+ },
+ {
+  "id": "2061",
+  "name": "תדהר",
+  "randomEligible": false
+ },
+ {
+  "id": "1172",
+  "name": "תובל",
+  "randomEligible": false
+ },
+ {
+  "id": "3558",
+  "name": "תומר",
+  "randomEligible": false
+ },
+ {
+  "id": "1083",
+  "name": "תושייה",
+  "randomEligible": false
+ },
+ {
+  "id": "163",
+  "name": "תימורים",
+  "randomEligible": false
+ },
+ {
+  "id": "10",
+  "name": "תירוש",
+  "randomEligible": false
  },
  {
   "id": "5000",
-  "name": "תל אביב -יפו"
+  "name": "תל אביב -יפו",
+  "randomEligible": true
+ },
+ {
+  "id": "84",
+  "name": "תל יוסף",
+  "randomEligible": false
+ },
+ {
+  "id": "287",
+  "name": "תל יצחק",
+  "randomEligible": false
  },
  {
   "id": "154",
-  "name": "תל מונד"
+  "name": "תל מונד",
+  "randomEligible": true
+ },
+ {
+  "id": "103",
+  "name": "תל עדשים",
+  "randomEligible": false
+ },
+ {
+  "id": "719",
+  "name": "תל קציר",
+  "randomEligible": false
  },
  {
   "id": "1054",
-  "name": "תל שבע"
+  "name": "תל שבע",
+  "randomEligible": true
+ },
+ {
+  "id": "1283",
+  "name": "תל תאומים",
+  "randomEligible": false
+ },
+ {
+  "id": "3719",
+  "name": "תלם",
+  "randomEligible": false
+ },
+ {
+  "id": "1051",
+  "name": "תלמי אליהו",
+  "randomEligible": false
+ },
+ {
+  "id": "2003",
+  "name": "תלמי אלעזר",
+  "randomEligible": false
+ },
+ {
+  "id": "2050",
+  "name": "תלמי ביל\"ו",
+  "randomEligible": false
+ },
+ {
+  "id": "1237",
+  "name": "תלמי יוסף",
+  "randomEligible": false
+ },
+ {
+  "id": "727",
+  "name": "תלמי יחיאל",
+  "randomEligible": false
+ },
+ {
+  "id": "744",
+  "name": "תלמי יפה",
+  "randomEligible": false
+ },
+ {
+  "id": "814",
+  "name": "תלמים",
+  "randomEligible": false
  },
  {
   "id": "1244",
-  "name": "תמרת"
+  "name": "תמרת",
+  "randomEligible": true
+ },
+ {
+  "id": "2002",
+  "name": "תנובות",
+  "randomEligible": false
+ },
+ {
+  "id": "752",
+  "name": "תעוז",
+  "randomEligible": false
  },
  {
   "id": "709",
-  "name": "תפרח"
+  "name": "תפרח",
+  "randomEligible": true
+ },
+ {
+  "id": "665",
+  "name": "תקומה",
+  "randomEligible": false
  },
  {
   "id": "3563",
-  "name": "תקוע"
+  "name": "תקוע",
+  "randomEligible": true
+ },
+ {
+  "id": "970",
+  "name": "תראבין א-צאנע (שבט)",
+  "randomEligible": false
+ },
+ {
+  "id": "1346",
+  "name": "תרבין א-צאנע (יישוב)*",
+  "randomEligible": false
+ },
+ {
+  "id": "778",
+  "name": "תרום",
+  "randomEligible": false
  }
 ]

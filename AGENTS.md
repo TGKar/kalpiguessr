@@ -50,8 +50,8 @@ public datasets — nothing here is fabricated or approximated.
   only covers localities *within* one of Israel's ~54 regional councils
   (villages/kibbutzim/moshavim under a מועצה אזורית) — it does not include
   standalone cities or local councils (e.g. Tel Aviv, Jerusalem, Haifa are
-  absent). Real coverage as a result: **116 of 323** localities have a
-  cluster value. Rather than show a hollow "אין נתון" for the other 207,
+  absent). Real coverage as a result: **976 of 1211** guessable localities
+  have a cluster value. Rather than show a hollow "אין נתון" for the rest,
   hint 4's button+output are hidden entirely for those localities
   (`startRound` checks `state.socioeconomic[answerId].cluster` — see
   `js/app.js`). No other CKAN dataset with a *complete* (city + village)
@@ -69,19 +69,46 @@ public datasets — nothing here is fabricated or approximated.
   UI, `js/app.js`, or `data/socioeconomic.json` — don't reintroduce a
   `bagrutPct`-shaped field without an actual source behind it.
 
-## Locality pool and exclusions
+## Locality pool: guessable vs. randomEligible (two-tier model)
 
 Join key across all three sources is the CBS locality code (סמל ישוב /
-סמל יישוב — same numbering, different spelling across datasets). A locality
-is included only if it has: a K25 result record, a K24 result record, *and*
-a coordinate record, **and** eligible-voter count (בזב) ≥ 1000 in both
-elections (drops tiny sub-1000-voter settlements whose vote-share bars are
-dominated by single-digit vote counts and add noise rather than signal).
-This yields **323 localities** (well above the ≥150–200 target). The build
-script (kept at `/tmp/.../scratchpad/build_data.py` at generation time, not
-in the repo) reconciled `sum(per-party votes) == valid votes (כשרים)` for
-every kept locality with zero discrepancies before writing the committed
-JSON.
+סמל יישוב — same numbering, different spelling across datasets). There is
+one list, `data/localities.json`, with two independent concerns split by a
+per-entry boolean:
+
+- **Guessable** (inclusion in the list at all): a locality is included if it
+  has a K25 result record, a K24 result record, *and* a coordinate record —
+  full three-way join completeness, no fabrication, no partial records. This
+  yields **1211 localities** — essentially every real Israeli locality with
+  complete data across the three sources (a locality drops out only if the
+  CBS coordinate file has no `קואורדינטות` value for it, which excludes ~32
+  entries; K25/K24 vote data and the coordinate file's locality set are
+  otherwise an exact match). Every guessable locality is a valid autocomplete
+  match, unconditionally — `state.localities` in `js/app.js` is this whole
+  list, never filtered by `randomEligible`.
+- **`randomEligible: true|false`** (auto-selection eligibility): computed as
+  eligible-voter count (בזב) ≥ 1000 in *both* K25 and K24 — the same rule
+  that used to gate inclusion in the old single-tier pool, now demoted to a
+  flag. **323 of 1211** localities are `randomEligible` (this is exactly the
+  old pool, unchanged). It drops tiny sub-1000-voter settlements whose
+  vote-share bars are dominated by single-digit vote counts and add noise
+  rather than signal. `pickRandomAnswerId` (Random mode) and `pickAnswerId`'s
+  no-override fallback rotation (Daily mode) in `js/app.js` both filter to
+  `randomEligible === true` before selecting/rotating — the fallback rotation
+  index is the locality's position within that filtered subset, not its
+  position in the full list.
+
+`data/answer-schedule.json` overrides are unaffected by `randomEligible` and
+are the intentional way to feature a `randomEligible: false` locality (e.g.
+a small town like מג'דל שמס, id `4201`) on a specific date — see
+`js/app.js` (`pickAnswerId`).
+
+A locality-data build/reconciliation script (kept at
+`/tmp/.../scratchpad/` at generation time, not in the repo) pulled the full
+CKAN datasets (no eligible-voter filter applied at fetch time), reconciled
+`sum(per-party votes) == valid votes (כשרים)` for all 1211 kept localities
+with zero discrepancies, and confirmed the old 323-locality pool is exactly
+reproduced by the `randomEligible` rule applied to the new, larger pool.
 
 Locality display names use the CBS reference file's spelling (`data/localities.json`),
 which is more consistently punctuated (geresh/gershayim, parentheses for
@@ -95,17 +122,20 @@ kibbutz/moshav qualifiers) than the CEC's own locality-name column.
   sets differ between the two elections (real party splits/mergers/threshold
   changes between 2021 and 2022) — this is expected, not a bug.
 - `coords.json`: `{ localityId: { lat, lon } }` (WGS84).
-- `localities.json`: canonical `[{ id, name }]` list, sorted by name. This
-  exact order is also the fallback-rotation order for `answer-schedule.json`
-  — do not reorder this file casually, since it changes which locality shows
-  on un-overridden future dates.
+- `localities.json`: canonical `[{ id, name, randomEligible }]` list, sorted
+  by name — see the two-tier model above. This exact order (filtered to
+  `randomEligible === true`) is the fallback-rotation order for
+  `answer-schedule.json` — do not reorder this file casually, since it
+  changes which locality shows on un-overridden future dates.
 - `answer-schedule.json`: `{ _meta: { epoch }, overrides: { "YYYY-MM-DD":
-  localityId } }`. Fallback for any date without an override: `dayIndex =
-  floor((date - epoch) / 86400000)`, answer = `localities[dayIndex mod
-  length]` (local calendar dates, not UTC). Implemented in `js/app.js`
+  localityId } }`. Fallback for any date without an override: `eligible =
+  localities.filter(l => l.randomEligible)`, `dayIndex = floor((date -
+  epoch) / 86400000)`, answer = `eligible[dayIndex mod eligible.length]`
+  (local calendar dates, not UTC). Implemented in `js/app.js`
   (`pickAnswerId`). A separate "Random" mode (`pickRandomAnswerId`) picks
-  uniformly from `localities.json` independent of date/schedule; the two
-  modes share all guess/hint/win logic in `js/app.js` (`startRound(mode)`).
+  uniformly from that same `randomEligible` subset, independent of
+  date/schedule; the two modes share all guess/hint/win logic in
+  `js/app.js` (`startRound(mode)`).
 - `socioeconomic.json`: `{ localityId: { cluster: 1-10|null } }`. See the
   provenance section above for coverage and why there's no `bagrutPct`.
 
@@ -162,7 +192,16 @@ archive date-picker, and the hint-cost/hint-4-visibility changes — all
 verified the same way (Node harness against the real committed JSON: the
 0.1% filter checked against Tel Aviv's real vote breakdown, several archive
 dates resolved through `pickAnswerId` to real localities, all 8 compass
-labels confirmed to map to an arrow).
+labels confirmed to map to an arrow). Still true as of the round that split
+the pool into guessable (1211) vs. `randomEligible` (323) — verified in Node
+against the real committed JSON: zero localities missing any of the three
+joined data sources, K25/K24 vote-sum reconciliation clean for all 1211,
+`randomEligible` reproduces the old 323-locality pool exactly, 2000 fallback
+rotation draws and 5000 `pickRandomAnswerId` draws all landed on
+`randomEligible === true` localities, מג'דל שמס (id `4201`, real sub-1000
+K24 eligible-voter count) confirmed guessable with `randomEligible: false`
+and correctly featurable via an `answer-schedule.json` override, and today's
+existing override (`4501`) still resolves correctly.
 
 ## Maintaining this file
 

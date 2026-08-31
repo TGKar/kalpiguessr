@@ -30,9 +30,10 @@ today's locality is selected:
 
 - **Daily** (default): the answer comes from `data/answer-schedule.json`,
   the same for every visitor on a given calendar day.
-- **Random**: a locality is picked uniformly at random from
-  `data/localities.json` on each visit or "משחק אקראי חדש" click. Guessing,
-  distance/direction feedback, and hints all work identically in both modes.
+- **Random**: a locality is picked uniformly at random from the
+  `randomEligible: true` subset of `data/localities.json` on each visit or
+  "משחק אקראי חדש" click. Guessing, distance/direction feedback, and hints all
+  work identically in both modes.
 
 In Daily mode, a date picker lets you replay any earlier date's puzzle
 (clamped to today — no peeking at a future date). Every hint you reveal adds
@@ -41,10 +42,12 @@ In Daily mode, a date picker lets you replay any earlier date's puzzle
 ## Changing the daily answer
 
 Edit `data/answer-schedule.json` by hand — add an entry to `overrides` mapping
-a `YYYY-MM-DD` date (local time) to a locality `id` from `data/localities.json`.
-Any date without an explicit override falls back to a deterministic rotation
-through `data/localities.json`. See `AGENTS.md` for the exact algorithm and
-data sourcing/exclusion details.
+a `YYYY-MM-DD` date (local time) to any locality `id` from
+`data/localities.json`, `randomEligible` or not (this is the way to feature a
+small locality that the fallback rotation and Random mode skip). Any date
+without an explicit override falls back to a deterministic rotation through
+the `randomEligible: true` subset of `data/localities.json`. See `AGENTS.md`
+for the exact algorithm and data sourcing/exclusion details.
 
 ## Project layout
 
@@ -58,8 +61,10 @@ data sourcing/exclusion details.
 - `data/socioeconomic.json` — per-locality CBS socioeconomic cluster (1-10),
   used for hint 4 (hidden when a locality has no cluster value) — see
   `AGENTS.md` for coverage and source caveats.
-- `data/localities.json` — the canonical list of playable localities
-  (autocomplete source + fallback rotation order).
+- `data/localities.json` — the canonical list of every guessable locality
+  (autocomplete source). Each entry also carries `randomEligible`, which
+  gates whether that locality can be auto-selected by Random mode or the
+  Daily fallback rotation — see `AGENTS.md`.
 - `data/answer-schedule.json` — hand-editable date → locality mapping.
 
 ## Data sources

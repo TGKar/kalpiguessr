@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "description": "Hand-editable answer schedule. `overrides` maps a calendar date (local time, YYYY-MM-DD) to a locality id from data/localities.json. Any date without an entry falls back to a deterministic day-index rotation through data/localities.json (in the order committed there): dayIndex = floor((date - epoch) / 86400000), answer = localities[dayIndex mod length]. See README.md / AGENTS.md for details.",
+    "description": "Hand-editable answer schedule. `overrides` maps a calendar date (local time, YYYY-MM-DD) to ANY locality id from data/localities.json (randomEligible or not — this is the way to feature a small locality). Any date without an entry falls back to a deterministic day-index rotation through the randomEligible:true subset of data/localities.json (in the order committed there): eligible = localities.filter(l => l.randomEligible), dayIndex = floor((date - epoch) / 86400000), answer = eligible[dayIndex mod eligible.length]. See README.md / AGENTS.md for details.",
     "epoch": "2024-01-01"
   },
   "overrides": {

@@ -46,25 +46,29 @@
     return `${y}-${m}-${day}`;
   }
 
-  // Deterministic fallback: rotate through the committed locality list (order
-  // as stored in data/localities.json) indexed by whole days since the epoch.
-  // data/answer-schedule.json can override any specific date by hand.
+  // Deterministic fallback: rotate through the randomEligible subset of the
+  // committed locality list (in data/localities.json's relative order)
+  // indexed by whole days since the epoch. data/answer-schedule.json can
+  // override any specific date by hand with ANY guessable locality,
+  // randomEligible or not.
   function pickAnswerId(schedule, localities, dateStr) {
     if (schedule.overrides && schedule.overrides[dateStr]) {
       return schedule.overrides[dateStr];
     }
+    const eligible = localities.filter((loc) => loc.randomEligible);
     const epoch = (schedule._meta && schedule._meta.epoch) || '2024-01-01';
     const epochDate = new Date(`${epoch}T00:00:00`);
     const today = new Date(`${dateStr}T00:00:00`);
     const dayIndex = Math.floor((today - epochDate) / 86400000);
-    const n = localities.length;
+    const n = eligible.length;
     const idx = ((dayIndex % n) + n) % n;
-    return localities[idx].id;
+    return eligible[idx].id;
   }
 
   function pickRandomAnswerId(localities) {
-    const idx = Math.floor(Math.random() * localities.length);
-    return localities[idx].id;
+    const eligible = localities.filter((loc) => loc.randomEligible);
+    const idx = Math.floor(Math.random() * eligible.length);
+    return eligible[idx].id;
   }
 
   const MIN_VOTE_SHARE_PCT = 0.1;
