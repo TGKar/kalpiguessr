@@ -69,7 +69,7 @@ public datasets — nothing here is fabricated or approximated.
   UI, `js/app.js`, or `data/socioeconomic.json` — don't reintroduce a
   `bagrutPct`-shaped field without an actual source behind it.
 
-## Locality pool: guessable vs. randomEligible (two-tier model)
+## Locality pool: guessable vs. randomEligible vs. Random-mode size tiers
 
 Join key across all three sources is the CBS locality code (סמל ישוב /
 סמל יישוב — same numbering, different spelling across datasets). There is
@@ -113,6 +113,27 @@ reproduced by the `randomEligible` rule applied to the new, larger pool.
 Locality display names use the CBS reference file's spelling (`data/localities.json`),
 which is more consistently punctuated (geresh/gershayim, parentheses for
 kibbutz/moshav qualifiers) than the CEC's own locality-name column.
+
+**Random-mode size tiers** are a third, independent dimension layered on top
+of the above, computed client-side (no new data files) by
+`computeSizeTierPools` in `js/app.js` and selected via a 3-position slider
+(קטן/בינוני/גדול) that's only visible in Random mode — Daily mode's
+fallback rotation and `answer-schedule.json` overrides are untouched by this
+and still use `randomEligible` directly through `pickAnswerId`, unmodified:
+
+- **קטן (small)**: every guessable locality with K25 (`results-25.json`)
+  `eligible >= 1000` — looser than `randomEligible` (no K24 requirement), so
+  it's a superset of בינוני. **331 of 1211**.
+- **בינוני (medium)**: exactly the `randomEligible === true` set — **323**,
+  byte-identical to the pool above, unchanged.
+- **גדול (large)**: the top 100 guessable localities by K25 `eligible`,
+  descending, ties broken by numeric locality id — **exactly 100**, always
+  (Israel's largest cities/towns; Jerusalem/Tel Aviv/Haifa are all in it).
+
+`pickRandomAnswerId(pool)` now takes the pool array directly (whichever tier
+is selected, via `state.sizeTierPools[state.sizeTier]`) instead of filtering
+`randomEligible` itself — Random mode's default tier is `medium`, so
+first-visit behavior is unchanged from before this feature existed.
 
 ## Data files (`data/`)
 
@@ -166,6 +187,10 @@ plain KL divergence would require.
   picker's native `max` is clamped to today and `startRound` also clamps
   defensively (a manually-typed future date falls back to today) so a
   future day's answer can never leak early. Random mode has no date concept.
+- **Random mode has a size-tier slider** (קטן/בינוני/גדול), hidden in Daily
+  mode. Moving it immediately re-rolls a fresh round from the newly selected
+  tier's pool (same reset as the "משחק אקראי חדש" button). See the size-tier
+  section above for the three pools and `pickRandomAnswerId`'s tier param.
 
 ## Testing notes
 
@@ -201,7 +226,16 @@ rotation draws and 5000 `pickRandomAnswerId` draws all landed on
 `randomEligible === true` localities, מג'דל שמס (id `4201`, real sub-1000
 K24 eligible-voter count) confirmed guessable with `randomEligible: false`
 and correctly featurable via an `answer-schedule.json` override, and today's
-existing override (`4501`) still resolves correctly.
+existing override (`4501`) still resolves correctly. Chrome is still
+unavailable as of the round that added the Random-mode size-tier slider —
+verified in Node against the real committed JSON: pool sizes are small=331
+(> 323 as expected), medium=323 and byte-identical to the existing
+`randomEligible` set, large=exactly 100 with Jerusalem/Tel Aviv/Haifa among
+them; 5000 `pickRandomAnswerId` draws per tier all landed inside that tier's
+pool; and `pickAnswerId` (Daily mode's fallback rotation) is untouched by
+this change — confirmed both by a zero-diff on that function and by
+re-resolving today's override and a future fallback date to the same
+answers as before.
 
 ## Maintaining this file
 

@@ -19,6 +19,18 @@
     <button type="button" id="new-random-btn" class="new-random-btn" hidden>משחק אקראי חדש</button>
   </div>
 
+  <div class="size-tier-wrap" id="size-tier-wrap" hidden>
+    <span class="size-tier-label">גודל היישוב:</span>
+    <div class="size-tier-slider-group">
+      <input type="range" id="size-tier-slider" min="0" max="2" step="1" value="1" aria-label="בחירת גודל יישוב למשחק אקראי">
+      <div class="size-tier-ticks" aria-hidden="true">
+        <span>קטן</span>
+        <span>בינוני</span>
+        <span>גדול</span>
+      </div>
+    </div>
+  </div>
+
   <div class="date-picker-wrap" id="date-picker-wrap">
     <span class="date-picker-label">תאריך: <strong id="date-picker-status">היום</strong></span>
     <input type="date" id="date-picker" aria-label="בחירת תאריך לחידה יומית קודמת">

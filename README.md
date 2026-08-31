@@ -30,14 +30,21 @@ today's locality is selected:
 
 - **Daily** (default): the answer comes from `data/answer-schedule.json`,
   the same for every visitor on a given calendar day.
-- **Random**: a locality is picked uniformly at random from the
-  `randomEligible: true` subset of `data/localities.json` on each visit or
-  "משחק אקראי חדש" click. Guessing, distance/direction feedback, and hints all
-  work identically in both modes.
+- **Random**: a locality is picked uniformly at random from a size-tier pool
+  (see below) on each visit, "משחק אקראי חדש" click, or slider move.
+  Guessing, distance/direction feedback, and hints all work identically in
+  both modes.
 
 In Daily mode, a date picker lets you replay any earlier date's puzzle
 (clamped to today — no peeking at a future date). Every hint you reveal adds
 1 to the guess count shown on a win, the same as a wrong guess.
+
+In Random mode, a slider picks which size tier the locality is drawn from —
+קטן (small, K25 eligible voters ≥ 1000), בינוני (medium, the default —
+`randomEligible: true`, the same 323-locality pool as before this slider
+existed), or גדול (large, Israel's 100 biggest localities by K25 eligible
+voters). Moving the slider re-rolls immediately. See `AGENTS.md` for the
+exact pool definitions.
 
 ## Changing the daily answer
 
@@ -63,8 +70,9 @@ for the exact algorithm and data sourcing/exclusion details.
   `AGENTS.md` for coverage and source caveats.
 - `data/localities.json` — the canonical list of every guessable locality
   (autocomplete source). Each entry also carries `randomEligible`, which
-  gates whether that locality can be auto-selected by Random mode or the
-  Daily fallback rotation — see `AGENTS.md`.
+  gates whether that locality can be auto-selected by the Daily fallback
+  rotation (and is one of the three Random-mode size tiers) — see
+  `AGENTS.md`.
 - `data/answer-schedule.json` — hand-editable date → locality mapping.
 
 ## Data sources

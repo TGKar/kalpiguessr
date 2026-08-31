@@ -23,6 +23,8 @@
     partyLetters25: [],
     schedule: null,
     socioeconomic: null,
+    sizeTierPools: null,
+    sizeTier: 'medium',
     mode: 'daily',
     dailyDate: null,
     answerId: null,
@@ -65,10 +67,37 @@
     return eligible[idx].id;
   }
 
-  function pickRandomAnswerId(localities) {
-    const eligible = localities.filter((loc) => loc.randomEligible);
-    const idx = Math.floor(Math.random() * eligible.length);
-    return eligible[idx].id;
+  function pickRandomAnswerId(pool) {
+    const idx = Math.floor(Math.random() * pool.length);
+    return pool[idx].id;
+  }
+
+  // Random-mode-only size tiers, layered on top of (and independent from)
+  // randomEligible: 'medium' IS the existing randomEligible subset (323
+  // localities, unchanged); 'small' is a looser >=1000-eligible-voters-in-K25
+  // cut (no both-elections requirement, so it's a superset of 'medium');
+  // 'large' is exactly the top 100 guessable localities by K25 eligible
+  // voters, ties broken by numeric locality id for determinism. Daily mode's
+  // fallback rotation and answer-schedule.json overrides only ever use
+  // randomEligible directly (see pickAnswerId) and never touch these pools.
+  const SIZE_TIERS = ['small', 'medium', 'large'];
+
+  function computeSizeTierPools(localities, results25) {
+    const small = localities.filter((loc) => {
+      const rec = results25[loc.id];
+      return rec && rec.eligible >= 1000;
+    });
+    const medium = localities.filter((loc) => loc.randomEligible);
+    const large = localities
+      .filter((loc) => results25[loc.id])
+      .slice()
+      .sort((a, b) => {
+        const diff = results25[b.id].eligible - results25[a.id].eligible;
+        if (diff !== 0) return diff;
+        return Number(a.id) - Number(b.id);
+      })
+      .slice(0, 100);
+    return { small, medium, large };
   }
 
   const MIN_VOTE_SHARE_PCT = 0.1;
@@ -388,7 +417,7 @@
     const today = localDateStr(new Date());
 
     if (mode === 'random') {
-      state.answerId = pickRandomAnswerId(state.localities);
+      state.answerId = pickRandomAnswerId(state.sizeTierPools[state.sizeTier]);
       state.dailyDate = null;
     } else {
       let target = dateStr || today;
@@ -420,6 +449,9 @@
     });
     document.getElementById('new-random-btn').hidden = mode !== 'random';
 
+    const sizeTierWrap = document.getElementById('size-tier-wrap');
+    sizeTierWrap.hidden = mode !== 'random';
+
     const datePickerWrap = document.getElementById('date-picker-wrap');
     datePickerWrap.hidden = mode !== 'daily';
     if (mode === 'daily') {
@@ -435,6 +467,16 @@
       btn.addEventListener('click', () => startRound(btn.dataset.mode));
     });
     document.getElementById('new-random-btn').addEventListener('click', () => startRound('random'));
+  }
+
+  // Moving the slider immediately re-rolls a fresh round from the newly
+  // selected tier's pool (same reset behavior as "משחק אקראי חדש").
+  function setupSizeTierSlider() {
+    const slider = document.getElementById('size-tier-slider');
+    slider.addEventListener('input', () => {
+      state.sizeTier = SIZE_TIERS[Number(slider.value)];
+      startRound('random');
+    });
   }
 
   function setupDatePicker() {
@@ -470,10 +512,12 @@
     state.partyLetters25 = Object.keys(parties25);
     state.schedule = schedule;
     state.socioeconomic = socioeconomic;
+    state.sizeTierPools = computeSizeTierPools(localities, results25);
 
     setupAutocomplete();
     setupHints();
     setupModeSwitcher();
+    setupSizeTierSlider();
     setupDatePicker();
     startRound('daily');
   }
