@@ -242,13 +242,17 @@ h2 {
 }
 
 /* Hints */
-.hint-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.hint-block {
+  margin-bottom: 0.6rem;
+}
+
+.hint-block:last-child {
+  margin-bottom: 0;
 }
 
 .hint-btn {
+  display: block;
+  width: 100%;
   padding: 0.6rem 0.9rem;
   font-size: 0.9rem;
   background: #eef4f6;
@@ -270,14 +274,60 @@ h2 {
 }
 
 .hint-output {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px dashed var(--border);
+  margin-top: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
   font-size: 0.9rem;
 }
 
 .hint-output p {
   margin: 0.25rem 0;
+}
+
+/* Mode switcher */
+.mode-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.mode-btn {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.mode-btn:hover {
+  background: #eef4f6;
+}
+
+.mode-btn[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.new-random-btn {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+  background: var(--bar-color-alt);
+  border: 1px solid var(--bar-color-alt);
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+}
+
+.new-random-btn:hover {
+  filter: brightness(0.95);
 }
 
 .app-footer {

@@ -1,4 +1,4 @@
-# קלפי-דל (knesset-guessr)
+# Kalpiguessr (knesset-guessr)
 
 A daily Tradle/Worldle-style guessing game for Israeli Knesset election results.
 Every day the app picks a locality (yishuv) and shows only its 25th Knesset
@@ -23,6 +23,17 @@ python3 -m http.server 8000
 Then open `http://localhost:8000/` in a browser. It must be served over HTTP
 (not opened as a `file://` URL) so `fetch()` can load the JSON files in `data/`.
 
+## Daily vs. Random mode
+
+The mode switcher near the top of the page ("יומי" / "אקראי") picks how
+today's locality is selected:
+
+- **Daily** (default): the answer comes from `data/answer-schedule.json`,
+  the same for every visitor on a given calendar day.
+- **Random**: a locality is picked uniformly at random from
+  `data/localities.json` on each visit or "משחק אקראי חדש" click. Guessing,
+  distance/direction feedback, and hints all work identically in both modes.
+
 ## Changing the daily answer
 
 Edit `data/answer-schedule.json` by hand — add an entry to `overrides` mapping
@@ -40,6 +51,9 @@ data sourcing/exclusion details.
   maps for each election.
 - `data/coords.json` — per-locality WGS84 lat/lon (converted from the
   official ITM grid — see `AGENTS.md`).
+- `data/socioeconomic.json` — per-locality CBS socioeconomic cluster (1-10)
+  and matriculation (bagrut) eligibility % — see `AGENTS.md` for coverage
+  and source caveats.
 - `data/localities.json` — the canonical list of playable localities
   (autocomplete source + fallback rotation order).
 - `data/answer-schedule.json` — hand-editable date → locality mapping.

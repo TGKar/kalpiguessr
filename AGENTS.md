@@ -42,6 +42,40 @@ public datasets — nothing here is fabricated or approximated.
   (Jerusalem, Tel Aviv, Eilat) to within ~1km, which is expected since these
   are locality *centroids*, not landmark points — more than accurate enough
   for city-level distance/direction gameplay.
+- **Socioeconomic cluster** (hint 4): data.gov.il CKAN dataset
+  `social_economic_cluster` ("אשכול כלכלי חברתי של מועצות מקומיות ויישובים
+  לשנת 2019"), resource id `7c860e04-9f8d-41c2-9f24-6249958d2081`, field
+  `ESHKOL 2019` (CBS official 1-10 socioeconomic index), joined on
+  `LOCALITY SYMBOL` = our locality id. This CBS resource, despite its title,
+  only covers localities *within* one of Israel's ~54 regional councils
+  (villages/kibbutzim/moshavim under a מועצה אזורית) — it does not include
+  standalone cities or local councils (e.g. Tel Aviv, Jerusalem, Haifa are
+  absent). Real coverage as a result: **116 of 323** localities have a
+  cluster value; the rest show `null` (UI: "אין נתון"). No other CKAN
+  dataset with a *complete* (city + village) locality-level 1-10 cluster
+  was found — searched data.gov.il broadly (`social_economic_cluster`,
+  `citiesandsettelments`, `localities-in-israel`/`bycode2022` — that file's
+  `אשכול רשויות מקומיות` field looked promising but turned out to be an
+  unrelated regional-council sub-area code, not the socioeconomic index)
+  before settling on this as the best real, joinable source.
+- **Matriculation (bagrut) eligibility %** (hint 4): **not sourced** —
+  `bagrutPct` is `null` for every locality in `data/socioeconomic.json`.
+  This is a genuine, real CBS/Ministry-of-Education statistic (cited in
+  press coverage as "special CBS processing"), but no authoritative
+  locality-level dataset for it could be found as open, joinable,
+  machine-readable data: it is absent from data.gov.il (searched under CBS,
+  Ministry of Education, and RAMA/ראמ"ה organizations — the closest hits
+  were `rama_meitzav`, an unrelated standardized-test dataset, and
+  Ministry-of-Education "תמונה חינוכית" XLS resources that turned out to be
+  2015/16-vintage and not datastore-indexed), and the CBS annual "הרשויות
+  המקומיות בישראל" release that covers similar ground turned out (after
+  building a from-scratch PDF text extractor, see below) to cover
+  demographics/migration/wages/budget-by-cluster, not bagrut. Rather than
+  transcribe numbers by hand from a news article or estimate, the field is
+  left `null` everywhere — per the brief, a missing indicator should degrade
+  gracefully ("אין נתון"), not be fabricated. If a real source turns up
+  later, populate `bagrutPct` in `data/socioeconomic.json` the same way
+  `cluster` is populated.
 
 ## Locality pool and exclusions
 
@@ -77,7 +111,12 @@ kibbutz/moshav qualifiers) than the CEC's own locality-name column.
   localityId } }`. Fallback for any date without an override: `dayIndex =
   floor((date - epoch) / 86400000)`, answer = `localities[dayIndex mod
   length]` (local calendar dates, not UTC). Implemented in `js/app.js`
-  (`pickAnswerId`).
+  (`pickAnswerId`). A separate "Random" mode (`pickRandomAnswerId`) picks
+  uniformly from `localities.json` independent of date/schedule; the two
+  modes share all guess/hint/win logic in `js/app.js` (`startRound(mode)`).
+- `socioeconomic.json`: `{ localityId: { cluster: 1-10|null, bagrutPct:
+  number|null } }`. See the provenance section above for what's real vs.
+  `null` and why.
 
 ## Similarity hint methodology
 
@@ -100,9 +139,14 @@ similar locality by vote pattern comes out as Givatayim — its adjacent,
 demographically similar neighbor, which is a strong correctness signal).
 `data/answer-schedule.json` fallback logic and full data-join integrity (0
 localities missing coords/results in either election) were also verified
-this way. If Chrome becomes available, a manual pass (guess flow,
-autocomplete, RTL layout, all three hints) is still worth doing before
-treating the UI itself as verified.
+this way. Chrome is still unavailable as of the follow-up round that added
+Random mode and hint 4 (socioeconomic/bagrut) — that round's `startRound`,
+`pickRandomAnswerId`, and `socioeconomic.json` join were likewise verified
+by loading the real committed JSON in Node (2000 random draws all resolved
+to valid localities; all 323 localities have a `socioeconomic.json` entry).
+If Chrome becomes available, a manual pass (guess flow, autocomplete, RTL
+layout, all four hints, both mode-switcher buttons) is still worth doing
+before treating the UI itself as verified.
 
 ## Maintaining this file
 

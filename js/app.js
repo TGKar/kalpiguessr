@@ -9,6 +9,7 @@
     parties25: 'data/parties-25.json',
     parties24: 'data/parties-24.json',
     schedule: 'data/answer-schedule.json',
+    socioeconomic: 'data/socioeconomic.json',
   };
 
   const state = {
@@ -20,6 +21,9 @@
     parties25: null,
     parties24: null,
     partyLetters25: [],
+    schedule: null,
+    socioeconomic: null,
+    mode: 'daily',
     answerId: null,
     guesses: [],
     won: false,
@@ -53,6 +57,11 @@
     const dayIndex = Math.floor((today - epochDate) / 86400000);
     const n = localities.length;
     const idx = ((dayIndex % n) + n) % n;
+    return localities[idx].id;
+  }
+
+  function pickRandomAnswerId(localities) {
+    const idx = Math.floor(Math.random() * localities.length);
     return localities[idx].id;
   }
 
@@ -317,19 +326,80 @@
       const { id } = Stats.findMostSimilarLocality(state.answerId, state.results25, state.partyLetters25);
       const similarName = state.localitiesById.get(id).name;
       out.innerHTML = `<p>היישוב עם פילוג הקולות הדומה ביותר הוא <strong>${similarName}</strong>.</p>`;
+    } else if (hint === 'socioeconomic') {
+      const out = document.getElementById('hint-socioeconomic');
+      if (out.dataset.filled) return;
+      out.dataset.filled = '1';
+      const rec = state.socioeconomic[state.answerId] || { cluster: null, bagrutPct: null };
+      const clusterText = rec.cluster != null ? `<strong>${rec.cluster}</strong> (מתוך 1-10)` : 'אין נתון';
+      const bagrutText = rec.bagrutPct != null ? `<strong>${rec.bagrutPct}%</strong>` : 'אין נתון';
+      out.innerHTML = `
+        <p>אשכול חברתי-כלכלי (למ"ס): ${clusterText}</p>
+        <p>אחוז זכאות לתעודת בגרות: ${bagrutText}</p>
+      `;
     }
   }
 
+  function resetHints() {
+    document.querySelectorAll('.hint-btn').forEach((btn) => {
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    document.querySelectorAll('.hint-output').forEach((out) => {
+      out.hidden = true;
+      delete out.dataset.filled;
+      if (!out.querySelector('.bar-chart')) out.innerHTML = '';
+    });
+  }
+
+  // Starts (or restarts) a round in the given mode: picks a new answer,
+  // clears guesses/hints/win state, and re-renders the answer's 25th-Knesset
+  // chart. Used both for the initial load and for mode/round switches.
+  function startRound(mode) {
+    state.mode = mode;
+    state.answerId =
+      mode === 'random'
+        ? pickRandomAnswerId(state.localities)
+        : pickAnswerId(state.schedule, state.localities, localDateStr(new Date()));
+    state.guesses = [];
+    state.won = false;
+
+    const answerRec = state.results25[state.answerId];
+    renderBarChart(document.getElementById('chart-25'), answerRec.votes, state.parties25, answerRec.valid);
+    renderHistory();
+    resetHints();
+
+    const input = document.getElementById('guess-input');
+    input.disabled = false;
+    input.value = '';
+    input.placeholder = 'הקלידו שם יישוב...';
+
+    document.getElementById('win-banner').hidden = true;
+
+    document.querySelectorAll('.mode-btn').forEach((btn) => {
+      btn.setAttribute('aria-selected', String(btn.dataset.mode === mode));
+    });
+    document.getElementById('new-random-btn').hidden = mode !== 'random';
+  }
+
+  function setupModeSwitcher() {
+    document.querySelectorAll('.mode-btn').forEach((btn) => {
+      btn.addEventListener('click', () => startRound(btn.dataset.mode));
+    });
+    document.getElementById('new-random-btn').addEventListener('click', () => startRound('random'));
+  }
+
   async function init() {
-    const [localities, results25, results24, coords, parties25, parties24, schedule] = await Promise.all([
-      fetchJson(DATA_FILES.localities),
-      fetchJson(DATA_FILES.results25),
-      fetchJson(DATA_FILES.results24),
-      fetchJson(DATA_FILES.coords),
-      fetchJson(DATA_FILES.parties25),
-      fetchJson(DATA_FILES.parties24),
-      fetchJson(DATA_FILES.schedule),
-    ]);
+    const [localities, results25, results24, coords, parties25, parties24, schedule, socioeconomic] =
+      await Promise.all([
+        fetchJson(DATA_FILES.localities),
+        fetchJson(DATA_FILES.results25),
+        fetchJson(DATA_FILES.results24),
+        fetchJson(DATA_FILES.coords),
+        fetchJson(DATA_FILES.parties25),
+        fetchJson(DATA_FILES.parties24),
+        fetchJson(DATA_FILES.schedule),
+        fetchJson(DATA_FILES.socioeconomic),
+      ]);
 
     state.localities = localities;
     state.localitiesById = new Map(localities.map((loc) => [loc.id, loc]));
@@ -339,16 +409,13 @@
     state.parties25 = parties25;
     state.parties24 = parties24;
     state.partyLetters25 = Object.keys(parties25);
+    state.schedule = schedule;
+    state.socioeconomic = socioeconomic;
 
-    const today = localDateStr(new Date());
-    state.answerId = pickAnswerId(schedule, localities, today);
-
-    const answerRec = state.results25[state.answerId];
-    renderBarChart(document.getElementById('chart-25'), answerRec.votes, state.parties25, answerRec.valid);
-
-    renderHistory();
     setupAutocomplete();
     setupHints();
+    setupModeSwitcher();
+    startRound('daily');
   }
 
   init().catch((err) => {

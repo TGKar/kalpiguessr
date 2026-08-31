@@ -3,15 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>קלפי-דל • משחק ניחוש בחירות</title>
+<title>Kalpiguessr</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="page">
   <header class="app-header">
-    <h1>קלפי-דל</h1>
+    <h1>Kalpiguessr</h1>
     <p class="subtitle">נחשו את היישוב לפי פילוג הקולות שלו בבחירות לכנסת ה-25</p>
   </header>
+
+  <div class="mode-switcher" role="tablist" aria-label="מצב משחק">
+    <button type="button" class="mode-btn" data-mode="daily" role="tab" aria-selected="true">יומי</button>
+    <button type="button" class="mode-btn" data-mode="random" role="tab" aria-selected="false">אקראי</button>
+    <button type="button" id="new-random-btn" class="new-random-btn" hidden>משחק אקראי חדש</button>
+  </div>
 
   <main id="app">
     <section class="chart-card">
@@ -48,16 +54,24 @@
 
     <section class="hints-card">
       <h2>רמזים</h2>
-      <div class="hint-buttons">
+      <div class="hint-block">
         <button type="button" class="hint-btn" data-hint="turnout">רמז 1: בעלי זכות בחירה והצבעה בפועל</button>
+        <div id="hint-turnout" class="hint-output" hidden></div>
+      </div>
+      <div class="hint-block">
         <button type="button" class="hint-btn" data-hint="k24">רמז 2: פילוג הקולות בבחירות 2021 (כנסת 24)</button>
+        <div id="hint-k24" class="hint-output" hidden>
+          <div id="chart-24" class="bar-chart"></div>
+        </div>
+      </div>
+      <div class="hint-block">
         <button type="button" class="hint-btn" data-hint="similar">רמז 3: היישוב הדומה ביותר בפילוג הקולות</button>
+        <div id="hint-similar" class="hint-output" hidden></div>
       </div>
-      <div id="hint-turnout" class="hint-output" hidden></div>
-      <div id="hint-k24" class="hint-output" hidden>
-        <div id="chart-24" class="bar-chart"></div>
+      <div class="hint-block">
+        <button type="button" class="hint-btn" data-hint="socioeconomic">רמז 4: מדד חברתי-כלכלי ואחוז זכאות לבגרות</button>
+        <div id="hint-socioeconomic" class="hint-output" hidden></div>
       </div>
-      <div id="hint-similar" class="hint-output" hidden></div>
     </section>
   </main>
 
