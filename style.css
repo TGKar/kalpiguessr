@@ -1,0 +1,294 @@
+:root {
+  --bg: #f4f3ef;
+  --card-bg: #ffffff;
+  --text: #1f2430;
+  --text-muted: #5b6172;
+  --border: #e1dfd8;
+  --accent: #1a5f7a;
+  --accent-dark: #0f3d50;
+  --bar-color: #2f8fb0;
+  --bar-color-alt: #57b894;
+  --wrong: #c15b4a;
+  --win: #2f8f5b;
+  --shadow: 0 1px 3px rgba(20, 20, 30, 0.08);
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  text-align: right;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.app-header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 2rem;
+  color: var(--accent-dark);
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+section {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  color: var(--accent-dark);
+}
+
+/* Bar chart */
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr 3.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.bar-label {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bar-label .party-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-label .party-letter {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.bar-track {
+  background: #eef1ef;
+  border-radius: 6px;
+  height: 1.1rem;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--bar-color), var(--bar-color-alt));
+  border-radius: 6px 0 0 6px;
+  transition: width 0.4s ease;
+}
+
+.bar-pct {
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Autocomplete */
+.autocomplete {
+  position: relative;
+}
+
+#guess-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fbfbf9;
+  color: var(--text);
+}
+
+#guess-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.suggestions {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 4px);
+  right: 0;
+  left: 0;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(20, 20, 30, 0.12);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.suggestions li {
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.suggestions li:hover,
+.suggestions li.active {
+  background: #e7f1f5;
+}
+
+.hint-text {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.win-banner {
+  background: #e6f5ec;
+  border-color: var(--win);
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--win);
+}
+
+/* Guess history */
+.history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.history-list li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  background: #f8f8f6;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.history-list .guess-name {
+  font-weight: 600;
+}
+
+.history-list .guess-distance {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.history-list .guess-direction {
+  background: var(--accent);
+  color: white;
+  border-radius: 6px;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.history-list li.correct {
+  border-color: var(--win);
+  background: #e6f5ec;
+}
+
+.history-list li.correct .guess-direction {
+  background: var(--win);
+}
+
+.history-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+}
+
+/* Hints */
+.hint-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hint-btn {
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  background: #eef4f6;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--accent-dark);
+  cursor: pointer;
+  text-align: right;
+}
+
+.hint-btn:hover {
+  background: #dfeaee;
+}
+
+.hint-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.hint-output {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border);
+  font-size: 0.9rem;
+}
+
+.hint-output p {
+  margin: 0.25rem 0;
+}
+
+.app-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1.5rem;
+}
+
+.app-footer code {
+  background: #eee;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+}

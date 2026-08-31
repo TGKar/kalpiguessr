@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קלפי-דל • משחק ניחוש בחירות</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <header class="app-header">
+    <h1>קלפי-דל</h1>
+    <p class="subtitle">נחשו את היישוב לפי פילוג הקולות שלו בבחירות לכנסת ה-25</p>
+  </header>
+
+  <main id="app">
+    <section class="chart-card">
+      <h2>פילוג הקולות ביישוב המסתורי (בחירות 2022)</h2>
+      <div id="chart-25" class="bar-chart" aria-live="polite"></div>
+    </section>
+
+    <section class="guess-card">
+      <form id="guess-form" autocomplete="off">
+        <div class="autocomplete">
+          <input
+            id="guess-input"
+            type="text"
+            placeholder="הקלידו שם יישוב..."
+            aria-label="נחשו יישוב"
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-controls="suggestions"
+          >
+          <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+        </div>
+      </form>
+      <p id="guess-hint" class="hint-text">יש לבחור יישוב מתוך רשימת ההשלמה האוטומטית.</p>
+    </section>
+
+    <section id="win-banner" class="win-banner" hidden>
+      <p id="win-text"></p>
+    </section>
+
+    <section class="history-card">
+      <h2>ניחושים קודמים</h2>
+      <ol id="history-list" class="history-list"></ol>
+    </section>
+
+    <section class="hints-card">
+      <h2>רמזים</h2>
+      <div class="hint-buttons">
+        <button type="button" class="hint-btn" data-hint="turnout">רמז 1: בעלי זכות בחירה והצבעה בפועל</button>
+        <button type="button" class="hint-btn" data-hint="k24">רמז 2: פילוג הקולות בבחירות 2021 (כנסת 24)</button>
+        <button type="button" class="hint-btn" data-hint="similar">רמז 3: היישוב הדומה ביותר בפילוג הקולות</button>
+      </div>
+      <div id="hint-turnout" class="hint-output" hidden></div>
+      <div id="hint-k24" class="hint-output" hidden>
+        <div id="chart-24" class="bar-chart"></div>
+      </div>
+      <div id="hint-similar" class="hint-output" hidden></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>נתוני בחירות רשמיים מוועדת הבחירות המרכזית לכנסת (data.gov.il). ראו <code>AGENTS.md</code> למקורות המדויקים.</p>
+  </footer>
+</div>
+
+<script src="js/geo.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
