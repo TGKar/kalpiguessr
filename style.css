@@ -222,8 +222,14 @@ h2 {
   color: white;
   border-radius: 6px;
   padding: 0.15rem 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   white-space: nowrap;
+  /* Arrow glyphs (→ ← etc.) are bidi-mirrored characters; force an LTR run
+     so they always point their intended physical direction inside the
+     page's RTL flow instead of being flipped by the Unicode bidi algorithm. */
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
 }
 
 .history-list li.correct {
@@ -242,6 +248,12 @@ h2 {
 }
 
 /* Hints */
+.hint-cost-note {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
 .hint-block {
   margin-bottom: 0.6rem;
 }
@@ -328,6 +340,30 @@ h2 {
 
 .new-random-btn:hover {
   filter: brightness(0.95);
+}
+
+.date-picker-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.date-picker-label strong {
+  color: var(--text);
+}
+
+#date-picker {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text);
 }
 
 .app-footer {

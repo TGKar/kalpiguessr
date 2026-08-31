@@ -34,6 +34,10 @@ today's locality is selected:
   `data/localities.json` on each visit or "משחק אקראי חדש" click. Guessing,
   distance/direction feedback, and hints all work identically in both modes.
 
+In Daily mode, a date picker lets you replay any earlier date's puzzle
+(clamped to today — no peeking at a future date). Every hint you reveal adds
+1 to the guess count shown on a win, the same as a wrong guess.
+
 ## Changing the daily answer
 
 Edit `data/answer-schedule.json` by hand — add an entry to `overrides` mapping
@@ -51,9 +55,9 @@ data sourcing/exclusion details.
   maps for each election.
 - `data/coords.json` — per-locality WGS84 lat/lon (converted from the
   official ITM grid — see `AGENTS.md`).
-- `data/socioeconomic.json` — per-locality CBS socioeconomic cluster (1-10)
-  and matriculation (bagrut) eligibility % — see `AGENTS.md` for coverage
-  and source caveats.
+- `data/socioeconomic.json` — per-locality CBS socioeconomic cluster (1-10),
+  used for hint 4 (hidden when a locality has no cluster value) — see
+  `AGENTS.md` for coverage and source caveats.
 - `data/localities.json` — the canonical list of playable localities
   (autocomplete source + fallback rotation order).
 - `data/answer-schedule.json` — hand-editable date → locality mapping.

@@ -24,8 +24,10 @@
     schedule: null,
     socioeconomic: null,
     mode: 'daily',
+    dailyDate: null,
     answerId: null,
     guesses: [],
+    hintPenalty: 0,
     won: false,
     activeSuggestionIndex: -1,
     currentSuggestions: [],
@@ -65,16 +67,18 @@
     return localities[idx].id;
   }
 
+  const MIN_VOTE_SHARE_PCT = 0.1;
+
   function renderBarChart(container, votes, partiesMap, validTotal) {
     container.innerHTML = '';
     const entries = Object.entries(votes)
-      .filter(([, count]) => count > 0)
       .map(([letter, count]) => ({
         letter,
         name: partiesMap[letter] || letter,
         count,
         pct: (count / validTotal) * 100,
       }))
+      .filter((entry) => entry.pct >= MIN_VOTE_SHARE_PCT)
       .sort((a, b) => b.count - a.count);
 
     if (entries.length === 0) {
@@ -121,6 +125,20 @@
     return `${Math.round(km)} ק"מ`;
   }
 
+  // Maps Geo.compassLabel's Hebrew word (bearing bucketing stays in geo.js
+  // untouched) to a display arrow. The Hebrew word is kept as a
+  // title/aria-label for accessibility rather than dropped.
+  const DIRECTION_ARROWS = {
+    'צפון': '↑',
+    'צפון-מזרח': '↗',
+    'מזרח': '→',
+    'דרום-מזרח': '↘',
+    'דרום': '↓',
+    'דרום-מערב': '↙',
+    'מערב': '←',
+    'צפון-מערב': '↖',
+  };
+
   function renderHistory() {
     const list = document.getElementById('history-list');
     list.innerHTML = '';
@@ -144,7 +162,13 @@
 
       const dirEl = document.createElement('span');
       dirEl.className = 'guess-direction';
-      dirEl.textContent = g.correct ? '🎯' : g.direction;
+      if (g.correct) {
+        dirEl.textContent = '🎯';
+      } else {
+        dirEl.textContent = DIRECTION_ARROWS[g.direction] || g.direction;
+        dirEl.title = g.direction;
+        dirEl.setAttribute('aria-label', g.direction);
+      }
 
       li.appendChild(nameEl);
       li.appendChild(distEl);
@@ -158,7 +182,7 @@
     const answer = state.localitiesById.get(state.answerId);
     const banner = document.getElementById('win-banner');
     const text = document.getElementById('win-text');
-    const count = state.guesses.length;
+    const count = state.guesses.length + state.hintPenalty;
     const guessWord = count === 1 ? 'ניחוש אחד' : `${count} ניחושים`;
     text.textContent = `כל הכבוד! היישוב הוא ${answer.name}. פתרתם ב-${guessWord}.`;
     banner.hidden = false;
@@ -301,42 +325,34 @@
     });
   }
 
+  // Every hint costs a guess, charged exactly once: the same dataset.filled
+  // gate that stops a hint's content from being re-fetched also stops the
+  // guess count from double-counting a hint that's toggled closed and
+  // reopened. Centralized here so every hint type pays the same way.
   function populateHint(hint) {
+    const out = document.getElementById(`hint-${hint}`);
+    if (out.dataset.filled) return;
+    out.dataset.filled = '1';
+    state.hintPenalty++;
+
     const answer = state.results25[state.answerId];
     if (hint === 'turnout') {
-      const out = document.getElementById('hint-turnout');
-      if (out.dataset.filled) return;
-      out.dataset.filled = '1';
       const turnoutPct = ((answer.voters / answer.eligible) * 100).toFixed(1);
       out.innerHTML = `
         <p>בעלי זכות בחירה: <strong>${answer.eligible.toLocaleString('he-IL')}</strong></p>
         <p>הצביעו בפועל: <strong>${answer.voters.toLocaleString('he-IL')}</strong> (${turnoutPct}% אחוז הצבעה)</p>
       `;
     } else if (hint === 'k24') {
-      const out = document.getElementById('hint-k24');
-      if (out.dataset.filled) return;
-      out.dataset.filled = '1';
       const rec24 = state.results24[state.answerId];
       const container = document.getElementById('chart-24');
       renderBarChart(container, rec24.votes, state.parties24, rec24.valid);
     } else if (hint === 'similar') {
-      const out = document.getElementById('hint-similar');
-      if (out.dataset.filled) return;
-      out.dataset.filled = '1';
       const { id } = Stats.findMostSimilarLocality(state.answerId, state.results25, state.partyLetters25);
       const similarName = state.localitiesById.get(id).name;
       out.innerHTML = `<p>היישוב עם פילוג הקולות הדומה ביותר הוא <strong>${similarName}</strong>.</p>`;
     } else if (hint === 'socioeconomic') {
-      const out = document.getElementById('hint-socioeconomic');
-      if (out.dataset.filled) return;
-      out.dataset.filled = '1';
-      const rec = state.socioeconomic[state.answerId] || { cluster: null, bagrutPct: null };
-      const clusterText = rec.cluster != null ? `<strong>${rec.cluster}</strong> (מתוך 1-10)` : 'אין נתון';
-      const bagrutText = rec.bagrutPct != null ? `<strong>${rec.bagrutPct}%</strong>` : 'אין נתון';
-      out.innerHTML = `
-        <p>אשכול חברתי-כלכלי (למ"ס): ${clusterText}</p>
-        <p>אחוז זכאות לתעודת בגרות: ${bagrutText}</p>
-      `;
+      const rec = state.socioeconomic[state.answerId];
+      out.innerHTML = `<p>אשכול חברתי-כלכלי (למ"ס): <strong>${rec.cluster}</strong> (מתוך 1-10)</p>`;
     }
   }
 
@@ -351,22 +367,42 @@
     });
   }
 
+  function formatDateForDisplay(dateStr) {
+    const [y, m, d] = dateStr.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
   // Starts (or restarts) a round in the given mode: picks a new answer,
   // clears guesses/hints/win state, and re-renders the answer's 25th-Knesset
-  // chart. Used both for the initial load and for mode/round switches.
-  function startRound(mode) {
+  // chart. Used both for the initial load and for mode/round switches. For
+  // 'daily' mode, dateStr picks which day's puzzle to resolve via the same
+  // pickAnswerId(schedule, localities, dateStr) used for today; omitted, it
+  // defaults to today's local date (the archive date-picker is what supplies
+  // an explicit dateStr for earlier days).
+  function startRound(mode, dateStr) {
     state.mode = mode;
-    state.answerId =
-      mode === 'random'
-        ? pickRandomAnswerId(state.localities)
-        : pickAnswerId(state.schedule, state.localities, localDateStr(new Date()));
+    const today = localDateStr(new Date());
+
+    if (mode === 'random') {
+      state.answerId = pickRandomAnswerId(state.localities);
+      state.dailyDate = null;
+    } else {
+      let target = dateStr || today;
+      if (target > today) target = today; // never reveal a future date's answer
+      state.dailyDate = target;
+      state.answerId = pickAnswerId(state.schedule, state.localities, target);
+    }
     state.guesses = [];
+    state.hintPenalty = 0;
     state.won = false;
 
     const answerRec = state.results25[state.answerId];
     renderBarChart(document.getElementById('chart-25'), answerRec.votes, state.parties25, answerRec.valid);
     renderHistory();
     resetHints();
+
+    const socioRec = state.socioeconomic[state.answerId];
+    document.getElementById('hint-block-socioeconomic').hidden = !socioRec || socioRec.cluster == null;
 
     const input = document.getElementById('guess-input');
     input.disabled = false;
@@ -379,6 +415,15 @@
       btn.setAttribute('aria-selected', String(btn.dataset.mode === mode));
     });
     document.getElementById('new-random-btn').hidden = mode !== 'random';
+
+    const datePickerWrap = document.getElementById('date-picker-wrap');
+    datePickerWrap.hidden = mode !== 'daily';
+    if (mode === 'daily') {
+      const dateInput = document.getElementById('date-picker');
+      const status = document.getElementById('date-picker-status');
+      dateInput.value = state.dailyDate;
+      status.textContent = state.dailyDate === today ? 'היום' : formatDateForDisplay(state.dailyDate);
+    }
   }
 
   function setupModeSwitcher() {
@@ -386,6 +431,16 @@
       btn.addEventListener('click', () => startRound(btn.dataset.mode));
     });
     document.getElementById('new-random-btn').addEventListener('click', () => startRound('random'));
+  }
+
+  function setupDatePicker() {
+    const dateInput = document.getElementById('date-picker');
+    const today = localDateStr(new Date());
+    dateInput.max = today;
+    dateInput.addEventListener('change', () => {
+      if (!dateInput.value) return;
+      startRound('daily', dateInput.value);
+    });
   }
 
   async function init() {
@@ -415,6 +470,7 @@
     setupAutocomplete();
     setupHints();
     setupModeSwitcher();
+    setupDatePicker();
     startRound('daily');
   }
 

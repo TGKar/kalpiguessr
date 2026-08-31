@@ -51,31 +51,23 @@ public datasets — nothing here is fabricated or approximated.
   (villages/kibbutzim/moshavim under a מועצה אזורית) — it does not include
   standalone cities or local councils (e.g. Tel Aviv, Jerusalem, Haifa are
   absent). Real coverage as a result: **116 of 323** localities have a
-  cluster value; the rest show `null` (UI: "אין נתון"). No other CKAN
-  dataset with a *complete* (city + village) locality-level 1-10 cluster
-  was found — searched data.gov.il broadly (`social_economic_cluster`,
-  `citiesandsettelments`, `localities-in-israel`/`bycode2022` — that file's
-  `אשכול רשויות מקומיות` field looked promising but turned out to be an
-  unrelated regional-council sub-area code, not the socioeconomic index)
-  before settling on this as the best real, joinable source.
-- **Matriculation (bagrut) eligibility %** (hint 4): **not sourced** —
-  `bagrutPct` is `null` for every locality in `data/socioeconomic.json`.
-  This is a genuine, real CBS/Ministry-of-Education statistic (cited in
-  press coverage as "special CBS processing"), but no authoritative
-  locality-level dataset for it could be found as open, joinable,
-  machine-readable data: it is absent from data.gov.il (searched under CBS,
-  Ministry of Education, and RAMA/ראמ"ה organizations — the closest hits
-  were `rama_meitzav`, an unrelated standardized-test dataset, and
-  Ministry-of-Education "תמונה חינוכית" XLS resources that turned out to be
-  2015/16-vintage and not datastore-indexed), and the CBS annual "הרשויות
-  המקומיות בישראל" release that covers similar ground turned out (after
-  building a from-scratch PDF text extractor, see below) to cover
-  demographics/migration/wages/budget-by-cluster, not bagrut. Rather than
-  transcribe numbers by hand from a news article or estimate, the field is
-  left `null` everywhere — per the brief, a missing indicator should degrade
-  gracefully ("אין נתון"), not be fabricated. If a real source turns up
-  later, populate `bagrutPct` in `data/socioeconomic.json` the same way
-  `cluster` is populated.
+  cluster value. Rather than show a hollow "אין נתון" for the other 207,
+  hint 4's button+output are hidden entirely for those localities
+  (`startRound` checks `state.socioeconomic[answerId].cluster` — see
+  `js/app.js`). No other CKAN dataset with a *complete* (city + village)
+  locality-level 1-10 cluster was found — searched data.gov.il broadly
+  (`social_economic_cluster`, `citiesandsettelments`,
+  `localities-in-israel`/`bycode2022` — that file's `אשכול רשויות מקומיות`
+  field looked promising but turned out to be an unrelated regional-council
+  sub-area code, not the socioeconomic index) before settling on this as the
+  best real, joinable source.
+- **Matriculation (bagrut) eligibility %**: investigated for hint 4 (searched
+  data.gov.il under CBS/Ministry-of-Education/RAMA orgs, and read a CBS
+  annual local-authorities release via a from-scratch PDF text extractor —
+  none of it covered bagrut at locality level) and dropped entirely rather
+  than ship a field that would always be `null`. Not present anywhere in the
+  UI, `js/app.js`, or `data/socioeconomic.json` — don't reintroduce a
+  `bagrutPct`-shaped field without an actual source behind it.
 
 ## Locality pool and exclusions
 
@@ -114,9 +106,8 @@ kibbutz/moshav qualifiers) than the CEC's own locality-name column.
   (`pickAnswerId`). A separate "Random" mode (`pickRandomAnswerId`) picks
   uniformly from `localities.json` independent of date/schedule; the two
   modes share all guess/hint/win logic in `js/app.js` (`startRound(mode)`).
-- `socioeconomic.json`: `{ localityId: { cluster: 1-10|null, bagrutPct:
-  number|null } }`. See the provenance section above for what's real vs.
-  `null` and why.
+- `socioeconomic.json`: `{ localityId: { cluster: 1-10|null } }`. See the
+  provenance section above for coverage and why there's no `bagrutPct`.
 
 ## Similarity hint methodology
 
@@ -126,6 +117,25 @@ symmetric (KL is not — "similar to X" should be a symmetric relation) and
 handles parties with zero votes in a locality natively via the `0·log(0/x) := 0`
 convention, so no artificial small-probability smoothing is needed the way
 plain KL divergence would require.
+
+## Game mechanics notes
+
+- **Hints cost a guess.** This supersedes the original brief's "no
+  penalty/cost" hints — a later product decision (fix round 2) made every
+  hint reveal add 1 to the same count shown in the win banner
+  ("פתרתם ב-N ניחושים"), via `state.hintPenalty` in `js/app.js`. The charge
+  happens exactly once per hint, at the `dataset.filled` transition inside
+  `populateHint` — closing and reopening an already-revealed hint must not
+  charge again. Hints never get their own row in the guess-history list,
+  only wrong/correct locality guesses do.
+- **Vote-share bars hide anything under 0.1%.** `renderBarChart` filters by
+  `pct >= 0.1`, applied identically to the current-round chart and the
+  24th-Knesset hint chart since both go through that one function.
+- **Daily mode has an archive date-picker.** `startRound('daily', dateStr)`
+  resolves any past date through the same `pickAnswerId` used for today; the
+  picker's native `max` is clamped to today and `startRound` also clamps
+  defensively (a manually-typed future date falls back to today) so a
+  future day's answer can never leak early. Random mode has no date concept.
 
 ## Testing notes
 
@@ -146,7 +156,13 @@ by loading the real committed JSON in Node (2000 random draws all resolved
 to valid localities; all 323 localities have a `socioeconomic.json` entry).
 If Chrome becomes available, a manual pass (guess flow, autocomplete, RTL
 layout, all four hints, both mode-switcher buttons) is still worth doing
-before treating the UI itself as verified.
+before treating the UI itself as verified. Still true as of the round that
+added the 0.1% vote-share filter, arrow-glyph directions, the Daily-mode
+archive date-picker, and the hint-cost/hint-4-visibility changes — all
+verified the same way (Node harness against the real committed JSON: the
+0.1% filter checked against Tel Aviv's real vote breakdown, several archive
+dates resolved through `pickAnswerId` to real localities, all 8 compass
+labels confirmed to map to an arrow).
 
 ## Maintaining this file
 

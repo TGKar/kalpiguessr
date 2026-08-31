@@ -19,6 +19,11 @@
     <button type="button" id="new-random-btn" class="new-random-btn" hidden>משחק אקראי חדש</button>
   </div>
 
+  <div class="date-picker-wrap" id="date-picker-wrap">
+    <span class="date-picker-label">תאריך: <strong id="date-picker-status">היום</strong></span>
+    <input type="date" id="date-picker" aria-label="בחירת תאריך לחידה יומית קודמת">
+  </div>
+
   <main id="app">
     <section class="chart-card">
       <h2>פילוג הקולות ביישוב המסתורי (בחירות 2022)</h2>
@@ -54,6 +59,7 @@
 
     <section class="hints-card">
       <h2>רמזים</h2>
+      <p class="hint-cost-note">כל רמז שנחשף נספר כניחוש.</p>
       <div class="hint-block">
         <button type="button" class="hint-btn" data-hint="turnout">רמז 1: בעלי זכות בחירה והצבעה בפועל</button>
         <div id="hint-turnout" class="hint-output" hidden></div>
@@ -68,8 +74,8 @@
         <button type="button" class="hint-btn" data-hint="similar">רמז 3: היישוב הדומה ביותר בפילוג הקולות</button>
         <div id="hint-similar" class="hint-output" hidden></div>
       </div>
-      <div class="hint-block">
-        <button type="button" class="hint-btn" data-hint="socioeconomic">רמז 4: מדד חברתי-כלכלי ואחוז זכאות לבגרות</button>
+      <div class="hint-block" id="hint-block-socioeconomic" hidden>
+        <button type="button" class="hint-btn" data-hint="socioeconomic">רמז 4: מדד חברתי-כלכלי</button>
         <div id="hint-socioeconomic" class="hint-output" hidden></div>
       </div>
     </section>
