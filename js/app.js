@@ -11,6 +11,7 @@
     schedule: 'data/answer-schedule.json',
     socioeconomic: 'data/socioeconomic.json',
     peripherality: 'data/peripherality.json',
+    bagrut: 'data/bagrut.json',
   };
 
   const state = {
@@ -25,6 +26,7 @@
     schedule: null,
     socioeconomic: null,
     peripherality: null,
+    bagrut: null,
     sizeTierPools: null,
     sizeTier: 'medium',
     mode: 'daily',
@@ -383,8 +385,22 @@
       const similarName = state.localitiesById.get(id).name;
       out.innerHTML = `<p>היישוב עם פילוג הקולות הדומה ביותר הוא <strong>${similarName}</strong>.</p>`;
     } else if (hint === 'socioeconomic') {
-      const rec = state.socioeconomic[state.answerId];
-      out.innerHTML = `<p>אשכול חברתי-כלכלי (למ"ס): <strong>${rec.cluster}</strong> (מתוך 1-10)</p>`;
+      // Combined hint: the CBS socioeconomic cluster (2021) and the Ministry of
+      // Education bagrut-eligibility rate (2024) are near-complements — the
+      // cluster covers the villages, bagrut covers the cities, and only 5
+      // localities have both. Whichever line(s) exist are shown together;
+      // startRound hides the whole block when neither does. Still one hint, so
+      // still exactly one charge (taken above, at the dataset.filled gate).
+      const socioRec = state.socioeconomic[state.answerId];
+      const bagrutRec = state.bagrut[state.answerId];
+      let html = '';
+      if (socioRec && socioRec.cluster != null) {
+        html += `<p>אשכול חברתי-כלכלי (למ"ס, 2021): <strong>${socioRec.cluster}</strong> (מתוך 1-10)</p>`;
+      }
+      if (bagrutRec && bagrutRec.pct != null) {
+        html += `<p>זכאות לבגרות (משרד החינוך, ${bagrutRec.year}): <strong>${bagrutRec.pct}%</strong> מתלמידי כיתות י"ב הגרים ביישוב</p>`;
+      }
+      out.innerHTML = html;
     } else if (hint === 'peripherality') {
       // CBS peripherality: cluster 1 = most peripheral, 10 = most central, and
       // the 1-1213 national rank runs the same way (rank 1 = most peripheral).
@@ -441,8 +457,11 @@
     renderHistory();
     resetHints();
 
+    // Hint 4 carries two independent datasets; hide it only when neither has a value.
     const socioRec = state.socioeconomic[state.answerId];
-    document.getElementById('hint-block-socioeconomic').hidden = !socioRec || socioRec.cluster == null;
+    const bagrutRec = state.bagrut[state.answerId];
+    document.getElementById('hint-block-socioeconomic').hidden =
+      (!socioRec || socioRec.cluster == null) && (!bagrutRec || bagrutRec.pct == null);
 
     const periRec = state.peripherality[state.answerId];
     document.getElementById('hint-block-peripherality').hidden = !periRec || periRec.cluster == null;
@@ -501,7 +520,7 @@
 
   async function init() {
     const [localities, results25, results24, coords, parties25, parties24, schedule,
-      socioeconomic, peripherality] =
+      socioeconomic, peripherality, bagrut] =
       await Promise.all([
         fetchJson(DATA_FILES.localities),
         fetchJson(DATA_FILES.results25),
@@ -512,6 +531,7 @@
         fetchJson(DATA_FILES.schedule),
         fetchJson(DATA_FILES.socioeconomic),
         fetchJson(DATA_FILES.peripherality),
+        fetchJson(DATA_FILES.bagrut),
       ]);
 
     state.localities = localities;
@@ -525,6 +545,7 @@
     state.schedule = schedule;
     state.socioeconomic = socioeconomic;
     state.peripherality = peripherality;
+    state.bagrut = bagrut;
     state.sizeTierPools = computeSizeTierPools(localities, results25);
 
     setupAutocomplete();

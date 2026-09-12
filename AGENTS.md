@@ -74,14 +74,39 @@ public datasets — nothing here is fabricated or approximated.
   cluster (1 = most peripheral) and the rank (1 = most peripheral, 1213 = most
   central — Tel Aviv is 1212, Eilat is 3). Unlike the socioeconomic rank this
   one IS a single comparable national scale, so it's safe to show players.
-- **Matriculation (bagrut) eligibility %**: investigated for hint 4 (searched
-  data.gov.il under CBS/Ministry-of-Education/RAMA orgs, and read a CBS
-  annual local-authorities release via a from-scratch PDF text extractor —
-  none of it covered bagrut at locality level) and dropped entirely rather
-  than ship a field that would always be `null`. Not present anywhere in the
-  UI, `js/app.js`, or `data/socioeconomic.json` — don't reintroduce a
-  `bagrutPct`-shaped field without an actual source behind it. Still
-  unavailable as of the 2021-socioeconomic/peripherality rebuild.
+- **Matriculation (bagrut) eligibility %** (hint 4, second line): the Ministry
+  of Education's "שקיפות בחינוך" portal serves an **open, unauthenticated JSON
+  API** — no key, no cookie. **Hostname matters and has cost two earlier
+  investigations: `shkifut.education.gov.il` serves fine, while `edu.gov.il`
+  403s and redirects to a gov.il landing page.** Two calls:
+  `GET https://shkifut.education.gov.il/api/data/lists` → the 255 entries with
+  `Mode == 2` are the local authorities; then per authority
+  `GET https://shkifut.education.gov.il/api/data/rashutEduPic/?semelRashut=<Semel>&year=2024`
+  → group `Id == 5` (בגרות) → class `Id == 12` → index `Id == "ACHUZ_ZAKAIM"`
+  → `CompareValuesModel` entry named **`גרים ברשות`** (resident in the
+  authority). **Use the resident series, not `לומדים ברשות`** (studying here):
+  the studying series has two degenerate `0.0`s and a `100.0`, the resident one
+  is clean (min 6.6, median 82.7, sd 15.1). Vintage **2024** (all 181 values;
+  no year fallback was needed). Join: MoE `Semel` is the CBS locality code plus
+  a check digit, so `cbs_id = Semel // 10` — validated against every authority
+  whose `Semel // 10` hits a real CBS id, **zero mis-joins** (the 26 name
+  disagreements are all spelling variants: קרית/קריית, נהריה/נהרייה, …).
+  Coverage: **181 of 1211** guessable localities and **48 of 48** large-tier
+  cities. That is near the structural ceiling — 230 of the 255 authorities have
+  a value, but the rest are regional councils or merged authorities, and the
+  ~950 villages inside regional councils have no authority-level bagrut rate in
+  existence. **Caveat on 7 of the 181**: they join by normalized name rather
+  than by code, and for five of those (באר טוביה 155, לכיש 24, מגידו 586,
+  גזר 370, שפיר 692) the MoE entity is the eponymous *regional council*, so
+  their figure is the whole council's, not that village's — all five are below
+  every size tier's threshold, so they can only surface via an
+  `answer-schedule.json` override. Values are baked into `data/bagrut.json` at
+  build time; **never call this API from the browser** — it is an undocumented
+  internal backend that can change shape without notice. The same endpoint also
+  carries sibling per-authority indexes reachable exactly the same way —
+  `ACHUZ_ZAKAIM_MITZTYEN` (excellence), `ACHUZ_ANGLIT_5YL` / `ACHUZ_MATEM_5YL`
+  (5-unit English/maths), `ACHUZ_NESHIRA` (dropout), `GIUS_BANIM_LEZAVA`
+  (enlistment) — none of them implemented.
 
 **Fetching CBS data.** Direct file GETs under
 `https://www.cbs.gov.il/he/publications/DocLib/<year>/<pub>/<file>` work fine
@@ -192,8 +217,11 @@ first-visit behavior is unchanged from before this feature existed.
 - `peripherality.json`: `{ localityId: { cluster: 1-10|null, rank:
   1-1213|null } }`, same shape/coverage convention — an entry for all 1211,
   both fields `null` together where CBS has no value.
-  See the provenance section above for both files' sources, coverage counts,
-  the peripherality rank direction, and why there's no `bagrutPct`.
+- `bagrut.json`: `{ localityId: { pct: number|null, year: number|null } }`,
+  same convention again — an entry for all 1211, both fields `null` together,
+  181 with a value (all `year` 2024).
+  See the provenance section above for all three files' sources, coverage
+  counts, the peripherality rank direction, and the bagrut join/series caveats.
 
 ## Similarity hint methodology
 
@@ -227,13 +255,25 @@ plain KL divergence would require.
   tier's pool (same reset as the "משחק אקראי חדש" button). See the size-tier
   section above for the three pools and `pickRandomAnswerId`'s tier param.
 - **Five hints, two of them conditionally hidden.** 1 turnout, 2 the K24 vote
-  chart, 3 the most-similar locality, 4 socioeconomic cluster, 5 peripherality
-  (cluster + national rank). Hints 4 and 5 each hide their whole `hint-block`
-  in `startRound` when the answer has no value in the corresponding data file,
-  so a player never sees a hollow "אין נתון". Adding a hint means: a
-  `hint-block` + `hint-btn`/`hint-output` pair in `index.html`, a branch in
-  `populateHint`, and (if the data is incomplete) a hide line in `startRound`
-  — never a second `state.hintPenalty++` site.
+  chart, 3 the most-similar locality, 4 socioeconomic cluster **+ bagrut
+  eligibility**, 5 peripherality (cluster + national rank). Hints 4 and 5 each
+  hide their whole `hint-block` in `startRound` when the answer has no value in
+  the corresponding data file, so a player never sees a hollow "אין נתון".
+  Adding a hint means: a `hint-block` + `hint-btn`/`hint-output` pair in
+  `index.html`, a branch in `populateHint`, and (if the data is incomplete) a
+  hide line in `startRound` — never a second `state.hintPenalty++` site.
+- **Hint 4 is a combined hint over two independent datasets.** It renders the
+  socioeconomic cluster line when `socioeconomic.json` has a cluster and a
+  bagrut line when `bagrut.json` has a `pct`, and `startRound` hides the block
+  only when **neither** exists. The DOM ids stay `hint-socioeconomic` /
+  `hint-block-socioeconomic` for historical reasons — that key now means "hint
+  4", not "socioeconomic only". Measured coverage: cluster 1178, bagrut 181,
+  **overlap 181**, so combined coverage is **1178 of 1211** and the same 33
+  localities stay hidden. Since the CBS-2021 socioeconomic rebuild, bagrut is a
+  strict *subset* of the cluster's coverage, not a complement — it adds a second
+  statistic for those 181 (all 48 large-tier cities among them), not new
+  localities. Two lines, still exactly **one** charge: the guess is taken at the
+  shared `dataset.filled` gate in `populateHint`, never per line.
 
 ## Testing notes
 
@@ -250,17 +290,24 @@ round should re-check when it touches them:
   JSD similarity hint returns Givatayim for Tel Aviv (adjacent and
   demographically similar — a strong correctness signal).
 - Data-join integrity: all 1211 guessable localities have coords, K25 and K24
-  records, a `socioeconomic.json` entry and a `peripherality.json` entry, and
-  K25/K24 per-party vote sums reconcile against `valid` with zero
+  records, and a `socioeconomic.json`, `peripherality.json` and `bagrut.json`
+  entry, and K25/K24 per-party vote sums reconcile against `valid` with zero
   discrepancies.
+- Hint 4's render branch can be lifted verbatim out of `populateHint` with a
+  regex and run over all 1211 localities against a `{socioeconomic, bagrut}`
+  stub state, counting `<p>` tags per locality — the cheapest way to prove the
+  two-line/one-line/hidden split (currently 181 / 997 / 33) without a browser.
+  Pair it with a text assertion that `state.hintPenalty++` still occurs exactly
+  once in `js/app.js` and sits immediately after the `dataset.filled` gate.
 - Answer selection: resolve several dates (an override, a fallback, an
   archive date) through `pickAnswerId`, and draw a few thousand times per
   size tier through `pickRandomAnswerId`, confirming every draw lands in the
   intended pool. When a change is *supposed* to leave selection alone, prove
   it with a zero-diff on `pickAnswerId`/`pickRandomAnswerId`/
   `computeSizeTierPools` as well as by re-resolving known dates.
-- Current pool sizes for reference: guessable 1211, `randomEligible` 323,
-  size tiers small 331 / medium 323 / large 48.
+- Current data coverage for reference: guessable 1211, `randomEligible` 323,
+  size tiers small 331 / medium 323 / large 48; socioeconomic 1178,
+  peripherality 1182, bagrut 181 (48/48 large-tier), hint 4 visible for 1178.
 
 If Chrome ever becomes available, a manual pass is still worth doing before
 treating the UI itself as verified: guess flow, autocomplete, RTL layout, all
