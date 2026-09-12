@@ -385,12 +385,8 @@
       const similarName = state.localitiesById.get(id).name;
       out.innerHTML = `<p>היישוב עם פילוג הקולות הדומה ביותר הוא <strong>${similarName}</strong>.</p>`;
     } else if (hint === 'socioeconomic') {
-      // Combined hint: the CBS socioeconomic cluster (2021) and the Ministry of
-      // Education bagrut-eligibility rate (2024) are near-complements — the
-      // cluster covers the villages, bagrut covers the cities, and only 5
-      // localities have both. Whichever line(s) exist are shown together;
-      // startRound hides the whole block when neither does. Still one hint, so
-      // still exactly one charge (taken above, at the dataset.filled gate).
+      // Two datasets, one hint, one charge: both lines share the single
+      // dataset.filled gate above, so neither adds a second hintPenalty.
       const socioRec = state.socioeconomic[state.answerId];
       const bagrutRec = state.bagrut[state.answerId];
       let html = '';
