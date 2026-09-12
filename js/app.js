@@ -10,6 +10,7 @@
     parties24: 'data/parties-24.json',
     schedule: 'data/answer-schedule.json',
     socioeconomic: 'data/socioeconomic.json',
+    peripherality: 'data/peripherality.json',
   };
 
   const state = {
@@ -23,6 +24,7 @@
     partyLetters25: [],
     schedule: null,
     socioeconomic: null,
+    peripherality: null,
     sizeTierPools: null,
     sizeTier: 'medium',
     mode: 'daily',
@@ -383,6 +385,14 @@
     } else if (hint === 'socioeconomic') {
       const rec = state.socioeconomic[state.answerId];
       out.innerHTML = `<p>אשכול חברתי-כלכלי (למ"ס): <strong>${rec.cluster}</strong> (מתוך 1-10)</p>`;
+    } else if (hint === 'peripherality') {
+      // CBS peripherality: cluster 1 = most peripheral, 10 = most central, and
+      // the 1-1213 national rank runs the same way (rank 1 = most peripheral).
+      const rec = state.peripherality[state.answerId];
+      out.innerHTML = `
+        <p>אשכול פריפריאליות (למ"ס): <strong>${rec.cluster}</strong> (מתוך 1-10; 1 = פריפריאלי ביותר, 10 = מרכזי ביותר)</p>
+        <p>דירוג ארצי: <strong>${rec.rank}</strong> מתוך 1,213 יישובים (ככל שהדירוג גבוה יותר, היישוב מרכזי יותר)</p>
+      `;
     }
   }
 
@@ -433,6 +443,9 @@
 
     const socioRec = state.socioeconomic[state.answerId];
     document.getElementById('hint-block-socioeconomic').hidden = !socioRec || socioRec.cluster == null;
+
+    const periRec = state.peripherality[state.answerId];
+    document.getElementById('hint-block-peripherality').hidden = !periRec || periRec.cluster == null;
 
     const input = document.getElementById('guess-input');
     input.disabled = false;
@@ -487,7 +500,8 @@
   }
 
   async function init() {
-    const [localities, results25, results24, coords, parties25, parties24, schedule, socioeconomic] =
+    const [localities, results25, results24, coords, parties25, parties24, schedule,
+      socioeconomic, peripherality] =
       await Promise.all([
         fetchJson(DATA_FILES.localities),
         fetchJson(DATA_FILES.results25),
@@ -497,6 +511,7 @@
         fetchJson(DATA_FILES.parties24),
         fetchJson(DATA_FILES.schedule),
         fetchJson(DATA_FILES.socioeconomic),
+        fetchJson(DATA_FILES.peripherality),
       ]);
 
     state.localities = localities;
@@ -509,6 +524,7 @@
     state.partyLetters25 = Object.keys(parties25);
     state.schedule = schedule;
     state.socioeconomic = socioeconomic;
+    state.peripherality = peripherality;
     state.sizeTierPools = computeSizeTierPools(localities, results25);
 
     setupAutocomplete();

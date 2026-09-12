@@ -42,32 +42,60 @@ public datasets — nothing here is fabricated or approximated.
   (Jerusalem, Tel Aviv, Eilat) to within ~1km, which is expected since these
   are locality *centroids*, not landmark points — more than accurate enough
   for city-level distance/direction gameplay.
-- **Socioeconomic cluster** (hint 4): data.gov.il CKAN dataset
-  `social_economic_cluster` ("אשכול כלכלי חברתי של מועצות מקומיות ויישובים
-  לשנת 2019"), resource id `7c860e04-9f8d-41c2-9f24-6249958d2081`, field
-  `ESHKOL 2019` (CBS official 1-10 socioeconomic index), joined on
-  `LOCALITY SYMBOL` = our locality id. This CBS resource, despite its title,
-  only covers localities *within* one of Israel's ~54 regional councils
-  (villages/kibbutzim/moshavim under a מועצה אזורית) — it does not include
-  standalone cities or local councils (e.g. Tel Aviv, Jerusalem, Haifa are
-  absent). Real coverage as a result: **976 of 1211** guessable localities
-  have a cluster value. Rather than show a hollow "אין נתון" for the rest,
-  hint 4's button+output are hidden entirely for those localities
-  (`startRound` checks `state.socioeconomic[answerId].cluster` — see
-  `js/app.js`). No other CKAN dataset with a *complete* (city + village)
-  locality-level 1-10 cluster was found — searched data.gov.il broadly
-  (`social_economic_cluster`, `citiesandsettelments`,
-  `localities-in-israel`/`bycode2022` — that file's `אשכול רשויות מקומיות`
-  field looked promising but turned out to be an unrelated regional-council
-  sub-area code, not the socioeconomic index) before settling on this as the
-  best real, joinable source.
+- **Socioeconomic cluster** (hint 4): CBS **publication 1955**, "אפיון
+  יחידות גאוגרפיות וסיווגן לפי הרמה החברתית-כלכלית של האוכלוסייה בשנת 2021"
+  (**2021** data), two tables combined — `t02.xlsx` (sheet `לוח 2`, header row
+  5: local authorities, 201 rows with a code) and `t08.xlsx` (sheet `לוח ב`,
+  header row 8: localities inside regional councils, 996 rows), both at
+  `https://www.cbs.gov.il/he/publications/DocLib/2025/1955/<file>`. Columns:
+  `סמל יישוב` (join key) and `אשכול 2021[4]` (the official 1-10 index). The 54
+  regional-council rows in `t02` have a blank `סמל יישוב` and are skipped.
+  Coverage: **1178 of 1211** guessable localities, including **48 of 48**
+  large-tier cities. The 33 without a value are genuinely absent from CBS
+  (Bedouin tribal entries, IDF camps, and a handful like נווה זוהר / מקווה
+  ישראל) — do not invent values for them; hint 4's button+output are hidden
+  entirely for those localities (`startRound` checks
+  `state.socioeconomic[answerId].cluster` — see `js/app.js`).
+  This replaced an earlier data.gov.il CKAN source
+  (`social_economic_cluster`, 2019) that covered only localities inside a
+  regional council — 976/1211 and **zero** major cities, which silently
+  disabled hint 4 for Tel Aviv/Jerusalem/Haifa. Don't go back to it.
+  **Ship only the cluster, never the rank or index value**: `t02`'s ranks run
+  1-255 and `t08`'s 1-996 on two separately standardized scales (measured
+  means 0.000 vs 0.549) and are not comparable across the two tables.
+- **Peripherality** (hint 5): CBS **publication 1917**, "מדד פריפריאליות של
+  יישובים ושל רשויות מקומיות, **2020**", single table
+  `https://www.cbs.gov.il/he/publications/DocLib/2023/1917/table_02.xlsx`
+  (sheet `לוח 2`, header rows 3/5, 1213 rows with a code — every locality in
+  the country, cities included). Columns: `סמל יישוב` plus the
+  `מדד פריפריאליות 2020` group's `דירוג` (rank) and `אשכול` (1-10 cluster).
+  Coverage: **1182 of 1211**, **48 of 48** large-tier. Direction matters and
+  is easy to get backwards: **low = peripheral, high = central** for both the
+  cluster (1 = most peripheral) and the rank (1 = most peripheral, 1213 = most
+  central — Tel Aviv is 1212, Eilat is 3). Unlike the socioeconomic rank this
+  one IS a single comparable national scale, so it's safe to show players.
 - **Matriculation (bagrut) eligibility %**: investigated for hint 4 (searched
   data.gov.il under CBS/Ministry-of-Education/RAMA orgs, and read a CBS
   annual local-authorities release via a from-scratch PDF text extractor —
   none of it covered bagrut at locality level) and dropped entirely rather
   than ship a field that would always be `null`. Not present anywhere in the
   UI, `js/app.js`, or `data/socioeconomic.json` — don't reintroduce a
-  `bagrutPct`-shaped field without an actual source behind it.
+  `bagrutPct`-shaped field without an actual source behind it. Still
+  unavailable as of the 2021-socioeconomic/peripherality rebuild.
+
+**Fetching CBS data.** Direct file GETs under
+`https://www.cbs.gov.il/he/publications/DocLib/<year>/<pub>/<file>` work fine
+over plain unauthenticated `curl` with a normal browser User-Agent — CBS does
+*not* block automated download. What looks like a block is that the
+publication *pages* are JavaScript-rendered, so `curl`-ing a page returns an
+empty shell. To enumerate a publication's files, use the SharePoint REST
+folder listing, e.g.
+`https://www.cbs.gov.il/he/publications/_api/web/GetFolderByServerRelativeUrl('/he/publications/DocLib/2025/1955')/Files?$select=Name,Length&$top=500`.
+The sandbox has no `openpyxl`, no `pip` and no `unzip`; an `.xlsx` is a zip of
+XML, so read it with stdlib `zipfile` + `xml.etree.ElementTree`, remembering
+that `t="s"` cells hold indices into `xl/sharedStrings.xml`. (By contrast
+`aws-e.data.gov.il` file downloads return 403 — use the CKAN
+`datastore_search` API for data.gov.il, not the raw file URLs.)
 
 ## Locality pool: guessable vs. randomEligible vs. Random-mode size tiers
 
@@ -159,8 +187,13 @@ first-visit behavior is unchanged from before this feature existed.
   uniformly from that same `randomEligible` subset, independent of
   date/schedule; the two modes share all guess/hint/win logic in
   `js/app.js` (`startRound(mode)`).
-- `socioeconomic.json`: `{ localityId: { cluster: 1-10|null } }`. See the
-  provenance section above for coverage and why there's no `bagrutPct`.
+- `socioeconomic.json`: `{ localityId: { cluster: 1-10|null } }`, an entry for
+  every one of the 1211 guessable localities.
+- `peripherality.json`: `{ localityId: { cluster: 1-10|null, rank:
+  1-1213|null } }`, same shape/coverage convention — an entry for all 1211,
+  both fields `null` together where CBS has no value.
+  See the provenance section above for both files' sources, coverage counts,
+  the peripherality rank direction, and why there's no `bagrutPct`.
 
 ## Similarity hint methodology
 
@@ -193,58 +226,46 @@ plain KL divergence would require.
   mode. Moving it immediately re-rolls a fresh round from the newly selected
   tier's pool (same reset as the "משחק אקראי חדש" button). See the size-tier
   section above for the three pools and `pickRandomAnswerId`'s tier param.
+- **Five hints, two of them conditionally hidden.** 1 turnout, 2 the K24 vote
+  chart, 3 the most-similar locality, 4 socioeconomic cluster, 5 peripherality
+  (cluster + national rank). Hints 4 and 5 each hide their whole `hint-block`
+  in `startRound` when the answer has no value in the corresponding data file,
+  so a player never sees a hollow "אין נתון". Adding a hint means: a
+  `hint-block` + `hint-btn`/`hint-output` pair in `index.html`, a branch in
+  `populateHint`, and (if the data is incomplete) a hide line in `startRound`
+  — never a second `state.hintPenalty++` site.
 
 ## Testing notes
 
-No Chrome/Chromium binary is available in the sandbox this app was built in,
-so browser-based visual verification (`chrome-devtools-axi`) could not be
-run. Instead, `js/geo.js` and `js/stats.js` (pure logic, no DOM) were
-exercised in a Node harness against the real committed data: haversine
-distance/bearing validated against known city-pairs (e.g. Jerusalem→Tel Aviv
-≈54km NW), and the JSD similarity hint sanity-checked (Tel Aviv's most
-similar locality by vote pattern comes out as Givatayim — its adjacent,
-demographically similar neighbor, which is a strong correctness signal).
-`data/answer-schedule.json` fallback logic and full data-join integrity (0
-localities missing coords/results in either election) were also verified
-this way. Chrome is still unavailable as of the follow-up round that added
-Random mode and hint 4 (socioeconomic/bagrut) — that round's `startRound`,
-`pickRandomAnswerId`, and `socioeconomic.json` join were likewise verified
-by loading the real committed JSON in Node (2000 random draws all resolved
-to valid localities; all 323 localities have a `socioeconomic.json` entry).
-If Chrome becomes available, a manual pass (guess flow, autocomplete, RTL
-layout, all four hints, both mode-switcher buttons) is still worth doing
-before treating the UI itself as verified. Still true as of the round that
-added the 0.1% vote-share filter, arrow-glyph directions, the Daily-mode
-archive date-picker, and the hint-cost/hint-4-visibility changes — all
-verified the same way (Node harness against the real committed JSON: the
-0.1% filter checked against Tel Aviv's real vote breakdown, several archive
-dates resolved through `pickAnswerId` to real localities, all 8 compass
-labels confirmed to map to an arrow). Still true as of the round that split
-the pool into guessable (1211) vs. `randomEligible` (323) — verified in Node
-against the real committed JSON: zero localities missing any of the three
-joined data sources, K25/K24 vote-sum reconciliation clean for all 1211,
-`randomEligible` reproduces the old 323-locality pool exactly, 2000 fallback
-rotation draws and 5000 `pickRandomAnswerId` draws all landed on
-`randomEligible === true` localities, מג'דל שמס (id `4201`, real sub-1000
-K24 eligible-voter count) confirmed guessable with `randomEligible: false`
-and correctly featurable via an `answer-schedule.json` override, and today's
-existing override (`4501`) still resolves correctly. Chrome is still
-unavailable as of the round that added the Random-mode size-tier slider —
-verified in Node against the real committed JSON: pool sizes are small=331
-(> 323 as expected), medium=323 and byte-identical to the existing
-`randomEligible` set, large=exactly 100 with Jerusalem/Tel Aviv/Haifa among
-them; 5000 `pickRandomAnswerId` draws per tier all landed inside that tier's
-pool; and `pickAnswerId` (Daily mode's fallback rotation) is untouched by
-this change — confirmed both by a zero-diff on that function and by
-re-resolving today's override and a future fallback date to the same
-answers as before. Chrome is still unavailable as of the round that changed
-גדול (large)'s rule from a top-100-by-eligible cut to a fixed
-`eligible >= 30000` threshold — verified in Node against the real committed
-JSON: large is now 48 (not 100 — expected, since it's a threshold count, not
-a fixed round number, and will vary if the underlying data ever changes),
-is a strict subset of קטן (small, 331) as expected since 30000 > 1000, and
-Jerusalem/Tel Aviv/Haifa are all still in it; small (331) and medium (323)
-pools are unchanged (zero-diff on both filters).
+No Chrome/Chromium binary has been available in any sandbox this app was
+built in, so browser-based visual verification (`chrome-devtools-axi`) has
+never been run. Every round instead verifies with a **Node (or Python)
+harness run against the real committed JSON in `data/`** — never fixtures,
+never synthetic data. Things that method has established and that a future
+round should re-check when it touches them:
+
+- `js/geo.js` and `js/stats.js` are pure logic with no DOM, so they run
+  directly in Node: haversine distance/bearing matches known city-pairs
+  (Jerusalem→Tel Aviv ≈54km NW) and all 8 compass labels map to an arrow; the
+  JSD similarity hint returns Givatayim for Tel Aviv (adjacent and
+  demographically similar — a strong correctness signal).
+- Data-join integrity: all 1211 guessable localities have coords, K25 and K24
+  records, a `socioeconomic.json` entry and a `peripherality.json` entry, and
+  K25/K24 per-party vote sums reconcile against `valid` with zero
+  discrepancies.
+- Answer selection: resolve several dates (an override, a fallback, an
+  archive date) through `pickAnswerId`, and draw a few thousand times per
+  size tier through `pickRandomAnswerId`, confirming every draw lands in the
+  intended pool. When a change is *supposed* to leave selection alone, prove
+  it with a zero-diff on `pickAnswerId`/`pickRandomAnswerId`/
+  `computeSizeTierPools` as well as by re-resolving known dates.
+- Current pool sizes for reference: guessable 1211, `randomEligible` 323,
+  size tiers small 331 / medium 323 / large 48.
+
+If Chrome ever becomes available, a manual pass is still worth doing before
+treating the UI itself as verified: guess flow, autocomplete, RTL layout, all
+five hints (including that 4 and 5 hide for localities with no CBS value),
+the archive date-picker, the size-tier slider, and both mode-switcher buttons.
 
 ## Maintaining this file
 
