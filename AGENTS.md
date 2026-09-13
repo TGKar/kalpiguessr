@@ -299,14 +299,26 @@ data file's coverage.
 
 ## Game mechanics notes
 
-- **Hints cost a guess.** This supersedes the original brief's "no
-  penalty/cost" hints — a later product decision (fix round 2) made every
-  hint reveal add 1 to the same count shown in the win banner
-  ("פתרתם ב-N ניחושים"), via `state.hintPenalty` in `js/app.js`. The charge
-  happens exactly once per hint, at the `dataset.filled` transition inside
-  `populateHint` — closing and reopening an already-revealed hint must not
-  charge again. Hints never get their own row in the guess-history list,
-  only wrong/correct locality guesses do.
+- **Hints cost guesses, and the cost is per-hint.** This supersedes the
+  original brief's "no penalty/cost" hints — a later product decision (fix
+  round 2) made a hint reveal add to the same count shown in the win banner
+  ("פתרתם ב-N ניחושים"), via `state.hintPenalty` in `js/app.js`. **`HINT_COSTS`**
+  (next to the tuning knobs at the top of `js/app.js`) holds the amount per
+  hint key: hints 1–2 cost 1, **hint 3 costs 2** (it pools four datasets);
+  an unlisted key falls back to 1. The charge happens exactly once per hint,
+  at the `dataset.filled` transition inside `populateHint` — that is still the
+  **only** place a cost is applied, and closing and reopening an
+  already-revealed hint must not charge again. A hint whose cost is not 1
+  states it in its own button label in `index.html` (hint 3 reads
+  `רמז 3: פרופיל היישוב (2 ניחושים)`); hints 1 and 2 deliberately carry no
+  "(1 ניחוש)" suffix. Keep label and `HINT_COSTS` in sync. Hints never get
+  their own row in the guess-history list, only wrong/correct locality
+  guesses do.
+  **Two UI copy lines still say every hint counts as one guess** —
+  `index.html`'s rules box (`כל רמז נספר כניחוש`, captain-verbatim text, see
+  commit f855dcd) and the `.hint-cost-note` above the hint buttons. Both are
+  now inaccurate for hint 3 and are awaiting a captain wording decision; do
+  not reword them unprompted.
 - **`[hidden]` needs `style.css`'s `[hidden] { display: none !important; }`.**
   Everything toggled from `js/app.js` hides via the `hidden` attribute, whose
   UA `display: none` loses to any component `display` rule — that silently
@@ -349,7 +361,8 @@ data file's coverage.
   its only consumer — don't resurrect either.
   Adding a hint means: a `hint-block` + `hint-btn`/`hint-output` pair in
   `index.html`, a branch in `populateHint`, and (if the data is incomplete) a
-  hide line in `startRound` — never a second `state.hintPenalty++` site.
+  hide line in `startRound`, and an entry in `HINT_COSTS` if it costs anything
+  other than 1 — never a second `state.hintPenalty` write site.
 - **Hint 3 pools four independently-covered datasets into one block.** In
   display order: socioeconomic cluster, bagrut eligibility, peripherality
   (cluster + national rank), then the six `CITY_PROFILE_FIELDS` figures under a
@@ -360,11 +373,14 @@ data file's coverage.
   peripherality 1182, bagrut 181, profile 280 — union **1182 of 1211**, 29
   hidden, because peripherality is a strict superset of the other three (verified,
   zero localities have a part but no peripherality). The button label is the
-  fixed `רמז 3: פרופיל היישוב`: the old per-dataset dynamic label existed so the
+  fixed `רמז 3: פרופיל היישוב (2 ניחושים)`: the old per-dataset dynamic label existed so the
   hint couldn't promise a line it wouldn't show, and with four parts a generic
   label achieves that without enumerating 15 combinations.
   **Many lines, still exactly one charge** — taken at the shared
-  `dataset.filled` gate in `populateHint`, never per line or per part.
+  `dataset.filled` gate in `populateHint`, never per line or per part. That
+  one charge is `HINT_COSTS.profile`, i.e. **2**, so opening hint 3 moves the
+  counter 0→2 and reaches the `DISTANCE_UNLOCK_GUESS` gate after only three
+  other guesses.
 - **The live guess counter** (`#guess-counter`, under the guess input) shows
   `state.guesses.length + state.hintPenalty` — the same number the win banner
   uses and the same one the distance gate reads. It is updated inside
@@ -390,8 +406,8 @@ round should re-check when it touches them:
   `state` and count `<p>` tags per locality — the cheapest proof of a
   multi-line hint's lines/hidden split without a browser. Currently 29 hidden
   (0 lines) / 4 two-line / 893 three-line / 5 four-line / 104 ten-line /
-  176 eleven-line, and `state.hintPenalty` must advance by exactly 1 per
-  locality (and not at all on a re-open).
+  176 eleven-line, and `state.hintPenalty` must advance by exactly
+  `HINT_COSTS.profile` (**2**) per locality (and not at all on a re-open).
 - **DOM-dependent code can be run in Node too**, without jsdom: strip
   `js/app.js`'s IIFE wrapper and its trailing `init().catch(...)`, `new
   Function` the body with a ~40-line `document` stub (createElement returning a

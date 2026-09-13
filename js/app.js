@@ -21,6 +21,13 @@
   const INTENSITY_SOME_GAP = 0.2;   // ...and above this as "somewhat"
   const DISTANCE_UNLOCK_GUESS = 5;  // counter value (guesses + hints) that unlocks distance/direction
 
+  // What each hint adds to state.hintPenalty when it is first revealed.
+  // Hint 3 pools four datasets into one block and is worth more, so it costs
+  // two. Charged at the single dataset.filled gate in populateHint(); any hint
+  // missing from this map falls back to 1. Keep hint 3's button label in
+  // index.html in sync with its cost here.
+  const HINT_COSTS = { turnout: 1, k24: 1, profile: 2 };
+
   const state = {
     localities: [],
     localitiesById: new Map(),
@@ -593,15 +600,16 @@
     };
   }
 
-  // Every hint costs a guess, charged exactly once: the same dataset.filled
+  // Every hint costs guesses, charged exactly once: the same dataset.filled
   // gate that stops a hint's content from being re-fetched also stops the
   // guess count from double-counting a hint that's toggled closed and
-  // reopened. Centralized here so every hint type pays the same way.
+  // reopened. Centralized here so every hint type pays the same way — only
+  // the amount differs, via HINT_COSTS.
   function populateHint(hint) {
     const out = document.getElementById(`hint-${hint}`);
     if (out.dataset.filled) return;
     out.dataset.filled = '1';
-    state.hintPenalty++;
+    state.hintPenalty += HINT_COSTS[hint] || 1;
 
     const answer = state.results25[state.answerId];
     if (hint === 'turnout') {
