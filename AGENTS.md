@@ -77,6 +77,10 @@ public datasets — nothing here is fabricated or approximated.
   `אחוז בעלי תואר אקדמי מבני 27-54`, `הכנסה חודשית ממוצעת לנפש`,
   `מספר כלי רכב בבעלות ל-100 תושבים בני 17 ומעלה`,
   `אחוז משפחות עם 4 ילדים ויותר`, `ממוצע מספר ימי שהייה בחו"ל`.
+  **`daysAbroad` is a *per-year* average** over the whole population (no age
+  restriction): the column header in the table omits the period, but the
+  index's full documented variable name is `ממוצע מספר ימי שהייה בחו"ל בשנה`,
+  so the shipped `CITY_PROFILE_FIELDS` label deliberately ends in `בשנה`.
   **`ממוצע שנות לימוד של בני 25-54` (average years of schooling) was cut
   deliberately** — too close to the bagrut figure. Don't add it back, and
   don't add the other eight components either. Coverage: **280 of 1211**

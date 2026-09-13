@@ -649,7 +649,7 @@
     { key: 'incomePerPerson', label: 'הכנסה חודשית ממוצעת לנפש', format: FMT.shekels },
     { key: 'vehiclesPer100', label: 'כלי רכב בבעלות ל-100 תושבים בני 17 ומעלה', format: FMT.dec1 },
     { key: 'families4PlusPct', label: 'משפחות עם 4 ילדים ויותר', format: FMT.pct1 },
-    { key: 'daysAbroad', label: 'ממוצע ימי שהייה בחו"ל', format: FMT.dec1 },
+    { key: 'daysAbroad', label: 'ממוצע ימי שהייה בחו"ל בשנה', format: FMT.dec1 },
   ];
 
   // Presentation only, not per-locality data: the 2024 national matriculation
