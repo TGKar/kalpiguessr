@@ -282,8 +282,18 @@ data file's coverage.
   no-shared-axis branch returns `''` rather than throwing.
 - **Intensity** comes from the gap via `INTENSITY_MUCH_GAP` / `INTENSITY_SOME_GAP`
   (0.5 / 0.2), named constants at the top of `js/app.js` because they are
-  expected to be re-tuned after play. The sentence is **comparative only** —
-  never print either locality's real value, it gives the answer away.
+  expected to be re-tuned after play.
+- **Both localities' real values ARE printed**, on a second line under the
+  comparative sentence (`differenceDetail` returns `{ text, values }`, rendered
+  as `.guess-difference` + `.guess-difference-values`). This **reverses** the
+  original "comparative only, never reveal a value" rule: the captain asked for
+  the numbers and accepts that they make the secret locality easier to
+  identify — don't "fix" it back to comparative-only. The zero-gap neutral line
+  has no winning axis and so carries no values. Each axis's `format` comes from
+  the shared `FMT` map that `CITY_PROFILE_FIELDS` also uses, so a figure reads
+  identically in the hint and in the feedback; the CBS source values are raw
+  floats (income `7611.4655…`, academic % `43.3669…`) and are never printable
+  as-is.
 - **`periRank` direction is the easy one to get backwards**: high rank =
   central, rank 1 = most peripheral (see the peripherality provenance entry).
 
@@ -396,7 +406,9 @@ round should re-check when it touches them:
   socioCluster 25.2%, periRank 18.8%, everything else ≤3.4%. A wildly different
   split means the percentile tables or the axis coverage broke. Also assert the
   `periRank` direction explicitly (Tel Aviv, rank 1212, must read as *more
-  central* than Eilat, rank 3).
+  central* than Eilat, rank 3). Assert the printed values too: no
+  `\d+\.\d{3,}` may survive into a sentence, both Hebrew labels must be
+  present, and the neutral line must carry none.
 - Answer selection: resolve several dates (an override, a fallback, an
   archive date) through `pickAnswerId`, and draw a few thousand times per
   size tier through `pickRandomAnswerId`, confirming every draw lands in the

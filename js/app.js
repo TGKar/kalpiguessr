@@ -181,56 +181,70 @@
     'צפון-מערב': '↖',
   };
 
+  // Shared so a figure reads identically wherever it appears — the CBS source
+  // values are raw floats (e.g. income 7611.4655...), never printable as-is.
+  const FMT = {
+    whole: (v) => `${Math.round(v)}`,
+    pct1: (v) => `${v.toFixed(1)}%`,
+    shekels: (v) => `${Math.round(v).toLocaleString('he-IL')} ₪`,
+    dec1: (v) => v.toFixed(1),
+    count: (v) => v.toLocaleString('he-IL'),
+    plain: (v) => `${v}`,
+    plainPct: (v) => `${v}%`,
+  };
+
   // Axes for the wrong-guess difference feedback. Latitude/longitude are
   // deliberately NOT among them — they would re-create the geographic guessing
   // game this feedback replaces. `vehiclesPer100` is likewise excluded on
-  // purpose even though hint 3 still displays it. `up`/`down` describe the SECRET locality
-  // relative to the guessed one and stay comparative: printing a real value
-  // would give the answer away. See AGENTS.md for why percentiles, not z-scores.
+  // purpose even though hint 3 still displays it. `up`/`down` describe the SECRET
+  // locality relative to the guessed one; `format` then prints BOTH localities'
+  // real values next to it — the captain asked for the numbers and accepts that
+  // they make the answer easier to identify. See AGENTS.md for why percentiles,
+  // not z-scores.
   const DIFF_AXES = [
     {
-      key: 'socioCluster', source: 'socioeconomic', field: 'cluster',
+      key: 'socioCluster', source: 'socioeconomic', field: 'cluster', format: FMT.plain,
       up: (m) => `היישוב המסתורי בעל מדד חברתי-כלכלי גבוה ${m} מהיישוב שניחשתם.`,
       down: (m) => `היישוב המסתורי בעל מדד חברתי-כלכלי נמוך ${m} מהיישוב שניחשתם.`,
     },
     {
       // CBS peripherality rank: 1 = most peripheral, 1213 = most central.
-      key: 'periRank', source: 'peripherality', field: 'rank',
+      key: 'periRank', source: 'peripherality', field: 'rank', format: FMT.plain,
       up: (m) => `היישוב המסתורי מרכזי ${m} מהיישוב שניחשתם.`,
       down: (m) => `היישוב המסתורי פריפריאלי ${m} מהיישוב שניחשתם.`,
     },
     {
-      key: 'size', source: 'results25', field: 'eligible',
+      key: 'size', source: 'results25', field: 'eligible', format: FMT.count,
       up: (m) => `היישוב המסתורי גדול ${m} מהיישוב שניחשתם.`,
       down: (m) => `היישוב המסתורי קטן ${m} מהיישוב שניחשתם.`,
     },
     {
-      key: 'bagrut', source: 'bagrut', field: 'pct',
+      key: 'bagrut', source: 'bagrut', field: 'pct', format: FMT.plainPct,
       up: (m) => `שיעור הזכאים לבגרות ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
       down: (m) => `שיעור הזכאים לבגרות ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
     },
     {
-      key: 'medianAge', source: 'cityprofile', field: 'medianAge',
+      key: 'medianAge', source: 'cityprofile', field: 'medianAge', format: FMT.whole,
       up: (m) => `האוכלוסייה ביישוב המסתורי מבוגרת ${m} מזו שביישוב שניחשתם.`,
       down: (m) => `האוכלוסייה ביישוב המסתורי צעירה ${m} מזו שביישוב שניחשתם.`,
     },
     {
-      key: 'academicPct', source: 'cityprofile', field: 'academicPct',
+      key: 'academicPct', source: 'cityprofile', field: 'academicPct', format: FMT.pct1,
       up: (m) => `שיעור בעלי התואר האקדמי ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
       down: (m) => `שיעור בעלי התואר האקדמי ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
     },
     {
-      key: 'incomePerPerson', source: 'cityprofile', field: 'incomePerPerson',
+      key: 'incomePerPerson', source: 'cityprofile', field: 'incomePerPerson', format: FMT.shekels,
       up: (m) => `ההכנסה הממוצעת לנפש ביישוב המסתורי גבוהה ${m} מזו שביישוב שניחשתם.`,
       down: (m) => `ההכנסה הממוצעת לנפש ביישוב המסתורי נמוכה ${m} מזו שביישוב שניחשתם.`,
     },
     {
-      key: 'families4PlusPct', source: 'cityprofile', field: 'families4PlusPct',
+      key: 'families4PlusPct', source: 'cityprofile', field: 'families4PlusPct', format: FMT.pct1,
       up: (m) => `שיעור המשפחות עם 4 ילדים ויותר ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
       down: (m) => `שיעור המשפחות עם 4 ילדים ויותר ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
     },
     {
-      key: 'daysAbroad', source: 'cityprofile', field: 'daysAbroad',
+      key: 'daysAbroad', source: 'cityprofile', field: 'daysAbroad', format: FMT.dec1,
       up: (m) => `ממוצע ימי השהייה בחו"ל ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
       down: (m) => `ממוצע ימי השהייה בחו"ל ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
     },
@@ -285,14 +299,21 @@
     return best;
   }
 
-  function differenceSentence(guessId, answerId) {
+  // The comparative sentence plus, per the captain, the winning axis's real
+  // value for both localities. The neutral zero-gap line has no winning axis,
+  // so it carries no values.
+  function differenceDetail(guessId, answerId) {
     const best = pickBiggestDifference(guessId, answerId);
-    if (!best) return ''; // defensive: `size` covers all 1211, so unreachable
-    if (best.gap === 0) return DIFF_NEUTRAL_TEXT;
+    if (!best) return { text: '', values: '' }; // defensive: `size` covers all 1211
+    if (best.gap === 0) return { text: DIFF_NEUTRAL_TEXT, values: '' };
     const m = best.gap > INTENSITY_MUCH_GAP ? 'בהרבה'
       : best.gap >= INTENSITY_SOME_GAP ? 'יותר'
         : 'במעט';
-    return best.answerHigher ? best.axis.up(m) : best.axis.down(m);
+    const fmt = best.axis.format;
+    return {
+      text: best.answerHigher ? best.axis.up(m) : best.axis.down(m),
+      values: `היישוב שניחשתם: ${fmt(axisValue(best.axis, guessId))} · היישוב המסתורי: ${fmt(axisValue(best.axis, answerId))}`,
+    };
   }
 
   // Counts hints as well as guesses — the same number the player sees — so
@@ -355,6 +376,13 @@
         row.appendChild(diffEl);
       }
 
+      if (!g.correct && g.differenceValues) {
+        const valuesEl = document.createElement('span');
+        valuesEl.className = 'guess-difference-values';
+        valuesEl.textContent = g.differenceValues;
+        row.appendChild(valuesEl);
+      }
+
       const chart = document.createElement('div');
       chart.className = 'guess-chart bar-chart';
       chart.hidden = !g.expanded;
@@ -414,9 +442,12 @@
     const distance = Geo.haversineKm(guessCoord.lat, guessCoord.lon, answerCoord.lat, answerCoord.lon);
     const bearing = Geo.bearingDeg(guessCoord.lat, guessCoord.lon, answerCoord.lat, answerCoord.lon);
     const direction = Geo.compassLabel(bearing);
-    const difference = differenceSentence(localityId, state.answerId);
+    const diff = differenceDetail(localityId, state.answerId);
 
-    state.guesses.push({ id: localityId, name: guessed.name, correct: false, distance, direction, difference });
+    state.guesses.push({
+      id: localityId, name: guessed.name, correct: false, distance, direction,
+      difference: diff.text, differenceValues: diff.values,
+    });
     renderHistory();
   }
 
@@ -538,12 +569,12 @@
   // the rest keep one decimal, and income is whole shekels. Deliberately
   // excludes `ממוצע שנות לימוד` (average years of schooling) — see AGENTS.md.
   const CITY_PROFILE_FIELDS = [
-    { key: 'medianAge', label: 'גיל חציוני', format: (v) => `${Math.round(v)}` },
-    { key: 'academicPct', label: 'בעלי תואר אקדמי (גילאי 27-54)', format: (v) => `${v.toFixed(1)}%` },
-    { key: 'incomePerPerson', label: 'הכנסה חודשית ממוצעת לנפש', format: (v) => `${Math.round(v).toLocaleString('he-IL')} ₪` },
-    { key: 'vehiclesPer100', label: 'כלי רכב בבעלות ל-100 תושבים בני 17 ומעלה', format: (v) => v.toFixed(1) },
-    { key: 'families4PlusPct', label: 'משפחות עם 4 ילדים ויותר', format: (v) => `${v.toFixed(1)}%` },
-    { key: 'daysAbroad', label: 'ממוצע ימי שהייה בחו"ל', format: (v) => v.toFixed(1) },
+    { key: 'medianAge', label: 'גיל חציוני', format: FMT.whole },
+    { key: 'academicPct', label: 'בעלי תואר אקדמי (גילאי 27-54)', format: FMT.pct1 },
+    { key: 'incomePerPerson', label: 'הכנסה חודשית ממוצעת לנפש', format: FMT.shekels },
+    { key: 'vehiclesPer100', label: 'כלי רכב בבעלות ל-100 תושבים בני 17 ומעלה', format: FMT.dec1 },
+    { key: 'families4PlusPct', label: 'משפחות עם 4 ילדים ויותר', format: FMT.pct1 },
+    { key: 'daysAbroad', label: 'ממוצע ימי שהייה בחו"ל', format: FMT.dec1 },
   ];
 
   // Hint 3's four datasets have very different coverage (socioeconomic 1178,
