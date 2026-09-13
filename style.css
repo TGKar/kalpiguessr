@@ -174,6 +174,17 @@ h2 {
   background: #e7f1f5;
 }
 
+.guess-counter {
+  margin: 0.6rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.guess-counter strong {
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
 .hint-text {
   margin: 0.5rem 0 0;
   font-size: 0.8rem;

@@ -42,7 +42,7 @@
       <div id="rules-body" class="rules-body">
         <p>נחשו את היישוב הסודי לפי דפוס ההצבעה בו בבחירות האחרונות (2022).</p>
         <p>אחרי כל ניחוש שגוי, תקבלו את הפער הגדול ביותר בין היישוב שניחשתם ליישוב הסודי.</p>
-        <p>מהניחוש השישי ואילך תקבלו גם את המרחק והכיוון אל היישוב הסודי.</p>
+        <p>מהניחוש החמישי ואילך תקבלו גם את המרחק והכיוון אל היישוב הסודי.</p>
         <p>לחצו על ניחוש שגוי כדי לראות איך אותו יישוב הצביע.</p>
         <p>נתקעתם? פתחו רמז. כל רמז נספר כניחוש.</p>
       </div>
@@ -68,6 +68,7 @@
           <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
         </div>
       </form>
+      <p class="guess-counter">ניחושים עד כה: <strong id="guess-counter">0</strong></p>
       <p id="guess-hint" class="hint-text">יש לבחור יישוב מתוך רשימת ההשלמה האוטומטית.</p>
     </section>
 
@@ -93,21 +94,9 @@
           <div id="chart-24" class="bar-chart"></div>
         </div>
       </div>
-      <div class="hint-block">
-        <button type="button" class="hint-btn" data-hint="similar">רמז 3: היישוב הדומה ביותר בפילוג הקולות</button>
-        <div id="hint-similar" class="hint-output" hidden></div>
-      </div>
-      <div class="hint-block" id="hint-block-socioeconomic" hidden>
-        <button type="button" class="hint-btn" data-hint="socioeconomic">רמז 4: מדד חברתי-כלכלי</button>
-        <div id="hint-socioeconomic" class="hint-output" hidden></div>
-      </div>
-      <div class="hint-block" id="hint-block-peripherality" hidden>
-        <button type="button" class="hint-btn" data-hint="peripherality">רמז 5: מדד פריפריאליות</button>
-        <div id="hint-peripherality" class="hint-output" hidden></div>
-      </div>
-      <div class="hint-block" id="hint-block-cityprofile" hidden>
-        <button type="button" class="hint-btn" data-hint="cityprofile">רמז 6: פרופיל היישוב</button>
-        <div id="hint-cityprofile" class="hint-output" hidden></div>
+      <div class="hint-block" id="hint-block-profile" hidden>
+        <button type="button" class="hint-btn" data-hint="profile">רמז 3: פרופיל היישוב</button>
+        <div id="hint-profile" class="hint-output" hidden></div>
       </div>
     </section>
   </main>
@@ -118,7 +107,6 @@
 </div>
 
 <script src="js/geo.js"></script>
-<script src="js/stats.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

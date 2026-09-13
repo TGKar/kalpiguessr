@@ -42,7 +42,7 @@ public datasets — nothing here is fabricated or approximated.
   (Jerusalem, Tel Aviv, Eilat) to within ~1km, which is expected since these
   are locality *centroids*, not landmark points — more than accurate enough
   for city-level distance/direction gameplay.
-- **Socioeconomic cluster** (hint 4): CBS **publication 1955**, "אפיון
+- **Socioeconomic cluster** (hint 3): CBS **publication 1955**, "אפיון
   יחידות גאוגרפיות וסיווגן לפי הרמה החברתית-כלכלית של האוכלוסייה בשנת 2021"
   (**2021** data), two tables combined — `t02.xlsx` (sheet `לוח 2`, header row
   5: local authorities, 201 rows with a code) and `t08.xlsx` (sheet `לוח ב`,
@@ -53,17 +53,16 @@ public datasets — nothing here is fabricated or approximated.
   Coverage: **1178 of 1211** guessable localities, including **48 of 48**
   large-tier cities. The 33 without a value are genuinely absent from CBS
   (Bedouin tribal entries, IDF camps, and a handful like נווה זוהר / מקווה
-  ישראל) — do not invent values for them; hint 4's button+output are hidden
-  entirely for those localities (`startRound` checks
-  `state.socioeconomic[answerId].cluster` — see `js/app.js`).
+  ישראל) — do not invent values for them; hint 3 simply omits the cluster line
+  for those localities (`profileParts` in `js/app.js`).
   This replaced an earlier data.gov.il CKAN source
   (`social_economic_cluster`, 2019) that covered only localities inside a
   regional council — 976/1211 and **zero** major cities, which silently
-  disabled hint 4 for Tel Aviv/Jerusalem/Haifa. Don't go back to it.
+  disabled the cluster for Tel Aviv/Jerusalem/Haifa. Don't go back to it.
   **Ship only the cluster, never the rank or index value**: `t02`'s ranks run
   1-255 and `t08`'s 1-996 on two separately standardized scales (measured
   means 0.000 vs 0.549) and are not comparable across the two tables.
-- **City-profile components** (hint 6): the *same* publication 1955 (**2021**
+- **City-profile components** (hint 3): the *same* publication 1955 (**2021**
   data), the two tables that carry the 15 raw variables behind the index:
   `t01.xlsx` (sheet `לוח 1`, header row 6 — 255 local authorities, **201** with
   a `סמל יישוב`; the 54 regional councils have a blank code) and
@@ -79,7 +78,7 @@ public datasets — nothing here is fabricated or approximated.
   `מספר כלי רכב בבעלות ל-100 תושבים בני 17 ומעלה`,
   `אחוז משפחות עם 4 ילדים ויותר`, `ממוצע מספר ימי שהייה בחו"ל`.
   **`ממוצע שנות לימוד של בני 25-54` (average years of schooling) was cut
-  deliberately** — too close to hint 4's bagrut figure. Don't add it back, and
+  deliberately** — too close to the bagrut figure. Don't add it back, and
   don't add the other eight components either. Coverage: **280 of 1211**
   guessable localities and **48 of 48** large-tier cities; it is all-or-nothing
   per locality (CBS publishes the 15 components together), so every covered
@@ -88,7 +87,7 @@ public datasets — nothing here is fabricated or approximated.
   localities. `t07`/`t09` cover all 996 regional-council localities but carry
   the index/cluster only, and `t12`/`t13` are statistical *sub*-areas inside
   cities, not new localities; neither adds profile coverage.
-- **Peripherality** (hint 5): CBS **publication 1917**, "מדד פריפריאליות של
+- **Peripherality** (hint 3): CBS **publication 1917**, "מדד פריפריאליות של
   יישובים ושל רשויות מקומיות, **2020**", single table
   `https://www.cbs.gov.il/he/publications/DocLib/2023/1917/table_02.xlsx`
   (sheet `לוח 2`, header rows 3/5, 1213 rows with a code — every locality in
@@ -99,7 +98,7 @@ public datasets — nothing here is fabricated or approximated.
   cluster (1 = most peripheral) and the rank (1 = most peripheral, 1213 = most
   central — Tel Aviv is 1212, Eilat is 3). Unlike the socioeconomic rank this
   one IS a single comparable national scale, so it's safe to show players.
-- **Matriculation (bagrut) eligibility %** (hint 4, second line): the Ministry
+- **Matriculation (bagrut) eligibility %** (hint 3): the Ministry
   of Education's "שקיפות בחינוך" portal serves an **open, unauthenticated JSON
   API** — no key, no cookie. **Hostname matters and has cost two earlier
   investigations: `shkifut.education.gov.il` serves fine, while `edu.gov.il`
@@ -250,29 +249,24 @@ first-visit behavior is unchanged from before this feature existed.
   `number|null`; an entry for all 1211, all six `null` together, **280** with
   values. 2021 CBS data — see the provenance section for the six variables'
   Hebrew labels and the one deliberately excluded.
-  See the provenance section above for all four files' sources, coverage
-  counts, the peripherality rank direction, and the bagrut join/series caveats.
-
-## Similarity hint methodology
-
-Hint 3 (most similar locality) uses **Jensen-Shannon divergence** (`js/stats.js`)
-over 25th-Knesset party vote-share vectors, not plain KL divergence: JSD is
-symmetric (KL is not — "similar to X" should be a symmetric relation) and
-handles parties with zero votes in a locality natively via the `0·log(0/x) := 0`
-convention, so no artificial small-probability smoothing is needed the way
-plain KL divergence would require.
+  All four back hint 3 — see the provenance section above for their sources,
+  coverage counts, the peripherality rank direction, and the bagrut
+  join/series caveats.
 
 ## Wrong-guess feedback: percentile axes
 
 The primary feedback on a wrong guess is one sentence naming the **single
 biggest difference** between the guessed locality and the secret one; distance
 and direction are only a late-game aid (see game mechanics). `DIFF_AXES` in
-`js/app.js` holds the ten axes (each `{ key, source, field, up, down }`, the
+`js/app.js` holds the nine axes (each `{ key, source, field, up, down }`, the
 `source` being a `state` data map), their percentile counts matching each
 data file's coverage.
 
 - **Latitude and longitude are deliberately NOT axes.** Adding them re-creates
   the geographic-guessing game this feedback exists to replace. Don't.
+- **`vehiclesPer100` is deliberately NOT an axis either**, even though hint 3
+  still displays it as one of the six profile figures. Being in
+  `CITY_PROFILE_FIELDS` is not a reason to re-add it to `DIFF_AXES`.
 - **Percentiles, not z-scores.** `buildPercentileTables()` ranks each axis over
   **its own population** (every locality holding that axis, not the answer
   pool) and maps rank → `[0,1]`; tied values share one percentile so an
@@ -309,11 +303,16 @@ data file's coverage.
   broke the size-tier slider and the date picker, both `display: flex`. The
   `!important` base rule is what makes attribute toggling work at all; keep it,
   and don't reach for a `.hidden` class instead.
-- **Distance/direction are gated to guess `DISTANCE_UNLOCK_GUESS` (6) onward.**
-  Earlier wrong guesses show only the difference sentence. The gate counts
-  `state.guesses.length`, **not** `+ state.hintPenalty` — opening hints must not
-  buy the map. `renderHistory` rebuilds the list each call, so the 6th guess
-  retroactively adds distance to the earlier rows too.
+- **Distance/direction unlock when the visible counter reaches
+  `DISTANCE_UNLOCK_GUESS` (5).** The gate is `state.guesses.length +
+  state.hintPenalty` — the same number rendered into `#guess-counter` and shown
+  in the win banner — so **opening hints DOES bring the map forward**. This is
+  the captain's intent and the deliberate *reversal* of the earlier rule (6
+  actual guesses, hints excluded); don't "fix" it back to guesses-only.
+  Opening a hint therefore re-renders the history, and since `renderHistory`
+  rebuilds the list each call, the unlocking event retroactively adds distance
+  to the earlier rows too. The rules box's `מהניחוש החמישי` line must track
+  this constant.
 - **Every guess row is a `<button>` that expands that locality's K25 vote
   chart** (`aria-expanded`, several rows may be open at once; tooltips were
   rejected as touch-hostile). It reuses `renderBarChart` unchanged and must
@@ -333,35 +332,33 @@ data file's coverage.
   mode. Moving it immediately re-rolls a fresh round from the newly selected
   tier's pool (same reset as the "משחק אקראי חדש" button). See the size-tier
   section above for the three pools and `pickRandomAnswerId`'s tier param.
-- **Six hints, three of them conditionally hidden.** 1 turnout, 2 the K24 vote
-  chart, 3 the most-similar locality, 4 socioeconomic cluster **+ bagrut
-  eligibility**, 5 peripherality (cluster + national rank), 6 the city profile
-  (six CBS component variables, one line each, under a single "נתוני הלמ"ס
-  לשנת 2021" line; `CITY_PROFILE_FIELDS` in `js/app.js` holds the labels and
-  per-field formatting — median age is whole years because CBS publishes it
-  that way). Hints 4, 5 and 6 each hide their whole `hint-block` in
-  `startRound` when the answer has no value in the corresponding data file, so
-  a player never sees a hollow "אין נתון".
+- **Exactly three hints** (`רמז 1`/`2`/`3`, no gaps): 1 turnout, 2 the K24
+  vote chart, 3 the combined locality profile. An earlier
+  most-similar-locality hint (Jensen-Shannon divergence over K25 vote shares,
+  `js/stats.js`) was **deleted** along with that file and `state.partyLetters25`,
+  its only consumer — don't resurrect either.
   Adding a hint means: a `hint-block` + `hint-btn`/`hint-output` pair in
   `index.html`, a branch in `populateHint`, and (if the data is incomplete) a
   hide line in `startRound` — never a second `state.hintPenalty++` site.
-- **Hint 4 is a combined hint over two independent datasets.** It renders the
-  socioeconomic cluster line when `socioeconomic.json` has a cluster and a
-  bagrut line when `bagrut.json` has a `pct`, and `startRound` hides the block
-  only when **neither** exists. The DOM ids stay `hint-socioeconomic` /
-  `hint-block-socioeconomic` for historical reasons — that key now means "hint
-  4", not "socioeconomic only". Measured coverage: cluster 1178, bagrut 181,
-  **overlap 181**, so combined coverage is **1178 of 1211** and the same 33
-  localities stay hidden. Since the CBS-2021 socioeconomic rebuild, bagrut is a
-  strict *subset* of the cluster's coverage, not a complement — it adds a second
-  statistic for those 181 (all 48 large-tier cities among them), not new
-  localities. `startRound` also sets the hint-4 button's label from which of the
-  two datasets the answer has (cluster only / bagrut only / both), so it never
-  promises a bagrut figure that won't appear; hint 6 needs no such treatment
-  since its six fields are all-or-nothing. Two lines, still exactly **one**
-  charge: the guess is taken at the shared `dataset.filled` gate in
-  `populateHint`, never per line. **Hint 6's six lines work the same way** —
-  a multi-line hint never means multiple charges.
+- **Hint 3 pools four independently-covered datasets into one block.** In
+  display order: socioeconomic cluster, bagrut eligibility, peripherality
+  (cluster + national rank), then the six `CITY_PROFILE_FIELDS` figures under a
+  "נתוני הלמ"ס לשנת 2021" sub-header (median age is whole years because CBS
+  publishes it that way). `profileParts` in `js/app.js` resolves the four parts;
+  each contributes its lines only when present, and `startRound` hides the whole
+  block only when **none** of the four do. Coverage: socioeconomic 1178,
+  peripherality 1182, bagrut 181, profile 280 — union **1182 of 1211**, 29
+  hidden, because peripherality is a strict superset of the other three (verified,
+  zero localities have a part but no peripherality). The button label is the
+  fixed `רמז 3: פרופיל היישוב`: the old per-dataset dynamic label existed so the
+  hint couldn't promise a line it wouldn't show, and with four parts a generic
+  label achieves that without enumerating 15 combinations.
+  **Many lines, still exactly one charge** — taken at the shared
+  `dataset.filled` gate in `populateHint`, never per line or per part.
+- **The live guess counter** (`#guess-counter`, under the guess input) shows
+  `state.guesses.length + state.hintPenalty` — the same number the win banner
+  uses and the same one the distance gate reads. It is updated inside
+  `renderHistory`, which is why opening a hint calls `renderHistory`.
 
 ## Testing notes
 
@@ -372,22 +369,19 @@ harness run against the real committed JSON in `data/`** — never fixtures,
 never synthetic data. Things that method has established and that a future
 round should re-check when it touches them:
 
-- `js/geo.js` and `js/stats.js` are pure logic with no DOM, so they run
-  directly in Node: haversine distance/bearing matches known city-pairs
-  (Jerusalem→Tel Aviv ≈54km NW) and all 8 compass labels map to an arrow; the
-  JSD similarity hint returns Givatayim for Tel Aviv (adjacent and
-  demographically similar — a strong correctness signal).
+- `js/geo.js` is pure logic with no DOM, so it runs directly in Node:
+  haversine distance/bearing matches known city-pairs (Jerusalem→Tel Aviv
+  ≈54km NW) and all 8 compass labels map to an arrow.
 - Data-join integrity: all 1211 guessable localities have coords, K25 and K24
   records, and a `socioeconomic.json`, `peripherality.json`, `bagrut.json` and
   `cityprofile.json` entry, and K25/K24 per-party vote sums reconcile against
   `valid` with zero discrepancies.
-- A hint's render branch can be lifted verbatim out of `populateHint` with a
-  regex and run over all 1211 localities against a stub `state`, counting `<p>`
-  tags per locality — the cheapest way to prove a multi-line hint's
-  lines/hidden split without a browser. Hint 4's is currently 181 two-line /
-  997 one-line / 33 hidden; hint 6's is 280 six-line / 0 partial / 931 hidden.
-  Pair it with a text assertion that `state.hintPenalty++` still occurs exactly
-  once in `js/app.js` and sits immediately after the `dataset.filled` gate.
+- Call `populateHint('profile')` over all 1211 localities against the stubbed
+  `state` and count `<p>` tags per locality — the cheapest proof of a
+  multi-line hint's lines/hidden split without a browser. Currently 29 hidden
+  (0 lines) / 4 two-line / 893 three-line / 5 four-line / 104 ten-line /
+  176 eleven-line, and `state.hintPenalty` must advance by exactly 1 per
+  locality (and not at all on a re-open).
 - **DOM-dependent code can be run in Node too**, without jsdom: strip
   `js/app.js`'s IIFE wrapper and its trailing `init().catch(...)`, `new
   Function` the body with a ~40-line `document` stub (createElement returning a
@@ -399,7 +393,7 @@ round should re-check when it touches them:
 - Wrong-guess feedback: sweeping all 732,655 unordered pairs yields zero
   errors, zero empty sentences and 27 zero-gap (neutral-line) pairs; over
   25,000 random secret/guess pairs the axis win split is size 42.1%,
-  socioCluster 24.4%, periRank 18.4%, everything else ≤3%. A wildly different
+  socioCluster 25.2%, periRank 18.8%, everything else ≤3.4%. A wildly different
   split means the percentile tables or the axis coverage broke. Also assert the
   `periRank` direction explicitly (Tel Aviv, rank 1212, must read as *more
   central* than Eilat, rank 3).
@@ -412,12 +406,14 @@ round should re-check when it touches them:
 - Current data coverage for reference: guessable 1211, `randomEligible` 323,
   size tiers small 331 / medium 323 / large 48; socioeconomic 1178,
   peripherality 1182, bagrut 181, city profile 280 — the last three all
-  48/48 large-tier. Hints visible: 4 for 1178, 5 for 1182, 6 for 280.
+  48/48 large-tier. Hint 3 visible for 1182 (their union), hidden for 29.
 
 If Chrome ever becomes available, a manual pass is still worth doing before
 treating the UI itself as verified: guess flow, autocomplete, RTL layout, all
-six hints (including that 4, 5 and 6 hide for localities with no CBS value),
-the wrong-guess sentence and the guess-6 distance unlock, expanding a guess row
+three hints (including that hint 3 hides for the 29 localities with no CBS
+value at all, and drops individual lines for partial ones), the live guess
+counter, the wrong-guess sentence and the counter-5 distance unlock (reachable
+by hints alone), expanding a guess row
 (pointer and keyboard), the rules box and its remembered collapsed state, the
 archive date-picker, the size-tier slider, and both mode-switcher buttons.
 

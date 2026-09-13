@@ -19,7 +19,7 @@
   // because the captain expects to adjust them after playing.
   const INTENSITY_MUCH_GAP = 0.5;   // percentile gap above this reads as "much"
   const INTENSITY_SOME_GAP = 0.2;   // ...and above this as "somewhat"
-  const DISTANCE_UNLOCK_GUESS = 6;  // wrong guess number that unlocks distance/direction
+  const DISTANCE_UNLOCK_GUESS = 5;  // counter value (guesses + hints) that unlocks distance/direction
 
   const state = {
     localities: [],
@@ -29,7 +29,6 @@
     coords: null,
     parties25: null,
     parties24: null,
-    partyLetters25: [],
     schedule: null,
     socioeconomic: null,
     peripherality: null,
@@ -184,7 +183,8 @@
 
   // Axes for the wrong-guess difference feedback. Latitude/longitude are
   // deliberately NOT among them — they would re-create the geographic guessing
-  // game this feedback replaces. `up`/`down` describe the SECRET locality
+  // game this feedback replaces. `vehiclesPer100` is likewise excluded on
+  // purpose even though hint 3 still displays it. `up`/`down` describe the SECRET locality
   // relative to the guessed one and stay comparative: printing a real value
   // would give the answer away. See AGENTS.md for why percentiles, not z-scores.
   const DIFF_AXES = [
@@ -223,11 +223,6 @@
       key: 'incomePerPerson', source: 'cityprofile', field: 'incomePerPerson',
       up: (m) => `ההכנסה הממוצעת לנפש ביישוב המסתורי גבוהה ${m} מזו שביישוב שניחשתם.`,
       down: (m) => `ההכנסה הממוצעת לנפש ביישוב המסתורי נמוכה ${m} מזו שביישוב שניחשתם.`,
-    },
-    {
-      key: 'vehiclesPer100', source: 'cityprofile', field: 'vehiclesPer100',
-      up: (m) => `שיעור כלי הרכב לתושב ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
-      down: (m) => `שיעור כלי הרכב לתושב ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
     },
     {
       key: 'families4PlusPct', source: 'cityprofile', field: 'families4PlusPct',
@@ -300,13 +295,18 @@
     return best.answerHigher ? best.axis.up(m) : best.axis.down(m);
   }
 
-  // Actual guesses only: hints cost a guess in the win count but must not buy
-  // the map, so state.hintPenalty is deliberately not counted here.
+  // Counts hints as well as guesses — the same number the player sees — so
+  // opening hints deliberately brings the map forward.
   function distanceUnlocked() {
-    return state.guesses.length >= DISTANCE_UNLOCK_GUESS;
+    return state.guesses.length + state.hintPenalty >= DISTANCE_UNLOCK_GUESS;
+  }
+
+  function guessCount() {
+    return state.guesses.length + state.hintPenalty;
   }
 
   function renderHistory() {
+    document.getElementById('guess-counter').textContent = String(guessCount());
     const list = document.getElementById('history-list');
     list.innerHTML = '';
     if (state.guesses.length === 0) {
@@ -386,7 +386,7 @@
     const answer = state.localitiesById.get(state.answerId);
     const banner = document.getElementById('win-banner');
     const text = document.getElementById('win-text');
-    const count = state.guesses.length + state.hintPenalty;
+    const count = guessCount();
     const guessWord = count === 1 ? 'ניחוש אחד' : `${count} ניחושים`;
     text.textContent = `כל הכבוד! היישוב הוא ${answer.name}. פתרתם ב-${guessWord}.`;
     banner.hidden = false;
@@ -525,12 +525,15 @@
         const nowShown = output.hidden;
         output.hidden = !nowShown;
         btn.setAttribute('aria-pressed', String(nowShown));
-        if (nowShown) populateHint(hint);
+        if (nowShown) {
+          populateHint(hint);
+          renderHistory(); // a hint charge moves the counter and can unlock distance
+        }
       });
     });
   }
 
-  // Hint 6's six CBS socioeconomic component variables, in display order.
+  // Hint 3's six CBS socioeconomic component variables, in display order.
   // CBS publishes median age as whole years, so it's shown without a decimal;
   // the rest keep one decimal, and income is whole shekels. Deliberately
   // excludes `ממוצע שנות לימוד` (average years of schooling) — see AGENTS.md.
@@ -542,6 +545,22 @@
     { key: 'families4PlusPct', label: 'משפחות עם 4 ילדים ויותר', format: (v) => `${v.toFixed(1)}%` },
     { key: 'daysAbroad', label: 'ממוצע ימי שהייה בחו"ל', format: (v) => v.toFixed(1) },
   ];
+
+  // Hint 3's four datasets have very different coverage (socioeconomic 1178,
+  // peripherality 1182, bagrut 181, profile figures 280), so each part is
+  // resolved independently and a null part simply drops its lines.
+  function profileParts(localityId) {
+    const socio = state.socioeconomic[localityId];
+    const bagrut = state.bagrut[localityId];
+    const peri = state.peripherality[localityId];
+    const profile = state.cityprofile[localityId];
+    return {
+      socio: socio && socio.cluster != null ? socio : null,
+      bagrut: bagrut && bagrut.pct != null ? bagrut : null,
+      peri: peri && peri.cluster != null ? peri : null,
+      profile: profile && CITY_PROFILE_FIELDS.some((f) => profile[f.key] != null) ? profile : null,
+    };
+  }
 
   // Every hint costs a guess, charged exactly once: the same dataset.filled
   // gate that stops a hint's content from being re-fetched also stops the
@@ -564,41 +583,31 @@
       const rec24 = state.results24[state.answerId];
       const container = document.getElementById('chart-24');
       renderBarChart(container, rec24.votes, state.parties24, rec24.valid);
-    } else if (hint === 'similar') {
-      const { id } = Stats.findMostSimilarLocality(state.answerId, state.results25, state.partyLetters25);
-      const similarName = state.localitiesById.get(id).name;
-      out.innerHTML = `<p>היישוב עם פילוג הקולות הדומה ביותר הוא <strong>${similarName}</strong>.</p>`;
-    } else if (hint === 'socioeconomic') {
-      // Two datasets, one hint, one charge: both lines share the single
-      // dataset.filled gate above, so neither adds a second hintPenalty.
-      const socioRec = state.socioeconomic[state.answerId];
-      const bagrutRec = state.bagrut[state.answerId];
+    } else if (hint === 'profile') {
+      // Four datasets, many lines, still one charge: every line shares the
+      // single dataset.filled gate above. Each part is omitted when this
+      // locality has no value for it; startRound hides the block when none do.
+      const parts = profileParts(state.answerId);
       let html = '';
-      if (socioRec && socioRec.cluster != null) {
-        html += `<p>אשכול חברתי-כלכלי (למ"ס, 2021): <strong>${socioRec.cluster}</strong> (מתוך 1-10)</p>`;
+      if (parts.socio) {
+        html += `<p>אשכול חברתי-כלכלי (למ"ס, 2021): <strong>${parts.socio.cluster}</strong> (מתוך 1-10)</p>`;
       }
-      if (bagrutRec && bagrutRec.pct != null) {
-        html += `<p>זכאות לבגרות (משרד החינוך, ${bagrutRec.year}): <strong>${bagrutRec.pct}%</strong> מתלמידי כיתות י"ב הגרים ביישוב</p>`;
+      if (parts.bagrut) {
+        html += `<p>זכאות לבגרות (משרד החינוך, ${parts.bagrut.year}): <strong>${parts.bagrut.pct}%</strong> מתלמידי כיתות י"ב הגרים ביישוב</p>`;
+      }
+      if (parts.peri) {
+        // CBS peripherality: cluster 1 = most peripheral, 10 = most central, and
+        // the 1-1213 national rank runs the same way (rank 1 = most peripheral).
+        html += `<p>אשכול פריפריאליות (למ"ס): <strong>${parts.peri.cluster}</strong> (מתוך 1-10; 1 = פריפריאלי ביותר, 10 = מרכזי ביותר)</p>`;
+        html += `<p>דירוג ארצי: <strong>${parts.peri.rank}</strong> מתוך 1,213 יישובים (ככל שהדירוג גבוה יותר, היישוב מרכזי יותר)</p>`;
+      }
+      if (parts.profile) {
+        const lines = CITY_PROFILE_FIELDS
+          .filter((f) => parts.profile[f.key] != null)
+          .map((f) => `<p>${f.label}: <strong>${f.format(parts.profile[f.key])}</strong></p>`);
+        html += `<p class="hint-source">נתוני הלמ"ס לשנת 2021:</p>${lines.join('')}`;
       }
       out.innerHTML = html;
-    } else if (hint === 'peripherality') {
-      // CBS peripherality: cluster 1 = most peripheral, 10 = most central, and
-      // the 1-1213 national rank runs the same way (rank 1 = most peripheral).
-      const rec = state.peripherality[state.answerId];
-      out.innerHTML = `
-        <p>אשכול פריפריאליות (למ"ס): <strong>${rec.cluster}</strong> (מתוך 1-10; 1 = פריפריאלי ביותר, 10 = מרכזי ביותר)</p>
-        <p>דירוג ארצי: <strong>${rec.rank}</strong> מתוך 1,213 יישובים (ככל שהדירוג גבוה יותר, היישוב מרכזי יותר)</p>
-      `;
-    } else if (hint === 'cityprofile') {
-      // Six CBS component variables, up to six lines — but still a single
-      // charge, taken at the shared dataset.filled gate above, exactly like
-      // hint 4's two lines. Fields with no value are omitted line by line;
-      // startRound hides the whole block when all six are null.
-      const rec = state.cityprofile[state.answerId];
-      const lines = CITY_PROFILE_FIELDS
-        .filter((f) => rec && rec[f.key] != null)
-        .map((f) => `<p>${f.label}: <strong>${f.format(rec[f.key])}</strong></p>`);
-      out.innerHTML = `<p class="hint-source">נתוני הלמ"ס לשנת 2021:</p>${lines.join('')}`;
     }
   }
 
@@ -647,25 +656,12 @@
     renderHistory();
     resetHints();
 
-    // Hint 4 carries two independent datasets; hide it only when neither has a value.
-    const socioRec = state.socioeconomic[state.answerId];
-    const bagrutRec = state.bagrut[state.answerId];
-    const hasSocio = Boolean(socioRec) && socioRec.cluster != null;
-    const hasBagrut = Boolean(bagrutRec) && bagrutRec.pct != null;
-    document.getElementById('hint-block-socioeconomic').hidden = !hasSocio && !hasBagrut;
-    // Bagrut covers far fewer localities than the cluster, so the label names
-    // only the lines this locality will actually get.
-    document.querySelector('.hint-btn[data-hint="socioeconomic"]').textContent =
-      hasSocio && hasBagrut ? 'רמז 4: מדד חברתי-כלכלי וזכאות לבגרות'
-        : hasBagrut ? 'רמז 4: זכאות לבגרות'
-          : 'רמז 4: מדד חברתי-כלכלי';
-
-    const periRec = state.peripherality[state.answerId];
-    document.getElementById('hint-block-peripherality').hidden = !periRec || periRec.cluster == null;
-
-    const profileRec = state.cityprofile[state.answerId];
-    document.getElementById('hint-block-cityprofile').hidden =
-      !profileRec || CITY_PROFILE_FIELDS.every((f) => profileRec[f.key] == null);
+    // Hidden only when the answer has none of hint 3's four parts. The label
+    // stays generic: with four parts a label naming the ones present would be
+    // unwieldy, and "פרופיל היישוב" can never over-promise a missing line.
+    const parts = profileParts(state.answerId);
+    document.getElementById('hint-block-profile').hidden =
+      !Object.values(parts).some(Boolean);
 
     const input = document.getElementById('guess-input');
     input.disabled = false;
@@ -770,7 +766,6 @@
     state.coords = coords;
     state.parties25 = parties25;
     state.parties24 = parties24;
-    state.partyLetters25 = Object.keys(parties25);
     state.schedule = schedule;
     state.socioeconomic = socioeconomic;
     state.peripherality = peripherality;
