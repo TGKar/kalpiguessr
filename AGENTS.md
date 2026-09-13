@@ -262,6 +262,37 @@ handles parties with zero votes in a locality natively via the `0·log(0/x) := 0
 convention, so no artificial small-probability smoothing is needed the way
 plain KL divergence would require.
 
+## Wrong-guess feedback: percentile axes
+
+The primary feedback on a wrong guess is one sentence naming the **single
+biggest difference** between the guessed locality and the secret one; distance
+and direction are only a late-game aid (see game mechanics). `DIFF_AXES` in
+`js/app.js` holds the ten axes (each `{ key, source, field, up, down }`, the
+`source` being a `state` data map), their percentile counts matching each
+data file's coverage.
+
+- **Latitude and longitude are deliberately NOT axes.** Adding them re-creates
+  the geographic-guessing game this feedback exists to replace. Don't.
+- **Percentiles, not z-scores.** `buildPercentileTables()` ranks each axis over
+  **its own population** (every locality holding that axis, not the answer
+  pool) and maps rank → `[0,1]`; tied values share one percentile so an
+  identical pair really does come out at gap 0. Standard scores were rejected:
+  the distributions are heavy-tailed, flat or bimodal, so city size can reach a
+  ~17-sd gap while peripherality rank caps around 3.5 and the biggest-gap
+  contest degenerates into a contest about distribution shape.
+- **Selection** is the strictly largest absolute percentile gap over axes where
+  *both* localities have a value, ties going to the earlier axis in
+  `DIFF_AXES` — deterministic, unweighted, no randomness. `size` covers all
+  1211, so a shared axis always exists; a zero gap falls back to a neutral
+  "very similar" line (27 of the 732,655 unordered pairs), and the
+  no-shared-axis branch returns `''` rather than throwing.
+- **Intensity** comes from the gap via `INTENSITY_MUCH_GAP` / `INTENSITY_SOME_GAP`
+  (0.5 / 0.2), named constants at the top of `js/app.js` because they are
+  expected to be re-tuned after play. The sentence is **comparative only** —
+  never print either locality's real value, it gives the answer away.
+- **`periRank` direction is the easy one to get backwards**: high rank =
+  central, rank 1 = most peripheral (see the peripherality provenance entry).
+
 ## Game mechanics notes
 
 - **Hints cost a guess.** This supersedes the original brief's "no
@@ -278,6 +309,18 @@ plain KL divergence would require.
   broke the size-tier slider and the date picker, both `display: flex`. The
   `!important` base rule is what makes attribute toggling work at all; keep it,
   and don't reach for a `.hidden` class instead.
+- **Distance/direction are gated to guess `DISTANCE_UNLOCK_GUESS` (6) onward.**
+  Earlier wrong guesses show only the difference sentence. The gate counts
+  `state.guesses.length`, **not** `+ state.hintPenalty` — opening hints must not
+  buy the map. `renderHistory` rebuilds the list each call, so the 6th guess
+  retroactively adds distance to the earlier rows too.
+- **Every guess row is a `<button>` that expands that locality's K25 vote
+  chart** (`aria-expanded`, several rows may be open at once; tooltips were
+  rejected as touch-hostile). It reuses `renderBarChart` unchanged and must
+  never touch `state.guesses` or `state.hintPenalty`.
+- **A collapsible "איך משחקים" rules box** sits above the chart, expanded by
+  default, its collapsed state in `localStorage` under `kalpiguessr.rulesCollapsed`
+  inside try/catch (the accessor throws in some privacy modes).
 - **Vote-share bars hide anything under 0.1%.** `renderBarChart` filters by
   `pct >= 0.1`, applied identically to the current-round chart and the
   24th-Knesset hint chart since both go through that one function.
@@ -345,6 +388,21 @@ round should re-check when it touches them:
   997 one-line / 33 hidden; hint 6's is 280 six-line / 0 partial / 931 hidden.
   Pair it with a text assertion that `state.hintPenalty++` still occurs exactly
   once in `js/app.js` and sits immediately after the `dataset.filled` gate.
+- **DOM-dependent code can be run in Node too**, without jsdom: strip
+  `js/app.js`'s IIFE wrapper and its trailing `init().catch(...)`, `new
+  Function` the body with a ~40-line `document` stub (createElement returning a
+  plain object with `children`/`dataset`/`classList`/`addEventListener`) and
+  stubbed `Geo`, then populate the returned `state` from the real JSON. That
+  exercises `renderHistory`/`submitGuess`/the row toggles for real — how the
+  distance gate, the expandable charts and the hint-charge invariants were
+  verified. Cheaper and more honest than lifting branches out with a regex.
+- Wrong-guess feedback: sweeping all 732,655 unordered pairs yields zero
+  errors, zero empty sentences and 27 zero-gap (neutral-line) pairs; over
+  25,000 random secret/guess pairs the axis win split is size 42.1%,
+  socioCluster 24.4%, periRank 18.4%, everything else ≤3%. A wildly different
+  split means the percentile tables or the axis coverage broke. Also assert the
+  `periRank` direction explicitly (Tel Aviv, rank 1212, must read as *more
+  central* than Eilat, rank 3).
 - Answer selection: resolve several dates (an override, a fallback, an
   archive date) through `pickAnswerId`, and draw a few thousand times per
   size tier through `pickRandomAnswerId`, confirming every draw lands in the
@@ -358,8 +416,10 @@ round should re-check when it touches them:
 
 If Chrome ever becomes available, a manual pass is still worth doing before
 treating the UI itself as verified: guess flow, autocomplete, RTL layout, all
-five hints (including that 4 and 5 hide for localities with no CBS value),
-the archive date-picker, the size-tier slider, and both mode-switcher buttons.
+six hints (including that 4, 5 and 6 hide for localities with no CBS value),
+the wrong-guess sentence and the guess-6 distance unlock, expanding a guess row
+(pointer and keyboard), the rules box and its remembered collapsed state, the
+archive date-picker, the size-tier slider, and both mode-switcher buttons.
 
 ## Maintaining this file
 

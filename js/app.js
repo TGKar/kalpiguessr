@@ -15,6 +15,12 @@
     cityprofile: 'data/cityprofile.json',
   };
 
+  // Tuning knobs for the wrong-guess feedback, kept together at the top
+  // because the captain expects to adjust them after playing.
+  const INTENSITY_MUCH_GAP = 0.5;   // percentile gap above this reads as "much"
+  const INTENSITY_SOME_GAP = 0.2;   // ...and above this as "somewhat"
+  const DISTANCE_UNLOCK_GUESS = 6;  // wrong guess number that unlocks distance/direction
+
   const state = {
     localities: [],
     localitiesById: new Map(),
@@ -30,6 +36,7 @@
     bagrut: null,
     cityprofile: null,
     sizeTierPools: null,
+    percentiles: null,
     sizeTier: 'medium',
     mode: 'daily',
     dailyDate: null,
@@ -175,6 +182,130 @@
     'צפון-מערב': '↖',
   };
 
+  // Axes for the wrong-guess difference feedback. Latitude/longitude are
+  // deliberately NOT among them — they would re-create the geographic guessing
+  // game this feedback replaces. `up`/`down` describe the SECRET locality
+  // relative to the guessed one and stay comparative: printing a real value
+  // would give the answer away. See AGENTS.md for why percentiles, not z-scores.
+  const DIFF_AXES = [
+    {
+      key: 'socioCluster', source: 'socioeconomic', field: 'cluster',
+      up: (m) => `היישוב המסתורי בעל מדד חברתי-כלכלי גבוה ${m} מהיישוב שניחשתם.`,
+      down: (m) => `היישוב המסתורי בעל מדד חברתי-כלכלי נמוך ${m} מהיישוב שניחשתם.`,
+    },
+    {
+      // CBS peripherality rank: 1 = most peripheral, 1213 = most central.
+      key: 'periRank', source: 'peripherality', field: 'rank',
+      up: (m) => `היישוב המסתורי מרכזי ${m} מהיישוב שניחשתם.`,
+      down: (m) => `היישוב המסתורי פריפריאלי ${m} מהיישוב שניחשתם.`,
+    },
+    {
+      key: 'size', source: 'results25', field: 'eligible',
+      up: (m) => `היישוב המסתורי גדול ${m} מהיישוב שניחשתם.`,
+      down: (m) => `היישוב המסתורי קטן ${m} מהיישוב שניחשתם.`,
+    },
+    {
+      key: 'bagrut', source: 'bagrut', field: 'pct',
+      up: (m) => `שיעור הזכאים לבגרות ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
+      down: (m) => `שיעור הזכאים לבגרות ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
+    },
+    {
+      key: 'medianAge', source: 'cityprofile', field: 'medianAge',
+      up: (m) => `האוכלוסייה ביישוב המסתורי מבוגרת ${m} מזו שביישוב שניחשתם.`,
+      down: (m) => `האוכלוסייה ביישוב המסתורי צעירה ${m} מזו שביישוב שניחשתם.`,
+    },
+    {
+      key: 'academicPct', source: 'cityprofile', field: 'academicPct',
+      up: (m) => `שיעור בעלי התואר האקדמי ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
+      down: (m) => `שיעור בעלי התואר האקדמי ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
+    },
+    {
+      key: 'incomePerPerson', source: 'cityprofile', field: 'incomePerPerson',
+      up: (m) => `ההכנסה הממוצעת לנפש ביישוב המסתורי גבוהה ${m} מזו שביישוב שניחשתם.`,
+      down: (m) => `ההכנסה הממוצעת לנפש ביישוב המסתורי נמוכה ${m} מזו שביישוב שניחשתם.`,
+    },
+    {
+      key: 'vehiclesPer100', source: 'cityprofile', field: 'vehiclesPer100',
+      up: (m) => `שיעור כלי הרכב לתושב ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
+      down: (m) => `שיעור כלי הרכב לתושב ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
+    },
+    {
+      key: 'families4PlusPct', source: 'cityprofile', field: 'families4PlusPct',
+      up: (m) => `שיעור המשפחות עם 4 ילדים ויותר ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
+      down: (m) => `שיעור המשפחות עם 4 ילדים ויותר ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
+    },
+    {
+      key: 'daysAbroad', source: 'cityprofile', field: 'daysAbroad',
+      up: (m) => `ממוצע ימי השהייה בחו"ל ביישוב המסתורי גבוה ${m} מאשר ביישוב שניחשתם.`,
+      down: (m) => `ממוצע ימי השהייה בחו"ל ביישוב המסתורי נמוך ${m} מאשר ביישוב שניחשתם.`,
+    },
+  ];
+
+  const DIFF_NEUTRAL_TEXT = 'היישוב המסתורי דומה מאוד ליישוב שניחשתם בכל הנתונים שנבדקו.';
+
+  function axisValue(axis, localityId) {
+    const rec = state[axis.source][localityId];
+    const v = rec ? rec[axis.field] : null;
+    return typeof v === 'number' ? v : null;
+  }
+
+  // Built once at init over each axis's own population (every locality that
+  // has a value for it), never over the answer pool. Equal values share one
+  // percentile, so an identical pair really does come out as a zero gap.
+  function buildPercentileTables() {
+    const tables = {};
+    for (const axis of DIFF_AXES) {
+      const vals = [];
+      for (const loc of state.localities) {
+        const v = axisValue(axis, loc.id);
+        if (v !== null) vals.push([loc.id, v]);
+      }
+      vals.sort((a, b) => a[1] - b[1]);
+      const table = new Map();
+      const n = vals.length;
+      for (let i = 0; i < n;) {
+        let j = i;
+        while (j + 1 < n && vals[j + 1][1] === vals[i][1]) j++;
+        const pct = n > 1 ? ((i + j) / 2) / (n - 1) : 0;
+        for (let k = i; k <= j; k++) table.set(vals[k][0], pct);
+        i = j + 1;
+      }
+      tables[axis.key] = table;
+    }
+    return tables;
+  }
+
+  // Strictly the largest percentile gap; ties keep the earlier axis in
+  // DIFF_AXES order, so the feedback is deterministic.
+  function pickBiggestDifference(guessId, answerId) {
+    let best = null;
+    for (const axis of DIFF_AXES) {
+      const table = state.percentiles[axis.key];
+      const gp = table.get(guessId);
+      const ap = table.get(answerId);
+      if (gp === undefined || ap === undefined) continue;
+      const gap = Math.abs(ap - gp);
+      if (!best || gap > best.gap) best = { axis, gap, answerHigher: ap > gp };
+    }
+    return best;
+  }
+
+  function differenceSentence(guessId, answerId) {
+    const best = pickBiggestDifference(guessId, answerId);
+    if (!best) return ''; // defensive: `size` covers all 1211, so unreachable
+    if (best.gap === 0) return DIFF_NEUTRAL_TEXT;
+    const m = best.gap > INTENSITY_MUCH_GAP ? 'בהרבה'
+      : best.gap >= INTENSITY_SOME_GAP ? 'יותר'
+        : 'במעט';
+    return best.answerHigher ? best.axis.up(m) : best.axis.down(m);
+  }
+
+  // Actual guesses only: hints cost a guess in the win count but must not buy
+  // the map, so state.hintPenalty is deliberately not counted here.
+  function distanceUnlocked() {
+    return state.guesses.length >= DISTANCE_UNLOCK_GUESS;
+  }
+
   function renderHistory() {
     const list = document.getElementById('history-list');
     list.innerHTML = '';
@@ -182,35 +313,72 @@
       list.innerHTML = '<li class="history-empty">עדיין לא ניחשתם. התחילו להקליד למעלה.</li>';
       return;
     }
+    const showDistance = distanceUnlocked();
     // Most recent guess first.
     for (let i = state.guesses.length - 1; i >= 0; i--) {
       const g = state.guesses[i];
       const li = document.createElement('li');
       if (g.correct) li.classList.add('correct');
 
+      const row = document.createElement('button');
+      row.type = 'button';
+      row.className = 'guess-row';
+      row.setAttribute('aria-expanded', String(Boolean(g.expanded)));
+
       const nameEl = document.createElement('span');
       nameEl.className = 'guess-name';
       nameEl.textContent = g.name;
+      row.appendChild(nameEl);
 
-      const distEl = document.createElement('span');
-      distEl.className = 'guess-distance';
-      distEl.textContent = g.correct ? 'זהו זה!' : formatDistance(g.distance);
+      if (g.correct || showDistance) {
+        const distEl = document.createElement('span');
+        distEl.className = 'guess-distance';
+        distEl.textContent = g.correct ? 'זהו זה!' : formatDistance(g.distance);
 
-      const dirEl = document.createElement('span');
-      dirEl.className = 'guess-direction';
-      if (g.correct) {
-        dirEl.textContent = '🎯';
-      } else {
-        dirEl.textContent = DIRECTION_ARROWS[g.direction] || g.direction;
-        dirEl.title = g.direction;
-        dirEl.setAttribute('aria-label', g.direction);
+        const dirEl = document.createElement('span');
+        dirEl.className = 'guess-direction';
+        if (g.correct) {
+          dirEl.textContent = '🎯';
+        } else {
+          dirEl.textContent = DIRECTION_ARROWS[g.direction] || g.direction;
+          dirEl.title = g.direction;
+          dirEl.setAttribute('aria-label', g.direction);
+        }
+        row.appendChild(distEl);
+        row.appendChild(dirEl);
       }
 
-      li.appendChild(nameEl);
-      li.appendChild(distEl);
-      li.appendChild(dirEl);
+      if (!g.correct && g.difference) {
+        const diffEl = document.createElement('span');
+        diffEl.className = 'guess-difference';
+        diffEl.textContent = g.difference;
+        row.appendChild(diffEl);
+      }
+
+      const chart = document.createElement('div');
+      chart.className = 'guess-chart bar-chart';
+      chart.hidden = !g.expanded;
+      if (g.expanded) fillGuessChart(chart, g.id);
+
+      // Expanding is free: it never touches guesses or state.hintPenalty.
+      row.addEventListener('click', () => {
+        g.expanded = !g.expanded;
+        row.setAttribute('aria-expanded', String(g.expanded));
+        chart.hidden = !g.expanded;
+        if (g.expanded) fillGuessChart(chart, g.id);
+      });
+
+      li.appendChild(row);
+      li.appendChild(chart);
       list.appendChild(li);
     }
+  }
+
+  function fillGuessChart(container, localityId) {
+    if (container.dataset.filled) return;
+    container.dataset.filled = '1';
+    const rec = state.results25[localityId];
+    renderBarChart(container, rec.votes, state.parties25, rec.valid);
   }
 
   function showWin() {
@@ -235,7 +403,7 @@
     if (!guessed || !answer) return;
 
     if (localityId === state.answerId) {
-      state.guesses.push({ name: guessed.name, correct: true });
+      state.guesses.push({ id: localityId, name: guessed.name, correct: true });
       renderHistory();
       showWin();
       return;
@@ -246,8 +414,9 @@
     const distance = Geo.haversineKm(guessCoord.lat, guessCoord.lon, answerCoord.lat, answerCoord.lon);
     const bearing = Geo.bearingDeg(guessCoord.lat, guessCoord.lon, answerCoord.lat, answerCoord.lon);
     const direction = Geo.compassLabel(bearing);
+    const difference = differenceSentence(localityId, state.answerId);
 
-    state.guesses.push({ name: guessed.name, correct: false, distance, direction });
+    state.guesses.push({ id: localityId, name: guessed.name, correct: false, distance, direction, difference });
     renderHistory();
   }
 
@@ -550,6 +719,33 @@
     });
   }
 
+  const RULES_COLLAPSED_KEY = 'kalpiguessr.rulesCollapsed';
+
+  // localStorage throws outright in some privacy modes, so a returning
+  // player's preference is best-effort and never allowed to break the game.
+  function setupRulesBox() {
+    const toggle = document.getElementById('rules-toggle');
+    const body = document.getElementById('rules-body');
+    let collapsed = false;
+    try {
+      collapsed = localStorage.getItem(RULES_COLLAPSED_KEY) === '1';
+    } catch (e) { /* ignore */ }
+
+    function apply() {
+      body.hidden = collapsed;
+      toggle.setAttribute('aria-expanded', String(!collapsed));
+    }
+    apply();
+
+    toggle.addEventListener('click', () => {
+      collapsed = !collapsed;
+      apply();
+      try {
+        localStorage.setItem(RULES_COLLAPSED_KEY, collapsed ? '1' : '0');
+      } catch (e) { /* ignore */ }
+    });
+  }
+
   async function init() {
     const [localities, results25, results24, coords, parties25, parties24, schedule,
       socioeconomic, peripherality, bagrut, cityprofile] =
@@ -581,8 +777,10 @@
     state.bagrut = bagrut;
     state.cityprofile = cityprofile;
     state.sizeTierPools = computeSizeTierPools(localities, results25);
+    state.percentiles = buildPercentileTables();
 
     setupAutocomplete();
+    setupRulesBox();
     setupHints();
     setupModeSwitcher();
     setupSizeTierSlider();
