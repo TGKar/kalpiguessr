@@ -116,7 +116,7 @@
     return { small, medium, large };
   }
 
-  const MIN_VOTE_SHARE_PCT = 0.1;
+  const MIN_VOTE_SHARE_PCT = 1;
 
   // Presentation only: a bar colour per ballot letter, so a chart reads as a
   // set of parties rather than one repeated gradient. It covers the letters
@@ -369,8 +369,30 @@
     return state.guesses.length + state.hintPenalty;
   }
 
+  // Square pips instead of a number. Always at least five of them so the
+  // distance threshold is visible before it is reached, and never capped: past
+  // five the row simply keeps growing (hint 3 costs two, so it can jump).
+  // The boundary pip carries a small gap after it, keeping five readable once
+  // the row is longer than that.
+  function renderGuessPips() {
+    const count = guessCount();
+    const container = document.getElementById('guess-counter');
+    container.innerHTML = '';
+    const total = Math.max(DISTANCE_UNLOCK_GUESS, count);
+    for (let i = 0; i < total; i++) {
+      const pip = document.createElement('span');
+      pip.className = 'pip';
+      if (i < count) pip.classList.add('pip-filled');
+      if (i === DISTANCE_UNLOCK_GUESS - 1 && total > DISTANCE_UNLOCK_GUESS) {
+        pip.classList.add('pip-boundary');
+      }
+      container.appendChild(pip);
+    }
+    container.setAttribute('aria-label', `ניחושים: ${count}`);
+  }
+
   function renderHistory() {
-    document.getElementById('guess-counter').textContent = String(guessCount());
+    renderGuessPips();
     const list = document.getElementById('history-list');
     list.innerHTML = '';
     if (state.guesses.length === 0) {
@@ -630,6 +652,24 @@
     { key: 'daysAbroad', label: 'ממוצע ימי שהייה בחו"ל', format: FMT.dec1 },
   ];
 
+  // Presentation only, not per-locality data: the 2024 national matriculation
+  // eligibility rate, drawn as the reference marker on the locality's bagrut
+  // bar. data/bagrut.json holds no national row.
+  const NATIONAL_BAGRUT_PCT = 76.6;
+
+  // Both CBS clusters run 1-10, so both scales are ten segments wide.
+  const CLUSTER_SCALE_SEGMENTS = 10;
+
+  function clusterScaleHtml(filled, tone) {
+    let cells = '';
+    for (let i = 1; i <= CLUSTER_SCALE_SEGMENTS; i++) {
+      cells += i <= filled
+        ? `<span class="scale-seg scale-seg-on scale-seg-${tone}"></span>`
+        : '<span class="scale-seg"></span>';
+    }
+    return `<div class="scale-track">${cells}</div>`;
+  }
+
   // Hint 3's four datasets have very different coverage (socioeconomic 1178,
   // peripherality 1182, bagrut 181, profile figures 280), so each part is
   // resolved independently and a null part simply drops its lines.
@@ -675,22 +715,38 @@
       const parts = profileParts(state.answerId);
       let html = '';
       if (parts.socio) {
-        html += `<p>אשכול חברתי-כלכלי (למ"ס, 2021): <strong>${parts.socio.cluster}</strong> (מתוך 1-10)</p>`;
-      }
-      if (parts.bagrut) {
-        html += `<p>זכאות לבגרות (משרד החינוך, ${parts.bagrut.year}): <strong>${parts.bagrut.pct}%</strong> מתלמידי כיתות י"ב הגרים ביישוב</p>`;
+        html += `<div class="profile-metric">
+          <div class="profile-metric-head"><span class="profile-metric-label">אשכול חברתי-כלכלי (למ"ס, 2021)</span><span class="profile-metric-value">${parts.socio.cluster} <span class="profile-metric-of">מתוך 10</span></span></div>
+          ${clusterScaleHtml(parts.socio.cluster, 'ink')}
+        </div>`;
       }
       if (parts.peri) {
         // CBS peripherality: cluster 1 = most peripheral, 10 = most central, and
-        // the 1-1213 national rank runs the same way (rank 1 = most peripheral).
-        html += `<p>אשכול פריפריאליות (למ"ס): <strong>${parts.peri.cluster}</strong> (מתוך 1-10; 1 = פריפריאלי ביותר, 10 = מרכזי ביותר)</p>`;
-        html += `<p>דירוג ארצי: <strong>${parts.peri.rank}</strong> מתוך 1,213 יישובים (ככל שהדירוג גבוה יותר, היישוב מרכזי יותר)</p>`;
+        // the 1-1213 national rank runs the same way (rank 1 = most peripheral),
+        // which is what the scale's two end labels say.
+        const rankLine = parts.peri.rank != null
+          ? `<span>דירוג ארצי: ${parts.peri.rank} מתוך 1,213</span>`
+          : '<span></span>';
+        html += `<div class="profile-metric">
+          <div class="profile-metric-head"><span class="profile-metric-label">אשכול פריפריאליות (למ"ס)</span><span class="profile-metric-value">${parts.peri.cluster} <span class="profile-metric-of">מתוך 10</span></span></div>
+          ${clusterScaleHtml(parts.peri.cluster, 'accent')}
+          <div class="profile-scale-ends"><span>פריפריאלי</span>${rankLine}<span>מרכזי</span></div>
+        </div>`;
+      }
+      if (parts.bagrut) {
+        // Clamped only so a stray >100 could never overflow the track.
+        const fillPct = Math.min(parts.bagrut.pct, 100);
+        html += `<div class="profile-metric">
+          <div class="profile-metric-head"><span class="profile-metric-label">זכאות לבגרות (משרד החינוך, ${parts.bagrut.year})</span><span class="profile-metric-value">${parts.bagrut.pct}%</span></div>
+          <div class="bagrut-track"><div class="bagrut-fill" style="width: ${fillPct}%"></div><div class="bagrut-avg" style="right: ${NATIONAL_BAGRUT_PCT}%"></div></div>
+          <p class="profile-note">מתלמידי כיתות י"ב הגרים ביישוב · הקו השחור הוא הממוצע הארצי (${NATIONAL_BAGRUT_PCT}%)</p>
+        </div>`;
       }
       if (parts.profile) {
-        const lines = CITY_PROFILE_FIELDS
+        const cards = CITY_PROFILE_FIELDS
           .filter((f) => parts.profile[f.key] != null)
-          .map((f) => `<p>${f.label}: <strong>${f.format(parts.profile[f.key])}</strong></p>`);
-        html += `<p class="hint-source">נתוני הלמ"ס לשנת 2021:</p>${lines.join('')}`;
+          .map((f) => `<div class="profile-stat"><div class="profile-stat-value">${f.format(parts.profile[f.key])}</div><div class="profile-stat-label">${f.label}</div></div>`);
+        html += `<div class="profile-stats-block"><p class="hint-source">נתוני הלמ"ס לשנת 2021:</p><div class="profile-stats">${cards.join('')}</div></div>`;
       }
       out.innerHTML = html;
     }

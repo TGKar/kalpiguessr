@@ -78,8 +78,12 @@ body {
   color: var(--ink);
 }
 
+.brand-text {
+  min-width: 0;
+}
+
 .subtitle {
-  margin: 0.6rem 0 0;
+  margin: 0.25rem 0 0;
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.45;
@@ -171,6 +175,12 @@ h2 {
   color: var(--ink);
 }
 
+.chart-note {
+  margin: 0.65rem 0 0;
+  font-size: 0.72rem;
+  color: var(--faint);
+}
+
 /* Guess input */
 .autocomplete {
   position: relative;
@@ -228,18 +238,55 @@ h2 {
   background: var(--bar-track);
 }
 
+/* Guess counter: bordered square pips, filled per counted guess. */
 .guess-counter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
   margin: 1rem 0 0;
   font-size: 0.9rem;
   color: var(--muted);
 }
 
-.guess-counter strong {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 1.2rem;
-  color: var(--ink);
-  margin-right: 0.15rem;
+.guess-pips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.pip {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--ink);
+  background: transparent;
+}
+
+.pip-filled {
+  background: var(--ink);
+}
+
+/* Subtle tick marking the fifth pip, so the distance threshold stays readable
+   once the row grows past it. */
+.pip-boundary {
+  margin-inline-end: 0.6rem;
+  position: relative;
+}
+
+.pip-boundary::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -0.42rem;
+  width: 0.24rem;
+  height: 1px;
+  background: var(--faint);
+}
+
+.guess-counter-note {
+  font-size: 0.78rem;
+  color: var(--faint);
 }
 
 .hint-text {
@@ -463,10 +510,135 @@ h2 {
 }
 
 .hint-output .hint-source {
-  margin: 0.8rem 0 0.4rem;
+  margin: 0 0 0.7rem;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   color: var(--faint);
+}
+
+/* Hint 3 "פרופיל היישוב": two ten-segment cluster scales, a bagrut bar against
+   the national average, then the six CBS figures as number-first cards. */
+.profile-metric {
+  margin-bottom: 1.05rem;
+}
+
+.profile-metric:last-child {
+  margin-bottom: 0;
+}
+
+.profile-metric-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin-bottom: 0.4rem;
+}
+
+.profile-metric-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-width: 0;
+}
+
+.profile-metric-value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.profile-metric-of {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--faint);
+}
+
+.scale-track {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.scale-seg {
+  height: 13px;
+  background: var(--bar-track);
+}
+
+.scale-seg-ink { background: var(--ink); }
+.scale-seg-accent { background: var(--accent); }
+
+/* Peripherality's two end labels carry the direction the old parenthetical
+   spelled out: low = peripheral, high = central. */
+.profile-scale-ends {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  font-size: 0.7rem;
+  color: var(--faint);
+}
+
+.bagrut-track {
+  position: relative;
+  height: 13px;
+  background: var(--bar-track);
+}
+
+.bagrut-fill {
+  height: 100%;
+  background: var(--accent);
+}
+
+/* The national-average marker; `right` is set inline as a percentage, which in
+   this RTL track measures from the same edge the fill grows out of. */
+.bagrut-avg {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--ink);
+}
+
+.hint-output .profile-note {
+  margin: 0.3rem 0 0;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--faint);
+}
+
+.profile-stats-block {
+  margin-top: 1.1rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--dashed-divider);
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.profile-stat {
+  background: var(--card);
+  border: 1px solid var(--dashed-divider);
+  padding: 0.7rem 0.75rem;
+  min-width: 0;
+}
+
+.profile-stat-value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.profile-stat-label {
+  margin-top: 0.3rem;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: var(--muted);
 }
 
 /* Mode switcher */
@@ -682,6 +854,16 @@ h2 {
   .hint-btn {
     display: block;
     width: 100%;
+  }
+
+  /* Three number cards don't fit a phone; two do. */
+  .profile-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-metric-head {
+    flex-wrap: wrap;
+    gap: 0.2rem 0.7rem;
   }
 
   .size-tier-wrap,

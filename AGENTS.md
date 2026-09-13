@@ -131,6 +131,12 @@ public datasets — nothing here is fabricated or approximated.
   `ACHUZ_ZAKAIM_MITZTYEN` (excellence), `ACHUZ_ANGLIT_5YL` / `ACHUZ_MATEM_5YL`
   (5-unit English/maths), `ACHUZ_NESHIRA` (dropout), `GIUS_BANIM_LEZAVA`
   (enlistment) — none of them implemented.
+  **The national average is not in the data.** Hint 3's bagrut bar draws a
+  reference marker at `NATIONAL_BAGRUT_PCT` in `js/app.js` — a **hardcoded
+  presentation constant** (2024: **76.6%**), not a per-locality figure and not a
+  row in `data/bagrut.json`. It is stated to the player in the note under the
+  bar, so if the per-locality vintage ever moves off 2024 this constant has to
+  move with it.
 
 **Fetching CBS data.** Direct file GETs under
 `https://www.cbs.gov.il/he/publications/DocLib/<year>/<pub>/<file>` work fine
@@ -323,9 +329,13 @@ there is no build step and no framework.
   `"Segoe UI", Arial, Helvetica` stack was the single worst thing about the
   previous look — Latin faces that merely happen to carry Hebrew glyphs.
 - **Layout order in `index.html` is deliberate**: header, mode/tier/date
-  controls, rules box, **guess input + counter, then the vote chart**, win
-  banner, history, hints. The input is above the chart so the main interaction
-  isn't pushed past the fold; don't move it back down.
+  controls, rules box, **the vote chart, then the guess input + pip counter**,
+  win banner, history, hints. The chart is the puzzle, so it comes first; the
+  guess box then sits directly above the previous-guesses list it feeds, which
+  keeps a guess and its feedback in one glance. An earlier round had the input
+  above the chart (to keep it off the fold) — that was the captain's correction,
+  don't put it back. The page title is Hebrew (`קלפיגסר`) in both `<head>` and
+  the header; an earlier brief that said to keep it Latin was wrong.
 - **The vote chart must never get its own scrollbar.** `.bar-chart` carries no
   `max-height` and no `overflow` — it grows and the page scrolls. Each
   `.bar-row` is a four-column grid (boxed ballot letter, bar, party name,
@@ -390,9 +400,11 @@ there is no build step and no framework.
 - **A collapsible "איך משחקים" rules box** sits above the chart, expanded by
   default, its collapsed state in `localStorage` under `kalpiguessr.rulesCollapsed`
   inside try/catch (the accessor throws in some privacy modes).
-- **Vote-share bars hide anything under 0.1%.** `renderBarChart` filters by
-  `pct >= 0.1`, applied identically to the current-round chart and the
-  24th-Knesset hint chart since both go through that one function.
+- **Vote-share bars hide anything under 1%** (`MIN_VOTE_SHARE_PCT`, raised
+  from 0.1). `renderBarChart` holds the only filter, so it applies identically
+  to all three of its call sites — the current-round chart, the 24th-Knesset
+  hint chart and an expanded guess row. `.chart-note` under the chart in
+  `index.html` states the floor to the player.
 - **Daily mode has an archive date-picker.** `startRound('daily', dateStr)`
   resolves any past date through the same `pickAnswerId` used for today; the
   picker's native `max` is clamped to today and `startRound` also clamps
@@ -411,13 +423,21 @@ there is no build step and no framework.
   `index.html`, a branch in `populateHint`, and (if the data is incomplete) a
   hide line in `startRound`, and an entry in `HINT_COSTS` if it costs anything
   other than 1 — never a second `state.hintPenalty` write site.
-- **Hint 3 pools four independently-covered datasets into one block.** In
-  display order: socioeconomic cluster, bagrut eligibility, peripherality
-  (cluster + national rank), then the six `CITY_PROFILE_FIELDS` figures under a
-  "נתוני הלמ"ס לשנת 2021" sub-header (median age is whole years because CBS
-  publishes it that way). `profileParts` in `js/app.js` resolves the four parts;
-  each contributes its lines only when present, and `startRound` hides the whole
-  block only when **none** of the four do. Coverage: socioeconomic 1178,
+- **Hint 3 pools four independently-covered datasets into one block**, drawn
+  as three kinds of visual, not as `label: value` lines (an earlier round's
+  eleven text lines were replaced). In display order: socioeconomic cluster and
+  peripherality cluster each as a **ten-segment scale** (`clusterScaleHtml`,
+  first N segments filled, numeral beside the label), peripherality carrying its
+  national rank plus `פריפריאלי`/`מרכזי` end labels beneath — those labels are
+  now the only thing stating the direction, so getting them backwards is silent;
+  then bagrut as a **bar with a marker at the national average**; then the six
+  `CITY_PROFILE_FIELDS` as a **three-column grid of number-first cards** under
+  the "נתוני הלמ"ס לשנת 2021" sub-header (median age is whole years because CBS
+  publishes it that way; the card labels are the same `CITY_PROFILE_FIELDS`
+  strings the wrong-guess feedback uses, deliberately not shortened for the
+  grid). `profileParts` in `js/app.js` resolves the four parts; each contributes
+  its own block only when present, and `startRound` hides the whole hint only
+  when **none** of the four do. Coverage: socioeconomic 1178,
   peripherality 1182, bagrut 181, profile 280 — union **1182 of 1211**, 29
   hidden, because peripherality is a strict superset of the other three (verified,
   zero localities have a part but no peripherality). The button label is the
@@ -429,10 +449,19 @@ there is no build step and no framework.
   one charge is `HINT_COSTS.profile`, i.e. **2**, so opening hint 3 moves the
   counter 0→2 and reaches the `DISTANCE_UNLOCK_GUESS` gate after only three
   other guesses.
-- **The live guess counter** (`#guess-counter`, under the guess input) shows
-  `state.guesses.length + state.hintPenalty` — the same number the win banner
-  uses and the same one the distance gate reads. It is updated inside
-  `renderHistory`, which is why opening a hint calls `renderHistory`.
+- **The live guess counter is square pips, not a number** — `#guess-counter`
+  is the pip container and `renderGuessPips` fills it. Filled count is
+  `state.guesses.length + state.hintPenalty`, the same number the win banner
+  uses and the distance gate reads. Two rules the captain set explicitly:
+  **always at least `DISTANCE_UNLOCK_GUESS` (5) pips**, even at zero, so the
+  threshold is visible before it is reached; and **past five the row keeps
+  growing, never capped and never switched back to a numeral** — seven counted
+  guesses is seven filled pips. Hint 3 costs two, so the count can jump by two.
+  The fifth pip carries `.pip-boundary` (a small gap + tick) *only* once the row
+  is longer than five, keeping the threshold legible without a label. The
+  container's `aria-label` carries the number for screen readers. It is
+  rendered inside `renderHistory`, which is why opening a hint calls
+  `renderHistory`.
 
 ## Testing notes
 
@@ -451,11 +480,18 @@ round should re-check when it touches them:
   `cityprofile.json` entry, and K25/K24 per-party vote sums reconcile against
   `valid` with zero discrepancies.
 - Call `populateHint('profile')` over all 1211 localities against the stubbed
-  `state` and count `<p>` tags per locality — the cheapest proof of a
-  multi-line hint's lines/hidden split without a browser. Currently 29 hidden
-  (0 lines) / 4 two-line / 893 three-line / 5 four-line / 104 ten-line /
-  176 eleven-line, and `state.hintPenalty` must advance by exactly
-  `HINT_COSTS.profile` (**2**) per locality (and not at all on a re-open).
+  `state` and count the emitted blocks per locality — the cheapest proof of the
+  hint's parts/hidden split without a browser. By present-part combination:
+  29 with none (hidden) / 4 peripherality only / 893 socio+peri / 5
+  socio+peri+bagrut / 104 socio+peri+profile / 176 all four. Assert per
+  locality that blocks == parts present, that each cluster scale emits exactly
+  10 segments, that the card count matches the non-null `CITY_PROFILE_FIELDS`,
+  and that `state.hintPenalty` advances by exactly `HINT_COSTS.profile` (**2**)
+  and not at all on a re-open. Check the peripherality direction here too, not
+  only in the wrong-guess feedback: Tel Aviv (cluster 10) must fill all ten
+  segments and Eilat (cluster 1) exactly one.
+- Pip counter: `renderGuessPips` at counts 0/3/5/7/12 must emit 5/5/5/7/12 pips
+  with 0/3/5/7/12 filled, and `.pip-boundary` only when the row exceeds five.
 - **DOM-dependent code can be run in Node too**, without jsdom: strip
   `js/app.js`'s IIFE wrapper and its trailing `init().catch(...)`, `new
   Function` the body with a ~40-line `document` stub (createElement returning a
@@ -488,20 +524,25 @@ round should re-check when it touches them:
   peripherality 1182, bagrut 181, city profile 280 — the last three all
   48/48 large-tier. Hint 3 visible for 1182 (their union), hidden for 29.
 
-**The "Ballot" restyle has never been seen rendered** — it was verified only
-structurally (id set unchanged, behavioural zero-diff against the pre-restyle
-commit for `pickAnswerId`/`pickRandomAnswerId`/`computeSizeTierPools`/
-`differenceDetail`/`renderBarChart`'s row data, plus the harness checks above).
-If Chrome ever becomes available, a manual pass is still worth doing before
-treating the UI itself as verified: guess flow, autocomplete, RTL layout, all
-three hints (including that hint 3 hides for the 29 localities with no CBS
-value at all, and drops individual lines for partial ones), the live guess
-counter, the wrong-guess sentence and the counter-5 distance unlock (reachable
-by hints alone), expanding a guess row
+**The "Ballot" look has never been seen rendered**, neither the original
+restyle nor the corrections on top of it (Hebrew title, chart-above-input order,
+pip counter, 1% floor, the hint 3 redesign). Both rounds were verified only
+structurally: id set cross-checked in both directions against `js/app.js`,
+brace-balanced byte-diff of `pickAnswerId`/`pickRandomAnswerId`/
+`computeSizeTierPools`/`DIFF_AXES`/`buildPercentileTables`/`differenceDetail`/
+`distanceUnlocked`/`HINT_COSTS`/`CITY_PROFILE_FIELDS` against the previous
+commit, every class the JS emits confirmed present in `style.css`, and the
+harness checks above. If Chrome ever becomes available, a manual pass is still
+worth doing before treating the UI itself as verified: guess flow,
+autocomplete, RTL layout, all three hints (including that hint 3 hides for the
+29 localities with no CBS value at all, and renders only the blocks a partial
+locality has), the pip counter past five, the wrong-guess sentence and the
+counter-5 distance unlock (reachable by hints alone), expanding a guess row
 (pointer and keyboard), the rules box and its remembered collapsed state, the
 archive date-picker, the size-tier slider, both mode-switcher buttons, and —
-for the restyle specifically — phone width (~390px) with nothing overflowing
-horizontally and the chart's folded two-line rows.
+for the look specifically — phone width (~390px) with nothing overflowing
+horizontally, the chart's folded two-line rows, and hint 3's stat grid folding
+from three columns to two.
 
 ## Maintaining this file
 
