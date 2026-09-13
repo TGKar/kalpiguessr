@@ -481,8 +481,15 @@
     // Hint 4 carries two independent datasets; hide it only when neither has a value.
     const socioRec = state.socioeconomic[state.answerId];
     const bagrutRec = state.bagrut[state.answerId];
-    document.getElementById('hint-block-socioeconomic').hidden =
-      (!socioRec || socioRec.cluster == null) && (!bagrutRec || bagrutRec.pct == null);
+    const hasSocio = Boolean(socioRec) && socioRec.cluster != null;
+    const hasBagrut = Boolean(bagrutRec) && bagrutRec.pct != null;
+    document.getElementById('hint-block-socioeconomic').hidden = !hasSocio && !hasBagrut;
+    // Bagrut covers far fewer localities than the cluster, so the label names
+    // only the lines this locality will actually get.
+    document.querySelector('.hint-btn[data-hint="socioeconomic"]').textContent =
+      hasSocio && hasBagrut ? 'רמז 4: מדד חברתי-כלכלי וזכאות לבגרות'
+        : hasBagrut ? 'רמז 4: זכאות לבגרות'
+          : 'רמז 4: מדד חברתי-כלכלי';
 
     const periRec = state.peripherality[state.answerId];
     document.getElementById('hint-block-peripherality').hidden = !periRec || periRec.cluster == null;

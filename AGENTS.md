@@ -272,6 +272,12 @@ plain KL divergence would require.
   `populateHint` — closing and reopening an already-revealed hint must not
   charge again. Hints never get their own row in the guess-history list,
   only wrong/correct locality guesses do.
+- **`[hidden]` needs `style.css`'s `[hidden] { display: none !important; }`.**
+  Everything toggled from `js/app.js` hides via the `hidden` attribute, whose
+  UA `display: none` loses to any component `display` rule — that silently
+  broke the size-tier slider and the date picker, both `display: flex`. The
+  `!important` base rule is what makes attribute toggling work at all; keep it,
+  and don't reach for a `.hidden` class instead.
 - **Vote-share bars hide anything under 0.1%.** `renderBarChart` filters by
   `pct >= 0.1`, applied identically to the current-round chart and the
   24th-Knesset hint chart since both go through that one function.
@@ -306,10 +312,13 @@ plain KL divergence would require.
   localities stay hidden. Since the CBS-2021 socioeconomic rebuild, bagrut is a
   strict *subset* of the cluster's coverage, not a complement — it adds a second
   statistic for those 181 (all 48 large-tier cities among them), not new
-  localities. Two lines, still exactly **one** charge: the guess is taken at the
-  shared `dataset.filled` gate in `populateHint`, never per line. **Hint 6's
-  six lines work the same way** — a multi-line hint never means multiple
-  charges.
+  localities. `startRound` also sets the hint-4 button's label from which of the
+  two datasets the answer has (cluster only / bagrut only / both), so it never
+  promises a bagrut figure that won't appear; hint 6 needs no such treatment
+  since its six fields are all-or-nothing. Two lines, still exactly **one**
+  charge: the guess is taken at the shared `dataset.filled` gate in
+  `populateHint`, never per line. **Hint 6's six lines work the same way** —
+  a multi-line hint never means multiple charges.
 
 ## Testing notes
 
