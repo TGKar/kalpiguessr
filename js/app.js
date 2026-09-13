@@ -12,6 +12,7 @@
     socioeconomic: 'data/socioeconomic.json',
     peripherality: 'data/peripherality.json',
     bagrut: 'data/bagrut.json',
+    cityprofile: 'data/cityprofile.json',
   };
 
   const state = {
@@ -27,6 +28,7 @@
     socioeconomic: null,
     peripherality: null,
     bagrut: null,
+    cityprofile: null,
     sizeTierPools: null,
     sizeTier: 'medium',
     mode: 'daily',
@@ -359,6 +361,19 @@
     });
   }
 
+  // Hint 6's six CBS socioeconomic component variables, in display order.
+  // CBS publishes median age as whole years, so it's shown without a decimal;
+  // the rest keep one decimal, and income is whole shekels. Deliberately
+  // excludes `ממוצע שנות לימוד` (average years of schooling) — see AGENTS.md.
+  const CITY_PROFILE_FIELDS = [
+    { key: 'medianAge', label: 'גיל חציוני', format: (v) => `${Math.round(v)}` },
+    { key: 'academicPct', label: 'בעלי תואר אקדמי (גילאי 27-54)', format: (v) => `${v.toFixed(1)}%` },
+    { key: 'incomePerPerson', label: 'הכנסה חודשית ממוצעת לנפש', format: (v) => `${Math.round(v).toLocaleString('he-IL')} ₪` },
+    { key: 'vehiclesPer100', label: 'כלי רכב בבעלות ל-100 תושבים בני 17 ומעלה', format: (v) => v.toFixed(1) },
+    { key: 'families4PlusPct', label: 'משפחות עם 4 ילדים ויותר', format: (v) => `${v.toFixed(1)}%` },
+    { key: 'daysAbroad', label: 'ממוצע ימי שהייה בחו"ל', format: (v) => v.toFixed(1) },
+  ];
+
   // Every hint costs a guess, charged exactly once: the same dataset.filled
   // gate that stops a hint's content from being re-fetched also stops the
   // guess count from double-counting a hint that's toggled closed and
@@ -405,6 +420,16 @@
         <p>אשכול פריפריאליות (למ"ס): <strong>${rec.cluster}</strong> (מתוך 1-10; 1 = פריפריאלי ביותר, 10 = מרכזי ביותר)</p>
         <p>דירוג ארצי: <strong>${rec.rank}</strong> מתוך 1,213 יישובים (ככל שהדירוג גבוה יותר, היישוב מרכזי יותר)</p>
       `;
+    } else if (hint === 'cityprofile') {
+      // Six CBS component variables, up to six lines — but still a single
+      // charge, taken at the shared dataset.filled gate above, exactly like
+      // hint 4's two lines. Fields with no value are omitted line by line;
+      // startRound hides the whole block when all six are null.
+      const rec = state.cityprofile[state.answerId];
+      const lines = CITY_PROFILE_FIELDS
+        .filter((f) => rec && rec[f.key] != null)
+        .map((f) => `<p>${f.label}: <strong>${f.format(rec[f.key])}</strong></p>`);
+      out.innerHTML = `<p class="hint-source">נתוני הלמ"ס לשנת 2021:</p>${lines.join('')}`;
     }
   }
 
@@ -462,6 +487,10 @@
     const periRec = state.peripherality[state.answerId];
     document.getElementById('hint-block-peripherality').hidden = !periRec || periRec.cluster == null;
 
+    const profileRec = state.cityprofile[state.answerId];
+    document.getElementById('hint-block-cityprofile').hidden =
+      !profileRec || CITY_PROFILE_FIELDS.every((f) => profileRec[f.key] == null);
+
     const input = document.getElementById('guess-input');
     input.disabled = false;
     input.value = '';
@@ -516,7 +545,7 @@
 
   async function init() {
     const [localities, results25, results24, coords, parties25, parties24, schedule,
-      socioeconomic, peripherality, bagrut] =
+      socioeconomic, peripherality, bagrut, cityprofile] =
       await Promise.all([
         fetchJson(DATA_FILES.localities),
         fetchJson(DATA_FILES.results25),
@@ -528,6 +557,7 @@
         fetchJson(DATA_FILES.socioeconomic),
         fetchJson(DATA_FILES.peripherality),
         fetchJson(DATA_FILES.bagrut),
+        fetchJson(DATA_FILES.cityprofile),
       ]);
 
     state.localities = localities;
@@ -542,6 +572,7 @@
     state.socioeconomic = socioeconomic;
     state.peripherality = peripherality;
     state.bagrut = bagrut;
+    state.cityprofile = cityprofile;
     state.sizeTierPools = computeSizeTierPools(localities, results25);
 
     setupAutocomplete();

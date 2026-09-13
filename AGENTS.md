@@ -63,6 +63,31 @@ public datasets — nothing here is fabricated or approximated.
   **Ship only the cluster, never the rank or index value**: `t02`'s ranks run
   1-255 and `t08`'s 1-996 on two separately standardized scales (measured
   means 0.000 vs 0.549) and are not comparable across the two tables.
+- **City-profile components** (hint 6): the *same* publication 1955 (**2021**
+  data), the two tables that carry the 15 raw variables behind the index:
+  `t01.xlsx` (sheet `לוח 1`, header row 6 — 255 local authorities, **201** with
+  a `סמל יישוב`; the 54 regional councils have a blank code) and
+  `appendix.xlsx` (sheet `נספח`, header row 5 — localities inside regional
+  councils with 2,000+ residents, **81** data rows, א→ת complete, then
+  footnotes). Both share one column layout: `(ערך, ציון תקן, דירוג)` triplets
+  per variable, the variable name sitting directly over its `ערך` column —
+  **ship `ערך` (the raw value), never the standard score or the rank** (those
+  ranks are per-universe and not comparable across the two files, the same trap
+  as the socioeconomic rank above). Their code sets are disjoint (0 overlap).
+  Only **six** of the 15 variables are shipped: `חציון גיל`,
+  `אחוז בעלי תואר אקדמי מבני 27-54`, `הכנסה חודשית ממוצעת לנפש`,
+  `מספר כלי רכב בבעלות ל-100 תושבים בני 17 ומעלה`,
+  `אחוז משפחות עם 4 ילדים ויותר`, `ממוצע מספר ימי שהייה בחו"ל`.
+  **`ממוצע שנות לימוד של בני 25-54` (average years of schooling) was cut
+  deliberately** — too close to hint 4's bagrut figure. Don't add it back, and
+  don't add the other eight components either. Coverage: **280 of 1211**
+  guessable localities and **48 of 48** large-tier cities; it is all-or-nothing
+  per locality (CBS publishes the 15 components together), so every covered
+  locality has all six. That 280 is the ceiling for this publication — the
+  components exist only at authority level plus those 81 large regional-council
+  localities. `t07`/`t09` cover all 996 regional-council localities but carry
+  the index/cluster only, and `t12`/`t13` are statistical *sub*-areas inside
+  cities, not new localities; neither adds profile coverage.
 - **Peripherality** (hint 5): CBS **publication 1917**, "מדד פריפריאליות של
   יישובים ושל רשויות מקומיות, **2020**", single table
   `https://www.cbs.gov.il/he/publications/DocLib/2023/1917/table_02.xlsx`
@@ -220,7 +245,12 @@ first-visit behavior is unchanged from before this feature existed.
 - `bagrut.json`: `{ localityId: { pct: number|null, year: number|null } }`,
   same convention again — an entry for all 1211, both fields `null` together,
   181 with a value (all `year` 2024).
-  See the provenance section above for all three files' sources, coverage
+- `cityprofile.json`: `{ localityId: { medianAge, academicPct,
+  incomePerPerson, vehiclesPer100, families4PlusPct, daysAbroad } }`, each
+  `number|null`; an entry for all 1211, all six `null` together, **280** with
+  values. 2021 CBS data — see the provenance section for the six variables'
+  Hebrew labels and the one deliberately excluded.
+  See the provenance section above for all four files' sources, coverage
   counts, the peripherality rank direction, and the bagrut join/series caveats.
 
 ## Similarity hint methodology
@@ -254,11 +284,15 @@ plain KL divergence would require.
   mode. Moving it immediately re-rolls a fresh round from the newly selected
   tier's pool (same reset as the "משחק אקראי חדש" button). See the size-tier
   section above for the three pools and `pickRandomAnswerId`'s tier param.
-- **Five hints, two of them conditionally hidden.** 1 turnout, 2 the K24 vote
+- **Six hints, three of them conditionally hidden.** 1 turnout, 2 the K24 vote
   chart, 3 the most-similar locality, 4 socioeconomic cluster **+ bagrut
-  eligibility**, 5 peripherality (cluster + national rank). Hints 4 and 5 each
-  hide their whole `hint-block` in `startRound` when the answer has no value in
-  the corresponding data file, so a player never sees a hollow "אין נתון".
+  eligibility**, 5 peripherality (cluster + national rank), 6 the city profile
+  (six CBS component variables, one line each, under a single "נתוני הלמ"ס
+  לשנת 2021" line; `CITY_PROFILE_FIELDS` in `js/app.js` holds the labels and
+  per-field formatting — median age is whole years because CBS publishes it
+  that way). Hints 4, 5 and 6 each hide their whole `hint-block` in
+  `startRound` when the answer has no value in the corresponding data file, so
+  a player never sees a hollow "אין נתון".
   Adding a hint means: a `hint-block` + `hint-btn`/`hint-output` pair in
   `index.html`, a branch in `populateHint`, and (if the data is incomplete) a
   hide line in `startRound` — never a second `state.hintPenalty++` site.
@@ -273,7 +307,9 @@ plain KL divergence would require.
   strict *subset* of the cluster's coverage, not a complement — it adds a second
   statistic for those 181 (all 48 large-tier cities among them), not new
   localities. Two lines, still exactly **one** charge: the guess is taken at the
-  shared `dataset.filled` gate in `populateHint`, never per line.
+  shared `dataset.filled` gate in `populateHint`, never per line. **Hint 6's
+  six lines work the same way** — a multi-line hint never means multiple
+  charges.
 
 ## Testing notes
 
@@ -290,13 +326,14 @@ round should re-check when it touches them:
   JSD similarity hint returns Givatayim for Tel Aviv (adjacent and
   demographically similar — a strong correctness signal).
 - Data-join integrity: all 1211 guessable localities have coords, K25 and K24
-  records, and a `socioeconomic.json`, `peripherality.json` and `bagrut.json`
-  entry, and K25/K24 per-party vote sums reconcile against `valid` with zero
-  discrepancies.
-- Hint 4's render branch can be lifted verbatim out of `populateHint` with a
-  regex and run over all 1211 localities against a `{socioeconomic, bagrut}`
-  stub state, counting `<p>` tags per locality — the cheapest way to prove the
-  two-line/one-line/hidden split (currently 181 / 997 / 33) without a browser.
+  records, and a `socioeconomic.json`, `peripherality.json`, `bagrut.json` and
+  `cityprofile.json` entry, and K25/K24 per-party vote sums reconcile against
+  `valid` with zero discrepancies.
+- A hint's render branch can be lifted verbatim out of `populateHint` with a
+  regex and run over all 1211 localities against a stub `state`, counting `<p>`
+  tags per locality — the cheapest way to prove a multi-line hint's
+  lines/hidden split without a browser. Hint 4's is currently 181 two-line /
+  997 one-line / 33 hidden; hint 6's is 280 six-line / 0 partial / 931 hidden.
   Pair it with a text assertion that `state.hintPenalty++` still occurs exactly
   once in `js/app.js` and sits immediately after the `dataset.filled` gate.
 - Answer selection: resolve several dates (an override, a fallback, an
@@ -307,7 +344,8 @@ round should re-check when it touches them:
   `computeSizeTierPools` as well as by re-resolving known dates.
 - Current data coverage for reference: guessable 1211, `randomEligible` 323,
   size tiers small 331 / medium 323 / large 48; socioeconomic 1178,
-  peripherality 1182, bagrut 181 (48/48 large-tier), hint 4 visible for 1178.
+  peripherality 1182, bagrut 181, city profile 280 — the last three all
+  48/48 large-tier. Hints visible: 4 for 1178, 5 for 1182, 6 for 280.
 
 If Chrome ever becomes available, a manual pass is still worth doing before
 treating the UI itself as verified: guess flow, autocomplete, RTL layout, all
