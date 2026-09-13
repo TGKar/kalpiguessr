@@ -1,17 +1,25 @@
+/* "Ballot" visual direction: the game as an Israeli ballot slip (פתק הצבעה).
+   Warm paper, black ink, hard offset shadows instead of blur, square corners
+   everywhere, and one red accent used sparingly. Deliberately light-only —
+   a dark variant of a paper metaphor is a separate design decision. */
 :root {
-  --bg: #f4f3ef;
-  --card-bg: #ffffff;
-  --text: #1f2430;
-  --text-muted: #5b6172;
-  --border: #e1dfd8;
-  --accent: #1a5f7a;
-  --accent-dark: #0f3d50;
-  --bar-color: #2f8fb0;
-  --bar-color-alt: #57b894;
-  --wrong: #c15b4a;
-  --win: #2f8f5b;
-  --shadow: 0 1px 3px rgba(20, 20, 30, 0.08);
-  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  --bg: #efe9dc;            /* paper background */
+  --card: #fdfcf8;          /* the slip itself */
+  --ink: #1a1815;           /* text / hard borders */
+  --border: #ddd4c2;        /* card borders + shadows */
+  --muted: #6e6558;         /* secondary text */
+  --faint: #a09582;         /* labels, footnotes */
+  --accent: #c2382b;        /* the one red */
+  --bar-track: #ece5d5;     /* empty part of a vote bar, chip fill */
+  --dashed-divider: #e8e0cf;
+
+  /* Hebrew-first faces. Secular One for display (title, locality names, big
+     numbers, ballot letters), Assistant for body. Loaded from Google Fonts in
+     index.html's head. */
+  --font-display: "Secular One", "Noto Sans Hebrew", "Arial Hebrew", sans-serif;
+  --font-body: "Assistant", "Noto Sans Hebrew", "Arial Hebrew", sans-serif;
+
+  font-family: var(--font-body);
 }
 
 * { box-sizing: border-box; }
@@ -23,255 +31,350 @@
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--text);
+  color: var(--ink);
   direction: rtl;
   text-align: right;
+  font-family: var(--font-body);
+  /* Long locality / party names must wrap rather than push the page sideways. */
+  overflow-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
 }
 
 .page {
-  max-width: 720px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 1.25rem 1rem 3rem;
+  padding: 1.75rem 1rem 3rem;
 }
 
+/* Header */
 .app-header {
-  text-align: center;
   margin-bottom: 1.5rem;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  background: var(--ink);
+  color: var(--bg);
+}
+
 .app-header h1 {
-  margin: 0 0 0.25rem;
-  font-size: 2rem;
-  color: var(--accent-dark);
-  letter-spacing: 0.02em;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.9rem;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
 }
 
 .subtitle {
-  margin: 0;
-  color: var(--text-muted);
+  margin: 0.6rem 0 0;
+  color: var(--muted);
   font-size: 0.95rem;
+  line-height: 1.45;
 }
 
+/* Cards are slips: paper, a hairline border and a hard offset shadow. */
 section {
-  background: var(--card-bg);
+  background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem 1.1rem;
-  margin-bottom: 1rem;
-  box-shadow: var(--shadow);
+  box-shadow: 3px 3px 0 var(--border);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1.05rem;
-  color: var(--accent-dark);
+  margin: 0 0 0.9rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: var(--faint);
 }
 
-/* Bar chart */
+/* Bar chart — four columns: boxed ballot letter, bar, party name, percentage.
+   No max-height and no internal scrollbar: the chart grows and the page
+   scrolls. */
 .bar-chart {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  max-height: 420px;
-  overflow-y: auto;
 }
 
 .bar-row {
   display: grid;
-  grid-template-columns: 6.5rem 1fr 3.5rem;
+  grid-template-columns: 3.6rem minmax(0, 1fr) minmax(0, 9rem) 3.1rem;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
+  gap: 0.7rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--dashed-divider);
 }
 
-.bar-label {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+.bar-row:last-child {
+  border-bottom: 0;
+}
+
+.party-letter {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  padding: 0.1rem 0.15rem;
+  /* Rendered ballot letters run to 3 characters in K25 and 4 in K24
+     (ודעם); clip rather than let a wide one stretch the grid. */
   white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.bar-label .party-name {
-  font-weight: 600;
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.bar-label .party-letter {
-  font-size: 0.7rem;
-  color: var(--text-muted);
+  min-width: 0;
 }
 
 .bar-track {
-  background: #eef1ef;
-  border-radius: 6px;
-  height: 1.1rem;
-  overflow: hidden;
+  background: var(--bar-track);
+  height: 14px;
   min-width: 0;
 }
 
 .bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--bar-color), var(--bar-color-alt));
-  border-radius: 6px 0 0 6px;
-  transition: width 0.4s ease;
+  /* Per-party colour is set inline by renderBarChart; this is the fallback
+     if it ever isn't. */
+  background: #8b857a;
+  transition: width 0.35s ease;
+}
+
+.party-name {
+  font-size: 0.88rem;
+  line-height: 1.3;
+  color: #4a453c;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .bar-pct {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.95rem;
   text-align: left;
   font-variant-numeric: tabular-nums;
-  color: var(--text-muted);
-  font-size: 0.8rem;
+  color: var(--ink);
 }
 
-/* Autocomplete */
+/* Guess input */
 .autocomplete {
   position: relative;
 }
 
 #guess-input {
   width: 100%;
-  padding: 0.7rem 0.9rem;
-  font-size: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #fbfbf9;
-  color: var(--text);
+  padding: 0.9rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  border: 2px solid var(--ink);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+#guess-input::placeholder {
+  color: var(--faint);
 }
 
 #guess-input:focus {
   outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline-offset: 2px;
 }
 
 .suggestions {
   position: absolute;
   z-index: 10;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   right: 0;
   left: 0;
   margin: 0;
-  padding: 0.25rem;
+  padding: 0;
   list-style: none;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 6px 16px rgba(20, 20, 30, 0.12);
-  max-height: 260px;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--border);
+  max-height: 280px;
   overflow-y: auto;
 }
 
 .suggestions li {
-  padding: 0.5rem 0.6rem;
-  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
   cursor: pointer;
   font-size: 0.95rem;
+  border-bottom: 1px dashed var(--dashed-divider);
+}
+
+.suggestions li:last-child {
+  border-bottom: 0;
 }
 
 .suggestions li:hover,
 .suggestions li.active {
-  background: #e7f1f5;
+  background: var(--bar-track);
 }
 
 .guess-counter {
-  margin: 0.6rem 0 0;
+  margin: 1rem 0 0;
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: var(--muted);
 }
 
 .guess-counter strong {
-  color: var(--text);
-  font-size: 1.05rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin-right: 0.15rem;
 }
 
 .hint-text {
-  margin: 0.5rem 0 0;
+  margin: 0.4rem 0 0;
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--faint);
 }
 
+/* Win banner */
 .win-banner {
-  background: #e6f5ec;
-  border-color: var(--win);
+  border: 2px solid var(--accent);
+  box-shadow: 3px 3px 0 var(--accent);
   text-align: center;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--win);
 }
 
-/* Guess history */
+.win-banner p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* Guess history — each row is its own little slip. */
 .history-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.6rem;
 }
 
 .history-list li {
-  background: #f8f8f6;
+  background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-right: 5px solid var(--border);
   font-size: 0.9rem;
-  overflow: hidden;
+}
+
+/* Newest guess first, so :first-child is the most recent one. */
+.history-list li:first-child {
+  border-right-color: var(--accent);
+}
+
+.history-list li.correct,
+.history-list li.correct:first-child {
+  border: 1px solid var(--ink);
+  border-right: 5px solid var(--ink);
 }
 
 .guess-row {
   display: grid;
   grid-template-columns: 1fr auto auto;
   align-items: center;
-  gap: 0.2rem 0.6rem;
+  gap: 0.3rem 0.6rem;
   width: 100%;
-  padding: 0.55rem 0.7rem;
+  padding: 0.8rem 1rem;
   background: none;
   border: 0;
-  border-radius: 8px;
-  font: inherit;
+  font-family: inherit;
+  font-size: inherit;
   color: inherit;
   text-align: right;
   cursor: pointer;
 }
 
+.guess-row > * {
+  min-width: 0;
+}
+
 .guess-row:hover {
-  background: #f0f0ec;
+  background: var(--bar-track);
+}
+
+.guess-row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.history-list .guess-name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .guess-difference {
   grid-column: 1 / -1;
-  color: var(--text-muted);
-  line-height: 1.35;
+  color: var(--ink);
+  font-size: 0.93rem;
+  line-height: 1.5;
 }
 
 .guess-difference-values {
   grid-column: 1 / -1;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  line-height: 1.35;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
   font-variant-numeric: tabular-nums;
 }
 
-.guess-chart {
-  padding: 0.2rem 0.7rem 0.7rem;
-  border-top: 1px dashed var(--border);
-  max-height: 240px;
+.value-chip {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 
-.history-list .guess-name {
-  font-weight: 600;
+.value-chip-guess {
+  background: var(--bar-track);
+  color: var(--ink);
+}
+
+.value-chip-answer {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.guess-chart {
+  padding: 0.2rem 1rem 0.9rem;
+  border-top: 1px dashed var(--dashed-divider);
 }
 
 .history-list .guess-distance {
-  color: var(--text-muted);
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
 .history-list .guess-direction {
-  background: var(--accent);
-  color: white;
-  border-radius: 6px;
+  background: var(--ink);
+  color: var(--bg);
   padding: 0.15rem 0.5rem;
   font-size: 0.9rem;
   white-space: nowrap;
@@ -283,34 +386,25 @@ h2 {
   display: inline-block;
 }
 
-.history-list li.correct {
-  border-color: var(--win);
-  background: #e6f5ec;
-}
-
-.history-list li.correct .guess-row:hover {
-  background: #dcefe3;
-}
-
 .history-list li.correct .guess-direction {
-  background: var(--win);
+  background: var(--accent);
 }
 
 .history-empty {
-  color: var(--text-muted);
+  color: var(--faint);
   font-size: 0.9rem;
-  padding: 0.5rem 0;
+  padding: 0.3rem 0;
 }
 
-/* Hints */
+/* Hints — paper chips with an ink border and a small hard shadow. */
 .hint-cost-note {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.9rem;
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--faint);
 }
 
 .hint-block {
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
 }
 
 .hint-block:last-child {
@@ -318,94 +412,120 @@ h2 {
 }
 
 .hint-btn {
-  display: block;
-  width: 100%;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.9rem;
-  background: #eef4f6;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--accent-dark);
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.55rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--border);
+  color: var(--ink);
   cursor: pointer;
   text-align: right;
 }
 
 .hint-btn:hover {
-  background: #dfeaee;
+  background: var(--bar-track);
 }
 
+.hint-btn-cost {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Pressed: the chip sits down into its own shadow. Kept on paper rather than
+   inverted to ink so the red cost suffix stays legible. */
 .hint-btn[aria-pressed="true"] {
-  background: var(--accent);
-  color: white;
-  border-color: var(--accent);
+  background: var(--bar-track);
+  box-shadow: none;
+  transform: translate(2px, 2px);
 }
 
 .hint-output {
-  margin-top: 0.5rem;
-  padding: 0.6rem 0.9rem;
+  margin-top: 0.7rem;
+  padding: 0.8rem 1rem;
+  background: var(--bg);
   border: 1px dashed var(--border);
-  border-radius: 8px;
   font-size: 0.9rem;
 }
 
 .hint-output p {
-  margin: 0.25rem 0;
+  margin: 0.3rem 0;
+  line-height: 1.5;
+}
+
+.hint-output strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.02em;
+}
+
+.hint-output .hint-source {
+  margin: 0.8rem 0 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--faint);
 }
 
 /* Mode switcher */
 .mode-switcher {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 
 .mode-btn {
-  padding: 0.5rem 1.1rem;
-  font-size: 0.9rem;
+  padding: 0.45rem 1.2rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
   font-weight: 600;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--text-muted);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--border);
+  color: var(--ink);
   cursor: pointer;
 }
 
 .mode-btn:hover {
-  background: #eef4f6;
+  background: var(--bar-track);
 }
 
 .mode-btn[aria-selected="true"] {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: white;
+  background: var(--ink);
+  color: var(--bg);
+  box-shadow: 2px 2px 0 var(--border);
 }
 
 .new-random-btn {
-  padding: 0.5rem 1.1rem;
+  padding: 0.45rem 1.2rem;
+  font-family: var(--font-body);
   font-size: 0.85rem;
-  background: var(--bar-color-alt);
-  border: 1px solid var(--bar-color-alt);
-  border-radius: 999px;
-  color: white;
+  font-weight: 700;
+  background: var(--accent);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--border);
+  color: var(--card);
   cursor: pointer;
 }
 
 .new-random-btn:hover {
-  filter: brightness(0.95);
+  filter: brightness(0.92);
 }
 
-.size-tier-wrap {
+/* Random-mode size tier + daily archive date picker */
+.size-tier-wrap,
+.date-picker-wrap {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
+  gap: 0.75rem;
   margin-bottom: 1rem;
   flex-wrap: wrap;
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--muted);
 }
 
 .size-tier-slider-group {
@@ -413,6 +533,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   width: 220px;
+  max-width: 100%;
 }
 
 #size-tier-slider {
@@ -425,50 +546,23 @@ h2 {
   justify-content: space-between;
   width: 100%;
   font-size: 0.75rem;
+  color: var(--faint);
   margin-top: 0.1rem;
 }
 
-.date-picker-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
 .date-picker-label strong {
-  color: var(--text);
+  color: var(--ink);
+  font-weight: 700;
 }
 
 #date-picker {
-  padding: 0.3rem 0.5rem;
+  padding: 0.35rem 0.5rem;
+  font-family: var(--font-body);
   font-size: 0.85rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--card-bg);
-  color: var(--text);
-}
-
-.app-footer {
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 1.5rem;
-}
-
-.app-footer code {
-  background: #eee;
-  padding: 0.1rem 0.3rem;
-  border-radius: 4px;
-}
-
-.hint-output .hint-source {
-  margin-bottom: 0.4rem;
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  border: 2px solid var(--ink);
+  background: var(--card);
+  color: var(--ink);
+  max-width: 100%;
 }
 
 /* Rules box */
@@ -478,16 +572,18 @@ h2 {
   padding: 0;
   background: none;
   border: 0;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--accent-dark);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--ink);
   text-align: right;
   cursor: pointer;
 }
 
 .rules-toggle::after {
   content: " ▾";
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+  color: var(--accent);
 }
 
 .rules-toggle[aria-expanded="false"]::after {
@@ -495,16 +591,101 @@ h2 {
 }
 
 .rules-body {
-  margin-top: 0.6rem;
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.45;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--dashed-divider);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.55;
 }
 
 .rules-body p {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.45rem;
 }
 
 .rules-body p:last-child {
   margin-bottom: 0;
+}
+
+/* Footer */
+.app-footer {
+  font-size: 0.75rem;
+  color: var(--faint);
+  margin-top: 1.75rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--border);
+}
+
+.app-footer p {
+  margin: 0;
+}
+
+.app-footer code {
+  background: var(--bar-track);
+  padding: 0.1rem 0.3rem;
+}
+
+/* Phone: the chart's four columns fold to letter | bar + % / name. */
+@media (max-width: 560px) {
+  .page {
+    padding: 1.25rem 0.8rem 2.5rem;
+  }
+
+  section {
+    padding: 0.9rem 0.9rem;
+  }
+
+  .app-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .bar-row {
+    grid-template-columns: 2.9rem minmax(0, 1fr) 3rem;
+    column-gap: 0.5rem;
+    row-gap: 0.15rem;
+    padding: 0.45rem 0;
+  }
+
+  .party-letter {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-size: 0.92rem;
+    padding: 0.1rem 0.05rem;
+  }
+
+  .bar-track {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .bar-pct {
+    grid-column: 3;
+    grid-row: 1;
+    font-size: 0.85rem;
+  }
+
+  .party-name {
+    grid-column: 2 / span 2;
+    grid-row: 2;
+    font-size: 0.8rem;
+  }
+
+  .guess-row {
+    padding: 0.7rem 0.8rem;
+  }
+
+  .history-list .guess-name {
+    font-size: 1.05rem;
+  }
+
+  .hint-btn {
+    display: block;
+    width: 100%;
+  }
+
+  .size-tier-wrap,
+  .date-picker-wrap {
+    gap: 0.5rem;
+  }
 }

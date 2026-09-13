@@ -285,7 +285,10 @@ data file's coverage.
   expected to be re-tuned after play.
 - **Both localities' real values ARE printed**, on a second line under the
   comparative sentence (`differenceDetail` returns `{ text, values }`, rendered
-  as `.guess-difference` + `.guess-difference-values`). This **reverses** the
+  as `.guess-difference` + `.guess-difference-values` — the one `values` string
+  is split back on the shared `VALUES_SEPARATOR` constant so each half becomes
+  its own chip; that split is presentational and the wording of each half is
+  untouched). This **reverses** the
   original "comparative only, never reveal a value" rule: the captain asked for
   the numbers and accepts that they make the secret locality easier to
   identify — don't "fix" it back to comparative-only. The zero-gap neutral line
@@ -296,6 +299,56 @@ data file's coverage.
   as-is.
 - **`periRank` direction is the easy one to get backwards**: high rank =
   central, rank 1 = most peripheral (see the peripherality provenance entry).
+
+## Visual direction: "Ballot"
+
+The whole UI is styled as Israel's physical ballot slip (פתק הצבעה): warm
+paper, black ink, **hard** offset shadows (`box-shadow: 3px 3px 0 <color>`,
+2px for chips) rather than blur, **square corners everywhere — no
+`border-radius` at all**, 1px `--border` on cards and 2px ink on interactive
+things, and one red accent used sparingly. `style.css` is the whole of it;
+there is no build step and no framework.
+
+- **Tokens** live in one `:root` block at the top of `style.css`: `--bg`
+  `#efe9dc`, `--card` `#fdfcf8`, `--ink` `#1a1815`, `--border` `#ddd4c2`,
+  `--muted` `#6e6558`, `--faint` `#a09582`, `--accent` `#c2382b`,
+  `--bar-track` `#ece5d5`, `--dashed-divider` `#e8e0cf`. Use the tokens, not
+  literals. (This replaced an earlier teal/green palette — don't reintroduce
+  it.)
+- **Fonts** are Hebrew-first, loaded by the single Google Fonts `<link>` in
+  `index.html`'s head: **Secular One** (`--font-display`, weight 400 only) for
+  the title, locality names, big numbers, ballot letters and percentages, and
+  **Assistant** 400/600/700 (`--font-body`) for everything else. Both fall back
+  through Noto Sans Hebrew / Arial Hebrew to `sans-serif`. The old
+  `"Segoe UI", Arial, Helvetica` stack was the single worst thing about the
+  previous look — Latin faces that merely happen to carry Hebrew glyphs.
+- **Layout order in `index.html` is deliberate**: header, mode/tier/date
+  controls, rules box, **guess input + counter, then the vote chart**, win
+  banner, history, hints. The input is above the chart so the main interaction
+  isn't pushed past the fold; don't move it back down.
+- **The vote chart must never get its own scrollbar.** `.bar-chart` carries no
+  `max-height` and no `overflow` — it grows and the page scrolls. Each
+  `.bar-row` is a four-column grid (boxed ballot letter, bar, party name,
+  percentage) separated by a dashed `--dashed-divider` line, collapsing at
+  ≤560px to letter | bar + % over the name. `renderBarChart` emits those four
+  cells in that DOM order.
+- **`PARTY_COLORS` in `js/app.js` is presentation only.** It maps a ballot
+  letter to a bar colour for the twelve lists that cleared or approached the
+  threshold in 2022/2021, echoing a party's own familiar colour where there is
+  a well-known one; everything else — including any list whose colour we are
+  not confident of — falls through to `PARTY_COLOR_FALLBACK` (`#8b857a`) rather
+  than being guessed at. **It carries no political classification**: no bloc,
+  no left/right grouping, no legend claiming one, and no game logic reads it.
+  Don't turn it into one, and don't invent a colour to fill a gap.
+- **`[hidden]` needs `style.css`'s `[hidden] { display: none !important; }`.**
+  Everything toggled from `js/app.js` hides via the `hidden` attribute, whose
+  UA `display: none` loses to any component `display` rule — that silently
+  broke the size-tier slider and the date picker, both `display: flex`. The
+  `!important` base rule is what makes attribute toggling work at all; keep it,
+  and don't reach for a `.hidden` class instead.
+- **Dark mode was deliberately not done.** A paper metaphor needs its own
+  dark-variant design decision, which the captain has not made; there are no
+  `prefers-color-scheme` blocks and adding one is out of scope until asked.
 
 ## Game mechanics notes
 
@@ -310,21 +363,16 @@ data file's coverage.
   **only** place a cost is applied, and closing and reopening an
   already-revealed hint must not charge again. A hint whose cost is not 1
   states it in its own button label in `index.html` (hint 3 reads
-  `רמז 3: פרופיל היישוב (2 ניחושים)`); hints 1 and 2 deliberately carry no
-  "(1 ניחוש)" suffix. Keep label and `HINT_COSTS` in sync. Hints never get
-  their own row in the guess-history list, only wrong/correct locality
-  guesses do.
+  `רמז 3: פרופיל היישוב (2 ניחושים)`, its cost suffix wrapped in a
+  `.hint-btn-cost` span so it can print in `--accent`); hints 1 and 2
+  deliberately carry no "(1 ניחוש)" suffix. Keep label and `HINT_COSTS` in
+  sync. Hints never get their own row in the guess-history list, only
+  wrong/correct locality guesses do.
   **Two UI copy lines still say every hint counts as one guess** —
   `index.html`'s rules box (`כל רמז נספר כניחוש`, captain-verbatim text, see
   commit f855dcd) and the `.hint-cost-note` above the hint buttons. Both are
   now inaccurate for hint 3 and are awaiting a captain wording decision; do
   not reword them unprompted.
-- **`[hidden]` needs `style.css`'s `[hidden] { display: none !important; }`.**
-  Everything toggled from `js/app.js` hides via the `hidden` attribute, whose
-  UA `display: none` loses to any component `display` rule — that silently
-  broke the size-tier slider and the date picker, both `display: flex`. The
-  `!important` base rule is what makes attribute toggling work at all; keep it,
-  and don't reach for a `.hidden` class instead.
 - **Distance/direction unlock when the visible counter reaches
   `DISTANCE_UNLOCK_GUESS` (5).** The gate is `state.guesses.length +
   state.hintPenalty` — the same number rendered into `#guess-counter` and shown
@@ -419,8 +467,12 @@ round should re-check when it touches them:
 - Wrong-guess feedback: sweeping all 732,655 unordered pairs yields zero
   errors, zero empty sentences and 27 zero-gap (neutral-line) pairs; over
   25,000 random secret/guess pairs the axis win split is size 42.1%,
-  socioCluster 25.2%, periRank 18.8%, everything else ≤3.4%. A wildly different
-  split means the percentile tables or the axis coverage broke. Also assert the
+  socioCluster 25.2%, periRank 18.8%, everything else ≤3.4%. **Those figures
+  depend on how the pairs are sampled** — drawing both localities uniformly
+  from all 1211 instead gives ≈35/30/30 on unchanged code, so compare a split
+  against the same sampler (or against the previous commit) before calling it a
+  regression. A wildly different split means the percentile tables or the axis
+  coverage broke. Also assert the
   `periRank` direction explicitly (Tel Aviv, rank 1212, must read as *more
   central* than Eilat, rank 3). Assert the printed values too: no
   `\d+\.\d{3,}` may survive into a sentence, both Hebrew labels must be
@@ -436,6 +488,10 @@ round should re-check when it touches them:
   peripherality 1182, bagrut 181, city profile 280 — the last three all
   48/48 large-tier. Hint 3 visible for 1182 (their union), hidden for 29.
 
+**The "Ballot" restyle has never been seen rendered** — it was verified only
+structurally (id set unchanged, behavioural zero-diff against the pre-restyle
+commit for `pickAnswerId`/`pickRandomAnswerId`/`computeSizeTierPools`/
+`differenceDetail`/`renderBarChart`'s row data, plus the harness checks above).
 If Chrome ever becomes available, a manual pass is still worth doing before
 treating the UI itself as verified: guess flow, autocomplete, RTL layout, all
 three hints (including that hint 3 hides for the 29 localities with no CBS
@@ -443,7 +499,9 @@ value at all, and drops individual lines for partial ones), the live guess
 counter, the wrong-guess sentence and the counter-5 distance unlock (reachable
 by hints alone), expanding a guess row
 (pointer and keyboard), the rules box and its remembered collapsed state, the
-archive date-picker, the size-tier slider, and both mode-switcher buttons.
+archive date-picker, the size-tier slider, both mode-switcher buttons, and —
+for the restyle specifically — phone width (~390px) with nothing overflowing
+horizontally and the chart's folded two-line rows.
 
 ## Maintaining this file
 

@@ -4,12 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kalpiguessr</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="page">
   <header class="app-header">
-    <h1>Kalpiguessr</h1>
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="1"></rect><path d="M8 8V4h8v4"></path><path d="M9 13h6"></path></svg>
+      </span>
+      <h1>Kalpiguessr</h1>
+    </div>
     <p class="subtitle">נחשו את היישוב לפי פילוג הקולות שלו בבחירות לכנסת ה-25</p>
   </header>
 
@@ -48,11 +54,6 @@
       </div>
     </section>
 
-    <section class="chart-card">
-      <h2>פילוג הקולות ביישוב המסתורי (בחירות 2022)</h2>
-      <div id="chart-25" class="bar-chart" aria-live="polite"></div>
-    </section>
-
     <section class="guess-card">
       <form id="guess-form" autocomplete="off">
         <div class="autocomplete">
@@ -70,6 +71,11 @@
       </form>
       <p class="guess-counter">ניחושים: <strong id="guess-counter">0</strong></p>
       <p id="guess-hint" class="hint-text">יש לבחור יישוב מתוך רשימת ההשלמה האוטומטית.</p>
+    </section>
+
+    <section class="chart-card">
+      <h2>פילוג הקולות ביישוב המסתורי (בחירות 2022)</h2>
+      <div id="chart-25" class="bar-chart" aria-live="polite"></div>
     </section>
 
     <section id="win-banner" class="win-banner" hidden>
@@ -95,7 +101,7 @@
         </div>
       </div>
       <div class="hint-block" id="hint-block-profile" hidden>
-        <button type="button" class="hint-btn" data-hint="profile">רמז 3: פרופיל היישוב (2 ניחושים)</button>
+        <button type="button" class="hint-btn" data-hint="profile">רמז 3: פרופיל היישוב <span class="hint-btn-cost">(2 ניחושים)</span></button>
         <div id="hint-profile" class="hint-output" hidden></div>
       </div>
     </section>

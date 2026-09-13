@@ -118,6 +118,37 @@
 
   const MIN_VOTE_SHARE_PCT = 0.1;
 
+  // Presentation only: a bar colour per ballot letter, so a chart reads as a
+  // set of parties rather than one repeated gradient. It covers the letters
+  // that cleared or approached the threshold in 2022/2021 and echoes a party's
+  // own familiar colour where there is a well-known one (Likud blue, Labor red,
+  // Meretz green, Shas near-black); the rest are simply distinguishable hues in
+  // the paper palette. Letters whose colour we are not confident about — and
+  // every minor list — fall through to PARTY_COLOR_FALLBACK rather than being
+  // guessed at. This is NOT a political classification: there is no bloc, no
+  // left/right grouping and no legend claiming one, and nothing in the game
+  // reads these values. ודעם (the 2021 Joint List) shares ום's green because
+  // the two never appear in the same chart.
+  const PARTY_COLORS = {
+    'מחל': '#1f4e8c',
+    'פה': '#2f7d9e',
+    'כן': '#d4694f',
+    'ט': '#3d6bb5',
+    'ל': '#7fa3d9',
+    'שס': '#3f3a33',
+    'ג': '#5c564c',
+    'אמת': '#c2382b',
+    'מרצ': '#4f8f4a',
+    'עם': '#3f9e8c',
+    'ום': '#2f7d5c',
+    'ודעם': '#2f7d5c',
+  };
+  const PARTY_COLOR_FALLBACK = '#8b857a';
+
+  function partyColor(letter) {
+    return PARTY_COLORS[letter] || PARTY_COLOR_FALLBACK;
+  }
+
   function renderBarChart(container, votes, partiesMap, validTotal) {
     container.innerHTML = '';
     const entries = Object.entries(votes)
@@ -140,30 +171,31 @@
       const row = document.createElement('div');
       row.className = 'bar-row';
 
-      const label = document.createElement('div');
-      label.className = 'bar-label';
-      const nameSpan = document.createElement('span');
-      nameSpan.className = 'party-name';
-      nameSpan.textContent = entry.name;
-      const letterSpan = document.createElement('span');
+      // Four grid cells: the boxed ballot letter, the bar, the party name and
+      // the percentage — laid out by .bar-row in style.css.
+      const letterSpan = document.createElement('div');
       letterSpan.className = 'party-letter';
       letterSpan.textContent = entry.letter;
-      label.appendChild(nameSpan);
-      label.appendChild(letterSpan);
 
       const track = document.createElement('div');
       track.className = 'bar-track';
       const fill = document.createElement('div');
       fill.className = 'bar-fill';
       fill.style.width = `${(entry.pct / maxPct) * 100}%`;
+      fill.style.backgroundColor = partyColor(entry.letter);
       track.appendChild(fill);
+
+      const nameSpan = document.createElement('div');
+      nameSpan.className = 'party-name';
+      nameSpan.textContent = entry.name;
 
       const pctLabel = document.createElement('div');
       pctLabel.className = 'bar-pct';
       pctLabel.textContent = `${entry.pct.toFixed(1)}%`;
 
-      row.appendChild(label);
+      row.appendChild(letterSpan);
       row.appendChild(track);
+      row.appendChild(nameSpan);
       row.appendChild(pctLabel);
       container.appendChild(row);
     }
@@ -306,6 +338,10 @@
     return best;
   }
 
+  // The separator between the two printed values. Named so renderHistory can
+  // split the string back into its two chips without the two drifting apart.
+  const VALUES_SEPARATOR = ' \u00b7 ';
+
   // The comparative sentence plus, per the captain, the winning axis's real
   // value for both localities. The neutral zero-gap line has no winning axis,
   // so it carries no values.
@@ -319,7 +355,7 @@
     const fmt = best.axis.format;
     return {
       text: best.answerHigher ? best.axis.up(m) : best.axis.down(m),
-      values: `היישוב שניחשתם: ${fmt(axisValue(best.axis, guessId))} · היישוב המסתורי: ${fmt(axisValue(best.axis, answerId))}`,
+      values: `היישוב שניחשתם: ${fmt(axisValue(best.axis, guessId))}${VALUES_SEPARATOR}היישוב המסתורי: ${fmt(axisValue(best.axis, answerId))}`,
     };
   }
 
@@ -386,7 +422,17 @@
       if (!g.correct && g.differenceValues) {
         const valuesEl = document.createElement('span');
         valuesEl.className = 'guess-difference-values';
-        valuesEl.textContent = g.differenceValues;
+        // Purely presentational: the one values string is split on its own
+        // separator so each half renders as its own chip (guessed locality,
+        // then secret one). The wording of each half is untouched; if the
+        // separator ever stops being there, the string is shown as one chip.
+        const halves = g.differenceValues.split(VALUES_SEPARATOR);
+        halves.forEach((half, idx) => {
+          const chip = document.createElement('span');
+          chip.className = idx === 0 ? 'value-chip value-chip-guess' : 'value-chip value-chip-answer';
+          chip.textContent = half;
+          valuesEl.appendChild(chip);
+        });
         row.appendChild(valuesEl);
       }
 
